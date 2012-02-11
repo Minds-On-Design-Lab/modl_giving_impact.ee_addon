@@ -19,8 +19,8 @@ h3. Campaigns
 
 Returns all active campaigns
 
-<code>
-{exp:giving_impact:campaigns}
+<code><pre>
+{exp:modl_giving_impact:campaigns}
 	{gi_title}
 	{gi_description}
 	{gi_token}
@@ -29,8 +29,8 @@ Returns all active campaigns
 	{gi_donation_target}
 	{gi_donation_total}
 	{gi_image_url}
-{/exp:giving_impact:campaigns}
-</code>
+{/exp:modl_giving_impact:campaigns}
+</pre></code>
 
 h3. Single Campaign
 
