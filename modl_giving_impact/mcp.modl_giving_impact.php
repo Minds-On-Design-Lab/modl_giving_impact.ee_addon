@@ -45,7 +45,7 @@ class Modl_giving_impact_mcp {
 		$this->EE->cp->set_right_nav(array(
 			'module_home' => $this->_base_url,
 			'add_api' => $this->_base_url.AMP.'method=add_edit_api',
-			'documentation' => '',
+			'documentation' => 'https://github.com/Minds-On-Design-Lab/modl_giving_impact.ee_addon',
 		));
 	}
 	
