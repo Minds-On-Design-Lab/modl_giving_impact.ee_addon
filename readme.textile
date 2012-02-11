@@ -1,0 +1,100 @@
+h1. MODL Giving Impact
+
+h2. Overview
+
+An ExpressionEngine 2.x module to interact with Giving Impact(TM).
+
+*Developed By:* Minds On Design Lab - http://mod-lab.com
+*Version:* 1.0
+*Copyright:* Copyright &copy; 2011 Minds On Design Lab
+*License:* Licensed under the MIT license - Please refer to LICENSE
+
+h2. Installation
+
+Install in system/expressionengine/third_party/modl_giving_impact
+
+h2. Usage
+
+h3. Campaigns
+
+Returns all active campaigns
+
+<code>
+{exp:giving_impact:campaigns}
+	{gi_title}
+	{gi_description}
+	{gi_token}
+	{gi_donation_url}
+	{gi_share_url}
+	{gi_donation_target}
+	{gi_donation_total}
+	{gi_image_url}
+{/exp:giving_impact:campaigns}
+</code>
+
+h3. Single Campaign
+
+Returns data for campaign with provided token
+
+<code>
+{exp:giving_impact:campaigns token="[unique-campaign-token]"}
+	{gi_title}
+	{gi_description}
+	{gi_token}
+	{gi_donation_url}
+	{gi_share_url}
+	{gi_donation_target}
+	{gi_donation_total}
+	{gi_image_url}
+{/exp:giving_impact:single-campaign}<pre></td>
+        </tr>
+         <tr class="even">
+            <td><strong>Campaign Giving Opportunities</strong><p>Returns all giving opportunities within campaign with provided token</p></td>
+            <td><pre>
+{exp:giving_impact:campaign_giving_opportunities token="[unique-campaign-token]"}
+	{gi_title}
+	{gi_description}
+	{gi_token}
+	{gi_donation_url}
+	{gi_share_url}
+	{gi_donation_target}
+	{gi_donation_total}
+	{gi_image_url}
+{/exp:giving_impact:campaign_giving_opportunities}</pre>
+
+<h4>Optional Parameters</strong></h4>
+<ul class="bullets">
+<li>sort_by="[tag-name]"</li>
+<li>numeric="yes"</li>
+<li>backwards="yes"</li>
+<li>limit="[number]"</li>
+<li>random="[number]"</li>
+</ul>
+</td>
+        </tr>
+        <tr class="odd">
+            <td><strong>Single Giving Opportunity</strong><p>Returns data for a Giving Opportunity with provided token</p></td>
+           <td><pre>
+{exp:giving_impact:single_giving_opportunity token="[unique-giving-opp-token]"}
+	{gi_title}
+	{gi_description}
+	{gi_token}
+	{gi_donation_url}
+	{gi_share_url}
+	{gi_donation_target}
+	{gi_donation_total}
+	{gi_image_url}
+{/exp:giving_impact:single_giving_opportunity}<pre></td>
+        </tr>
+		<tr class="even">
+            <td><strong>Single Giving Opportunity Donation Log</strong><p>Returns donation log data for a specific Giving Opportunity with provided token</p></td>
+            <td><pre>
+{exp:giving_impact:single_giving_opportunity_donation_log token="[unique-giving-opp-token]"}
+	{gi_log_date}
+	{gi_log_amount}
+	{gi_log_name}
+{/exp:giving_impact:single_giving_opportunity_donation_log}</pre></td>
+        </tr>
+
+    </tbody>
+</table>
