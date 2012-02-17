@@ -63,7 +63,9 @@ class Modl_giving_impact_mcp {
 		$this->EE->cp->set_variable('cp_page_title', lang('modl_giving_impact_module_name'));
 		
 		// check for existing credentials
-	    $credentials = $this->EE->db->get('modl_giving_impact_api_instance');
+	    $credentials = $this->EE->db
+	    	->where('site_id', $this->EE->config->item('site_id'))
+	    	->get('modl_giving_impact_api_instance');
 		
 		if ($credentials->num_rows() > 0) 
 		{
@@ -105,7 +107,9 @@ class Modl_giving_impact_mcp {
 	    }
 				    
 	    // check for existing credentials
-	    $credentials = $this->EE->db->get('modl_giving_impact_api_instance');
+	    $credentials = $this->EE->db
+	    	->where('site_id', $this->EE->config->item('site_id'))
+	    	->get('modl_giving_impact_api_instance');
 				
 		if ($credentials->num_rows() > 0) 
 		{
@@ -151,10 +155,13 @@ class Modl_giving_impact_mcp {
 				
 		if (empty($instance)) 
 		{
+			$data['site_id'] = $this->EE->config->item('site_id');
 			$this->EE->db->insert('modl_giving_impact_api_instance', $data);		}
 		else 
 		{
 			$this->EE->db->where('api_instance_id', $instance);
+			$this->EE->db->where('site_id', $this->EE->config->item('site_id'));
+
             $this->EE->db->update('modl_giving_impact_api_instance', $data);
 		}
 	

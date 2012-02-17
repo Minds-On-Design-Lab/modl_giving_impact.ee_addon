@@ -26,7 +26,7 @@
 
 class Modl_giving_impact_upd {
 	
-	public $version = '1.0';
+	public $version = '1.1';
 	
 	private $EE;
 	
@@ -65,6 +65,11 @@ class Modl_giving_impact_upd {
                 'constraint' => '10',
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE,
+            ),
+            'site_id'		=> array(
+            	'type'			=> 'INT',
+            	'constraint' 	=> 11,
+            	'null'			=> FALSE
             ),
             'api_account'   => array(
                 'type'          => 'VARCHAR',
@@ -129,6 +134,26 @@ class Modl_giving_impact_upd {
 	public function update($current = '')
 	{
 		// If you have updates, drop 'em in here.
+		if( version_compare($current, '1.1', '<') ) {
+			// add the site id
+			$this->EE->dbforge->add_column(
+				'modl_giving_impact_api_instance',
+				array(
+					'site_id' => array(
+						'type'			=> 'INT',
+						'constraint'	=> 11,
+						'null'			=> FALSE
+					)
+				)
+			);
+
+			$this->EE->db->update(
+				'modl_giving_impact_api_instance',
+				array(
+					'site_id' => 1
+				)
+			);
+		}
 		return TRUE;
 	}
 	
