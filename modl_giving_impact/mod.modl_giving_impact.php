@@ -54,7 +54,6 @@ class Modl_giving_impact {
         return $this->return_data;
 	}
 	
-	
 	public function single_campaign() {
 		
 		/** ---------------------------------------
