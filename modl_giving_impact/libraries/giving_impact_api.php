@@ -29,7 +29,9 @@ class Giving_impact_api {
 		
 		// Get existing credentials
     
-	    $this->credentials = $this->EE->db->get('modl_giving_impact_api_instance');
+	    $this->credentials = $this->EE->db
+	    	->where('site_id', $this->EE->config->item('site_id'))
+		    ->get('modl_giving_impact_api_instance');
 		
 		if ($this->credentials->num_rows() > 0) 
 		{
