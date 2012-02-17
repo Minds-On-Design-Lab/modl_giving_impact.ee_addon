@@ -1,10 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $lang = array(	
-	'giving_impact_module_name' => 
+	'modl_giving_impact_module_name' =>
 	'Giving Impact',
 
-	'giving_impact_module_description' => 
+	'modl_giving_impact_module_description' =>
 	'Giving Impact API Integration',
 
 	'module_home' => 'Home',

@@ -38,9 +38,9 @@ class Modl_giving_impact_mcp {
 	{
 		$this->EE =& get_instance();
 		
-		$this->_base_url = BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=giving_impact';
+		$this->_base_url = BASE.AMP.'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=modl_giving_impact';
 		
-		$this->_form_base = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=giving_impact';
+		$this->_form_base = 'C=addons_modules'.AMP.'M=show_module_cp'.AMP.'module=modl_giving_impact';
 		
 		$this->EE->cp->set_right_nav(array(
 			'module_home' => $this->_base_url,
@@ -60,10 +60,10 @@ class Modl_giving_impact_mcp {
 	{
 		$vars = array();
 		
-		$this->EE->cp->set_variable('cp_page_title', lang('giving_impact_module_name'));
+		$this->EE->cp->set_variable('cp_page_title', lang('modl_giving_impact_module_name'));
 		
 		// check for existing credentials
-	    $credentials = $this->EE->db->get('giving_impact_api_instance');
+	    $credentials = $this->EE->db->get('modl_giving_impact_api_instance');
 		
 		if ($credentials->num_rows() > 0) 
 		{
@@ -84,7 +84,7 @@ class Modl_giving_impact_mcp {
 	public function add_edit_api() { 
 		// Set page title & breadcrumb
 	    $this->EE->cp->set_variable('cp_page_title', lang('add_api'));
-		$this->EE->cp->set_breadcrumb($this->_base_url, lang('giving_impact_module_name'));
+		$this->EE->cp->set_breadcrumb($this->_base_url, lang('modl_giving_impact_module_name'));
 		
 	    // Load libs
 	    $this->EE->load->library('form_validation');
@@ -105,7 +105,7 @@ class Modl_giving_impact_mcp {
 	    }
 				    
 	    // check for existing credentials
-	    $credentials = $this->EE->db->get('giving_impact_api_instance');
+	    $credentials = $this->EE->db->get('modl_giving_impact_api_instance');
 				
 		if ($credentials->num_rows() > 0) 
 		{
@@ -134,7 +134,7 @@ class Modl_giving_impact_mcp {
 	public function documentation() { 		
 		// Set page title & breadcrumb
 	    $this->EE->cp->set_variable('cp_page_title', lang('documentation'));
-		$this->EE->cp->set_breadcrumb($this->_base_url, lang('giving_impact_module_name'));
+		$this->EE->cp->set_breadcrumb($this->_base_url, lang('modl_giving_impact_module_name'));
 		
 		return $this->EE->load->view('documentation', '', TRUE);
 	}
@@ -151,11 +151,11 @@ class Modl_giving_impact_mcp {
 				
 		if (empty($instance)) 
 		{
-			$this->EE->db->insert('giving_impact_api_instance', $data);		}
+			$this->EE->db->insert('modl_giving_impact_api_instance', $data);		}
 		else 
 		{
 			$this->EE->db->where('api_instance_id', $instance);
-            $this->EE->db->update('giving_impact_api_instance', $data);
+            $this->EE->db->update('modl_giving_impact_api_instance', $data);
 		}
 	
 	    $this->EE->session->set_flashdata('message_success', lang('credentials_added'));
