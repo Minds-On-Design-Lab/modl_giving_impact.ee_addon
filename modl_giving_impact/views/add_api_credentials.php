@@ -31,7 +31,7 @@
             <td><?= lang('path')?></td>
             <td>
             	<?php 
-            	$data = array('name' => 'api_path', 'value' => set_value('api_path', $api_account)); 
+            	$data = array('name' => 'api_path', 'value' => set_value('api_path', $api_path));
             	echo form_input($data); 
             	?>
             </td>
