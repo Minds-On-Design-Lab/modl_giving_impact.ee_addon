@@ -5,7 +5,7 @@ h2. Overview
 An ExpressionEngine 2.x module to interact with Giving Impact(TM).
 
 *Developed By:* Minds On Design Lab - http://mod-lab.com
-*Version:* 1.0
+*Version:* 1.1
 *Copyright:* Copyright &copy; 2011 Minds On Design Lab
 *License:* Licensed under the MIT license - Please refer to LICENSE
 
@@ -102,3 +102,7 @@ Returns donation log data for a specific Giving Opportunity with provided token
 	{gi_log_name}
 {/exp:giving_impact:single_giving_opportunity_donation_log}
 </pre>
+
+h2. Changelog
+
+* 02172012 - Added MSM support
