@@ -75,65 +75,71 @@ class Modl_giving_impact {
 	}
 	
 	public function campaign_giving_opportunities() {
-		
+
 		/** ---------------------------------------
 		*	Fetch parameter
 		/** ---------------------------------------*/
-				
+
 		$this->token = (($token = $this->EE->TMPL->fetch_param('token')) === FALSE) ? $this->token : $token;
-		
+
 		/* Sorting params */
 		$this->sort_by = $this->EE->TMPL->fetch_param('sort_by');
 		/* Numeric = yes otherwise string */
 		$this->sort_numeric = $this->EE->TMPL->fetch_param('sort_numeric');
 		/* Backwards = yes otherwise forwards */
 		$this->sort_backwards = $this->EE->TMPL->fetch_param('sort_backwards');
-		
+
 		/* Result Limit ordered */
 		$this->limit = $this->EE->TMPL->fetch_param('limit');
-		
+
 		/* Result Limit random */
 		$this->random = $this->EE->TMPL->fetch_param('random');
-		
+
 		/** ---------------------------------------
 		*	Get data from API and decode resulting JSON
 		/** ---------------------------------------*/
-		
+
 		$data = $this->EE->giving_impact_api->get_campaign_giving_opportunities($this->token);
-		$vars = $this->_prep_multiple($data);
 		
-		if ($this->sort_by) 
-		{
-			$this->EE->load->library('MY_sort_associative_array');
-	    	$sorter = new MY_sort_associative_array;
-	    	
-	    	if ($this->sort_numeric == "yes") 
-	    	{
-		    	$sorter->numeric = true;
-		    	} else {
-		    	$sorter->numeric = false;
-		    }
-	    	
-	    	
-	    	if ($this->sort_backwards == "yes") {
-	    		$sorter->backwards = true;
-		    	} else {
-	    		$sorter->backwards = false;
+		/* Check if data is returned and if so continue processing otherwise return false */
+		if (is_array($data) && !empty($data)) {
+			$vars = $this->_prep_multiple($data);
+
+			if ($this->sort_by)
+			{
+				$this->EE->load->library('MY_sort_associative_array');
+		    	$sorter = new MY_sort_associative_array;
+
+		    	if ($this->sort_numeric == "yes")
+		    	{
+			    	$sorter->numeric = true;
+			    	} else {
+			    	$sorter->numeric = false;
+			    }
+
+
+		    	if ($this->sort_backwards == "yes") {
+		    		$sorter->backwards = true;
+			    	} else {
+		    		$sorter->backwards = false;
+		    	}
+
+		    	$vars = $sorter->sort_associative_array($vars, $this->sort_by);
 	    	}
-	    	
-	    	$vars = $sorter->sort_associative_array($vars, $this->sort_by);
-    	}
-    	
-    	if ($this->random) {
-    		$vars = $this->_random_campaign_results($vars, $this->random);
-    	}
-    	
-    	if ($this->limit) {
-    		$vars = $this->_limit_campaign_results($vars, $this->limit);
-    	}
-		
-		$this->return_data = $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
-        return $this->return_data;
+
+	    	if ($this->random) {
+	    		$vars = $this->_random_campaign_results($vars, $this->random);
+	    	}
+
+	    	if ($this->limit) {
+	    		$vars = $this->_limit_campaign_results($vars, $this->limit);
+	    	}
+
+			$this->return_data = $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
+	        return $this->return_data;
+	    } else { 
+	    	return false;
+	    }
 	}
 		
 	public function single_giving_opportunity() {
