@@ -6,7 +6,7 @@ An ExpressionEngine 2.x module to interact with Giving Impact &trade;.
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
 **Version:** 2.0<br />
-**Copyright:** Copyright &copy; 2011 Minds On Design Lab<br />
+**Copyright:** Copyright &copy; 2010-2012 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
 ## Requirements
