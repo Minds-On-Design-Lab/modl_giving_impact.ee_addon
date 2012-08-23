@@ -9,30 +9,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr class="even">
-            <td><?= lang('account')?></td>
+         <tr class="even">
+            <td><?= lang('key')?></td>
             <td>
-            	<?php 
-            	$data = array('name' => 'api_account', 'value' => set_value('api_account', $api_account)); 
-            	echo form_input($data); 
+            	<?php
+            	$data = array('name' => 'api_key', 'value' => set_value('api_key', $api_key));
+            	echo form_input($data);
             	?>
             </td>
         </tr>
          <tr class="odd">
-            <td><?= lang('key')?></td>
-            <td>
-            	<?php 
-            	$data = array('name' => 'api_key', 'value' => set_value('api_key', $api_key)); 
-            	echo form_input($data); 
-            	?>
-            </td>
-        </tr>
-         <tr class="even">
             <td><?= lang('path')?></td>
             <td>
-            	<?php 
+            	<?php
             	$data = array('name' => 'api_path', 'value' => set_value('api_path', $api_path));
-            	echo form_input($data); 
+            	echo form_input($data);
             	?>
             </td>
         </tr>

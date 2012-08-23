@@ -11,7 +11,7 @@
  * @since		Version 2.0
  * @filesource
  */
- 
+
 // ------------------------------------------------------------------------
 
 /**
@@ -25,11 +25,11 @@
  */
 
 class Modl_giving_impact_upd {
-	
-	public $version = '1.1';
-	
+
+	public $version = '2';
+
 	private $EE;
-	
+
 	/**
 	 * Constructor
 	 */
@@ -37,9 +37,9 @@ class Modl_giving_impact_upd {
 	{
 		$this->EE =& get_instance();
 	}
-	
+
 	// ----------------------------------------------------------------
-	
+
 	/**
 	 * Installation Method
 	 *
@@ -53,11 +53,11 @@ class Modl_giving_impact_upd {
 			'has_cp_backend'		=> "y",
 			'has_publish_fields'	=> 'n'
 		);
-		
+
 		$this->EE->db->insert('modules', $mod_data);
-		
+
 		$this->EE->load->dbforge();
-		
+
 		// API Access Info
 		$api_access_table_fields = array(
 			'api_instance_id' => array(
@@ -71,11 +71,6 @@ class Modl_giving_impact_upd {
             	'constraint' 	=> 11,
             	'null'			=> FALSE
             ),
-            'api_account'   => array(
-                'type'          => 'VARCHAR',
-                'constraint'        => 255,
-                'null'      => FALSE,
-            ),
             'api_key'          => array(
                 'type'          => 'VARCHAR',
                 'constraint'        => 255,
@@ -87,50 +82,50 @@ class Modl_giving_impact_upd {
                 'null'          => FALSE
             ),
         );
-		
+
 		$this->EE->dbforge->add_field($api_access_table_fields);
         $this->EE->dbforge->add_key('api_instance_id', TRUE);
         $this->EE->dbforge->create_table('modl_giving_impact_api_instance');
-		
+
 		return TRUE;
 	}
 
 	// ----------------------------------------------------------------
-	
+
 	/**
 	 * Uninstall
 	 *
 	 * @return 	boolean 	TRUE
-	 */	
+	 */
 	public function uninstall()
 	{
 		$mod_id = $this->EE->db->select('module_id')
 								->get_where('modules', array(
 									'module_name'	=> 'Modl_giving_impact'
 								))->row('module_id');
-		
+
 		$this->EE->db->where('module_id', $mod_id)
 					 ->delete('module_member_groups');
-		
+
 		$this->EE->db->where('module_name', 'Modl_giving_impact')
 					 ->delete('modules');
-		
-		
+
+
 		//Drop Custom Tables
 		$this->EE->load->dbforge();
-		
+
 		$this->EE->dbforge->drop_table('modl_giving_impact_api_instance');
-				
+
 		return TRUE;
 	}
-	
+
 	// ----------------------------------------------------------------
-	
+
 	/**
 	 * Module Updater
 	 *
 	 * @return 	boolean 	TRUE
-	 */	
+	 */
 	public function update($current = '')
 	{
 		// If you have updates, drop 'em in here.
@@ -153,10 +148,17 @@ class Modl_giving_impact_upd {
 					'site_id' => 1
 				)
 			);
+		} elseif( version_compare($current, '2', '<') ) {
+			// remove account
+			$this->EE->dbforge->drop_column(
+				'modl_giving_impact_api_instance',
+				'api_account'
+			);
+
 		}
 		return TRUE;
 	}
-	
+
 }
 /* End of file upd.modl_giving_impact.php */
 /* Location: /system/expressionengine/third_party/giving_impact/upd.modl_giving_impact.php */

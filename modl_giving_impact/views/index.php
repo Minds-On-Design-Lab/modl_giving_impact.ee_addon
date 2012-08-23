@@ -10,14 +10,10 @@
     </thead>
     <tbody>
         <tr class="even">
-            <td><?= lang('account')?></td>
-            <td><?=$api_account?></td>
-        </tr>
-         <tr class="odd">
             <td><?= lang('key')?></td>
            <td><?=$api_key?></td>
         </tr>
-         <tr class="even">
+         <tr class="odd">
             <td><?= lang('path')?></td>
             <td><?=$api_path?></td>
         </tr>
