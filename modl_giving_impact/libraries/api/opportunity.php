@@ -1,4 +1,16 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ *
+ * @package		Giving Impact
+ * @author		Minds On Deisgn Lab
+ * @copyright	Copyright (c) 2012, Minds On Design Lab Inc.
+ * @license
+ * @link		http://givingimpact.com
+ * @since		Version 2.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
 
 class Modl_API_Opportunity extends Giving_impact_api {
 
