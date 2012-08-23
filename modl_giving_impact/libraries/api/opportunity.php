@@ -47,6 +47,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 			$this->EE->output->fatal_error('Error: '.$data['message']);
 		}
 
+		// if the tag content contains donation loop tag pair
 		if( strpos($this->EE->TMPL->tagdata, '{gi_donations}') !== false ) {
 			$url = $this->build_url($this->api_path.'/'.$token.'/donations');
 			$donation_data = $this->get($url);
@@ -54,6 +55,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 			$donations = array();
 
 			if( count($donation_data['donations']) ) {
+				// manually prefix and jam it on the end
 				$donations = $this->prefix_tags(
 					'gi_donation', $donation_data['donations']
 				);

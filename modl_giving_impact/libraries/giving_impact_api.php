@@ -33,6 +33,17 @@ class Giving_impact_api {
 
 	}
 
+	/**
+	 * Prefixes tags returned to template
+	 *
+     * @param string $pfx
+     * @param array  $data data returned from API
+     *
+     * @return array
+     *
+     * @access protected
+     * @final
+	 */
 	protected function prefix_tags($pfx, $data) {
 		$out = array();
 
@@ -49,6 +60,18 @@ class Giving_impact_api {
 		return $out;
 	}
 
+	/**
+	 * Builds an API URL
+	 *
+     * @param string $path the API action subpath,
+     *					   e.g. categories, opportunities
+     * @param array  $args key/value array of GET parameters
+     *
+     * @return string
+     *
+     * @access protected
+     * @final
+	 */
 	protected function build_url($path, $args = array()) {
 		$query = '';
 		if( count($args) ) {
@@ -59,6 +82,16 @@ class Giving_impact_api {
 		);
 	}
 
+	/**
+	 * Fetch and return data from API
+	 *
+     * @param string $url
+     *
+     * @return array
+     *
+     * @access protected
+     * @final
+	 */
 	protected function get($url) {
 
 		$raw_json = $this->_curl_fetch($url);
