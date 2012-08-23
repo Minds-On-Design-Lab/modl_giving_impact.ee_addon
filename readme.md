@@ -60,7 +60,7 @@ Returns data for campaign with provided token
 
 Returns all giving opportunities within campaign with provided token
 
-	{exp:giving_impact:opportunities token="[unique-campaign-token]"}
+	{exp:giving_impact:opportunities campaign="[unique-campaign-token]"}
 		{gi_title}
 		{gi_description}
 		{gi_token}
@@ -73,6 +73,7 @@ Returns all giving opportunities within campaign with provided token
 
 #### Options
 
+* campaign - STRING - Parent campaign. *REQUIRED**
 * limit - INT - Limits results returned. **default = 10**
 * offset - INT - Number of results to skip, useful for pagination. **default = 0**
 * sort\_by - STRING - Property to sort results by. **default = created_at**
