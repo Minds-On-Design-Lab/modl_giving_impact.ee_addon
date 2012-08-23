@@ -3,163 +3,83 @@
  *
  * @package		Giving Impact
  * @author		Minds On Deisgn Lab
- * @copyright	Copyright (c) 2010, Minds On Design Lab Inc.
- * @license		
+ * @copyright	Copyright (c) 2012, Minds On Design Lab Inc.
+ * @license
  * @link		http://givingimpact.com
- * @since		Version 1.0
+ * @since		Version 2.0
  * @filesource
  */
- 
+
 // ------------------------------------------------------------------------
 
 class Giving_impact_api {
 
-	var $api_base_url = '';
-	var $campaign_token = '';
-	var $api_account = '';
-	var $api_key = '';
-	var $credentials = '';
-		
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
+	private $base_url	= false;
+	private $api_key	= false;
+	private $user_agent = 'Modl_Giving_Impact/EE Addon';
+
+	public function __construct() {
 		$this->EE =& get_instance();
-		
+
 		// Get existing credentials
-    
-	    $this->credentials = $this->EE->db
+	    $creds = $this->EE->db
 	    	->where('site_id', $this->EE->config->item('site_id'))
 		    ->get('modl_giving_impact_api_instance');
-		
-		if ($this->credentials->num_rows() > 0) 
-		{
-			$this->api_account = $this->credentials->row('api_account');
-			$this->api_key = $this->credentials->row('api_key');
-			$this->api_base_url = $this->credentials->row('api_path');
+
+		if ($creds->num_rows() > 0)  {
+			$this->api_key = $creds->row('api_key');
+			$this->base_url = $creds->row('api_path');
 		}
 
 	}
-	
-	public function get_individual_campaign($token) {
-		
-		
-		/** ---------------------------------------
-		*	Construct API URL
-		*
-		*	Returns an individual giving campaign's data
-		/** ---------------------------------------*/
-		
-		$url = $this->api_base_url.'accounts/'.$this->api_account.'/campaigns/'.$token.'.json';
-		
-		/** ---------------------------------------
-		/**  Get and return json
-		/** ---------------------------------------*/
-		
-		return $this->_json_get($url);
-	}
-	
-	public function get_individual_giving_opportunity($token) {
-		
-		
-		/** ---------------------------------------
-		*   Construct API URL
-		*
-		*	Returns an individual giving opp's data
-		/** ---------------------------------------*/
-		
-		$url = $this->api_base_url.'accounts/'.$this->api_account.'/giving_opportunity/'.$token.'.json';
-		
-		/** ---------------------------------------
-		/**  Get and return json
-		/** ---------------------------------------*/
-		
-		return $this->_json_get($url);
-	}
-	
-	
-	
-	public function get_campaigns_active() {		
-		
-		/** ---------------------------------------
-		/**  Construct API URL for all active campaigns
-		/** ---------------------------------------*/
-		
-		$url = $this->api_base_url.'accounts/'.$this->api_account.'/campaigns.json';
-		
-		/** ---------------------------------------
-		/**  Get and return json
-		/** ---------------------------------------*/
-		
-		return $this->_json_get($url);
 
-	}
-	
-	public function get_campaign_giving_opportunities($token) {		
-		
-		/** ---------------------------------------
-		/**  Construct API URL for all active campaigns
-		/** ---------------------------------------*/
-		
-		$url = $this->api_base_url.'accounts/'.$this->api_account.'/giving_opportunities/'.$token.'.json';
-				
-		/** ---------------------------------------
-		/**  Get and return json
-		/** ---------------------------------------*/
+	protected function prefix_tags($pfx, $data) {
+		$out = array();
 
-		return $this->_json_get($url);
+		foreach( $data as $item ) {
+			$row = array();
 
-	}
-	
-	public function get_giving_opportunity_donation_log($token) {
-		
-		/** ---------------------------------------
-		*  Construct API URL
-		*
-		*  Returns donation log records for a
-		*  specific giving opportunty
-		/** ---------------------------------------*/
-		
-		$url = $this->api_base_url.'accounts/'.$this->api_account.'/giving_opportunity_donation_log/'.$token.'.json';
+			foreach( $item as $k => $v ) {
+				$row[$pfx.'_'.$k] = $v;
+			}
 
-		/** ---------------------------------------
-		/**  Get and return json
-		/** ---------------------------------------*/
-	
-		return $this->_json_get($url);
-		
+			$out[] = $row;
+		}
+
+		return $out;
 	}
-	
-	
-	private function _json_get($url)
-	{
-		/** ---------------------------------------
-		/**  Engage CURL
-		/** ---------------------------------------*/
-		
+
+	protected function build_url($path, $args = array()) {
+		$query = '';
+		if( count($args) ) {
+			$query = '?'.http_build_query($args);
+		}
+		return sprintf(
+			'%s/%s%s', rtrim($this->base_url, '/'), rtrim($path, '/'), $query
+		);
+	}
+
+	protected function get($url) {
+
 		$raw_json = $this->_curl_fetch($url);
-				
-		/** ---------------------------------------
-		/**  Decode resulting JSON
-		/** ---------------------------------------*/
-	
-				
 		$data = json_decode($raw_json, true);
-		
 		return $data;
 
 	}
-		
-	private function _curl_fetch($url)
-	{
-		$ch = curl_init(); 
-		curl_setopt($ch, CURLOPT_URL, $url); 
+
+	protected function _curl_fetch($url) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
     	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_USERPWD, $this->api_key);
+		curl_setopt($ch, CURLOPT_USERAGENT, $this->user_agent);
+		curl_setopt(
+			$ch,
+			CURLOPT_HTTPHEADER,
+			array('X-GI-Authorization: '.$this->api_key)
+		);
 
 		$data = curl_exec($ch);
 
