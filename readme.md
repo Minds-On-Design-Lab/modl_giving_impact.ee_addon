@@ -15,7 +15,7 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 ## Usage
 
-## Campaigns
+### Campaigns
 
 Returns all active campaigns
 
@@ -30,7 +30,14 @@ Returns all active campaigns
 		{gi_image_url}
 	{/exp:modl_giving_impact:campaigns}
 
-## Single Campaign
+#### Options
+
+* limit - INT - Limits results returned. **default = 10**
+* offset - INT - Number of results to skip, useful for pagination. **default = 0**
+* sort\_by - STRING - Property to sort results by. **default = created_at**
+* sort\_reverse - y or n - Sort results in reverse order. **default = n**
+
+### Single Campaign
 
 Returns data for campaign with provided token
 
@@ -45,7 +52,11 @@ Returns data for campaign with provided token
 		{gi_image_url}
 	{/exp:giving_impact:campaigns}
 
-## Campaign Giving Opportunities
+#### Options
+
+* token - STRING - Unique campaign token. **REQUIRED**
+
+### Campaign Giving Opportunities
 
 Returns all giving opportunities within campaign with provided token
 
@@ -60,8 +71,15 @@ Returns all giving opportunities within campaign with provided token
 		{gi_image_url}
 	{/exp:giving_impact:opportunities}
 
+#### Options
 
-## Single Giving Opportunity
+* limit - INT - Limits results returned. **default = 10**
+* offset - INT - Number of results to skip, useful for pagination. **default = 0**
+* sort\_by - STRING - Property to sort results by. **default = created_at**
+* sort\_reverse - y or n - Sort results in reverse order. **default = n**
+
+
+### Single Giving Opportunity
 
 Returns data for a Giving Opportunity with provided token
 
@@ -76,17 +94,40 @@ Returns data for a Giving Opportunity with provided token
 		{gi_image_url}
 	{/exp:giving_impact:opportunities}
 
+#### Options
 
-## Single Giving Opportunity Donation Log
+* token - STRING - Unique giving opportunity token. **REQUIRED**
 
-Returns donation log data for a specific Giving Opportunity with provided token
+### Donation Log
 
-	{exp:giving_impact:donations token="[unique-giving-opp-token]"}
-		{gi_log_date}
-		{gi_log_amount}
-		{gi_log_name}
+Donations are returned as part of a single campaign or opportunity
+
+	{exp:giving_impact:opportunities token="[unique-token]"}
+		{gi_title}
+		{gi_description}
+
+		{gi_donations}
+            {gi_donation_first_name}
+            {gi_donation_last_name}
+            {gi_donation_billing_address1}
+            {gi_donation_billing_city}
+            {gi_donation_billing_state}
+            {gi_donation_billing_postal_code}
+            {gi_donation_billing_country}
+            {gi_donation_donation_total}
+            {gi_donation_donation_level}
+            {gi_donation_email_address}
+            {gi_donation_referrer}
+            {gi_donation_offline}
+            {gi_donation_created_at}
+            {gi_donation_twitter_share}
+            {gi_donation_fb_share}
+		{/gi_donations}
 	{/exp:giving_impact:donations}
 
+##### NOTE:
+
+Donation logs will not be returned for multiple campaigns or opportunities. To retrieve a donation log, you must specify a campaign token.
 
 ## Changelog
 

@@ -35,6 +35,21 @@ class Modl_API_Campaign extends Giving_impact_api {
 			$this->EE->output->fatal_error('Error: '.$data['message']);
 		}
 
+		if( strpos($this->EE->TMPL->tagdata, '{gi_donations}') !== false ) {
+			$url = $this->build_url($this->api_path.'/'.$token.'/donations');
+			$donation_data = $this->get($url);
+
+			$donations = array();
+
+			if( count($donation_data['donations']) ) {
+				$donations = $this->prefix_tags(
+					'gi_donation', $donation_data['donations']
+				);
+			}
+
+			$data['campaign']['donations'] = $donations;
+		}
+
 		return $this->prefix_tags('gi', array($data['campaign']));
 	}
 
