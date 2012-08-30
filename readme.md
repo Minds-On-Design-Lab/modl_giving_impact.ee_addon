@@ -41,8 +41,32 @@ Returns all active campaigns
 
 * limit - INT - Limits results returned. **default = 10**
 * offset - INT - Number of results to skip, useful for pagination. **default = 0**
-* sort\_by - STRING - Property to sort results by. **default = created_at**
-* sort\_reverse - y or n - Sort results in reverse order. **default = n**
+* sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
+
+#### Example
+
+	{exp:modl_giving_impact:campaigns sort="title"}
+		{gi_title}
+		{gi_description}
+		{gi_token}
+		{gi_donation_url}
+		{gi_share_url}
+		{gi_donation_target}
+		{gi_donation_total}
+		{gi_image_url}
+	{/exp:modl_giving_impact:campaigns}
+
+	{exp:modl_giving_impact:campaigns limit="10" sort="created_at|desc"}
+		{gi_title}
+		{gi_description}
+		{gi_token}
+		{gi_donation_url}
+		{gi_share_url}
+		{gi_donation_target}
+		{gi_donation_total}
+		{gi_image_url}
+	{/exp:modl_giving_impact:campaigns}
+
 
 ### Single Campaign
 
@@ -83,8 +107,7 @@ Returns all giving opportunities within campaign with provided token
 * campaign - STRING - Parent campaign. **REQUIRED**
 * limit - INT - Limits results returned. **default = 10**
 * offset - INT - Number of results to skip, useful for pagination. **default = 0**
-* sort\_by - STRING - Property to sort results by. **default = created_at**
-* sort\_reverse - y or n - Sort results in reverse order. **default = n**
+* sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
 
 
 ### Single Giving Opportunity

@@ -71,16 +71,20 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		$campaign = $this->EE->TMPL->fetch_param('campaign', false);
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
-		$sort = $this->EE->TMPL->fetch_param('sort_by', $this->sort);
+		$sort = $this->EE->TMPL->fetch_param('sort', $this->sort);
+
+		$dir = $this->dir;
+		if( strpos($sort, '|') !== false ) {
+			$temp = explode('|', $sort);
+			$sort = $sort[0];
+			if( $sort[1] == 'desc' || $sort[1] == 'asc' ) {
+				$dir = $sort[1];
+			}
+		}
 
 		if( !$campaign ) {
 			$this->EE->output->fatal_error('Campaign token is required');
 			return;
-		}
-
-		$dir = $this->dir;
-		if( $this->EE->TMPL->fetch_param('sort_reverse', 'n') == 'y' ) {
-			$dir = 'desc';
 		}
 
 		$url = $this->build_url(
