@@ -42,6 +42,7 @@ Returns all active campaigns
 * limit - INT - Limits results returned. **default = 10**
 * offset - INT - Number of results to skip, useful for pagination. **default = 0**
 * sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
+* status - STRING - Campaign status, "active", "inactive" or "both". **default = active**
 
 #### Example
 
@@ -72,7 +73,7 @@ Returns all active campaigns
 
 Returns data for campaign with provided token
 
-	{exp:giving_impact:campaigns token="[unique-campaign-token]"}
+	{exp:giving_impact:campaigns campaign="[unique-campaign-token]"}
 		{gi_title}
 		{gi_description}
 		{gi_token}
@@ -85,7 +86,8 @@ Returns data for campaign with provided token
 
 #### Options
 
-* token - STRING - Unique campaign token. **REQUIRED**
+* campaign - STRING - Unique campaign token. **REQUIRED**
+* status - STRING - Campaign status, "active", "inactive" or "both". **default = active**
 
 ### Campaign Giving Opportunities
 
@@ -108,13 +110,14 @@ Returns all giving opportunities within campaign with provided token
 * limit - INT - Limits results returned. **default = 10**
 * offset - INT - Number of results to skip, useful for pagination. **default = 0**
 * sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
+* status - STRING - Campaign status, "active", "inactive" or "both". **default = active**
 
 
 ### Single Giving Opportunity
 
 Returns data for a Giving Opportunity with provided token
 
-	{exp:giving_impact:opportunities token="[unique-giving-opp-token]"}
+	{exp:giving_impact:opportunities opportunity="[unique-giving-opp-token]"}
 		{gi_title}
 		{gi_description}
 		{gi_token}
@@ -127,13 +130,14 @@ Returns data for a Giving Opportunity with provided token
 
 #### Options
 
-* token - STRING - Unique giving opportunity token. **REQUIRED**
+* opportunity - STRING - Unique giving opportunity token. **REQUIRED**
+* status - STRING - Campaign status, "active", "inactive" or "both". **default = active**
 
 ### Donation Log
 
 Donations are returned as part of a single campaign or opportunity
 
-	{exp:giving_impact:opportunities token="[unique-token]"}
+	{exp:giving_impact:opportunities opportunity="[unique-token]"}
 		{gi_title}
 		{gi_description}
 
