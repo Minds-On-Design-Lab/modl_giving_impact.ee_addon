@@ -135,34 +135,52 @@ Returns data for a Giving Opportunity with provided token
 
 ### Donation Log
 
-Donations are returned as part of a single campaign or opportunity
+Donations require either a campaign or opportunity token
 
-	{exp:giving_impact:opportunities opportunity="[unique-token]"}
-		{gi_title}
-		{gi_description}
-
-		{gi_donations}
-            {gi_donation_first_name}
-            {gi_donation_last_name}
-            {gi_donation_billing_address1}
-            {gi_donation_billing_city}
-            {gi_donation_billing_state}
-            {gi_donation_billing_postal_code}
-            {gi_donation_billing_country}
-            {gi_donation_donation_total}
-            {gi_donation_donation_level}
-            {gi_donation_email_address}
-            {gi_donation_referrer}
-            {gi_donation_offline}
-            {gi_donation_created_at}
-            {gi_donation_twitter_share}
-            {gi_donation_fb_share}
-		{/gi_donations}
+	{exp:giving_impact:donations opportunity="[unique-token]"}
+		{gi_first_name}
+		{gi_last_name}
+		{gi_billing_address1}
+		{gi_billing_city}
+		{gi_billing_state}
+		{gi_billing_postal_code}
+		{gi_billing_country}
+		{gi_total}
+		{gi_level}
+		{gi_email_address}
+		{gi_referrer}
+		{gi_offline}
+		{gi_created_at}
+		{gi_twitter_share}
+		{gi_fb_share}
 	{/exp:giving_impact:donations}
 
-##### NOTE:
+or
 
-Donation logs will not be returned for multiple campaigns or opportunities. To retrieve a donation log, you must specify a campaign token.
+	{exp:giving_impact:donations campaign="[unique-token]"}
+		{gi_first_name}
+		{gi_last_name}
+		{gi_billing_address1}
+		{gi_billing_city}
+		{gi_billing_state}
+		{gi_billing_postal_code}
+		{gi_billing_country}
+		{gi_total}
+		{gi_level}
+		{gi_email_address}
+		{gi_referrer}
+		{gi_offline}
+		{gi_created_at}
+		{gi_twitter_share}
+		{gi_fb_share}
+	{/exp:giving_impact:donations}
+
+#### Options
+
+* campaign **OR** opportunity - STRING - Parent campaign. **REQUIRED**
+* limit - INT - Limits results returned. **default = 10**
+* offset - INT - Number of results to skip, useful for pagination. **default = 0**
+* sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
 
 ## Changelog
 
