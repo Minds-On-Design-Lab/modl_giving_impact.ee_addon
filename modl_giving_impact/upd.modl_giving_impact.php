@@ -26,7 +26,7 @@
 
 class Modl_giving_impact_upd {
 
-	public $version = '2';
+	public $version = '2.1';
 
 	private $EE;
 
@@ -87,6 +87,11 @@ class Modl_giving_impact_upd {
         $this->EE->dbforge->add_key('api_instance_id', TRUE);
         $this->EE->dbforge->create_table('modl_giving_impact_api_instance');
 
+		$this->EE->db->insert('actions', array(
+			'class'		=> 'Modl_giving_impact' ,
+			'method'	=> 'post_opportunity'
+		));
+
 		return TRUE;
 	}
 
@@ -115,6 +120,10 @@ class Modl_giving_impact_upd {
 		$this->EE->load->dbforge();
 
 		$this->EE->dbforge->drop_table('modl_giving_impact_api_instance');
+
+		$this->EE->db
+			->where('class', 'Modl_giving_impact')
+			->delete('actions');
 
 		return TRUE;
 	}
@@ -155,7 +164,14 @@ class Modl_giving_impact_upd {
 				'api_account'
 			);
 
+		} elseif( version_compare($current, '2.1', '<') ) {
+			// remove account
+			$this->EE->db->insert('actions', array(
+				'class'		=> 'Modl_giving_impact' ,
+				'method'	=> 'post_opportunity'
+			));
 		}
+
 		return TRUE;
 	}
 

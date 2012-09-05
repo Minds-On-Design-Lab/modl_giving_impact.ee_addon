@@ -76,6 +76,104 @@ class Modl_giving_impact {
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
 	}
 
+	public function post_opportunity() {
+
+	}
+
+	public function form_start() {
+		$action_url = $this->EE->functions->fetch_site_index(0, 0)
+			.QUERY_MARKER.'ACT='
+			.$this->EE->functions->fetch_action_id(
+				'Modl_giving_impact', 'post_opportunity'
+			);
+		$token = $this->EE->TMPL->fetch_param('campaign', false);
+
+		$out = '<form method="POST" action="'.$action_url
+			.'" content-type="multipart/form-data">'
+			."\n\n"
+			.'<input type="hidden" value="'.$token.'" name="t" />';
+
+
+		return $out;
+	}
+
+	public function form_end() {
+		$val = $this->EE->TMPL->fetch_param('value', 'Submit');
+
+		$out = '<input type="submit" value="'.$val.'" /></form>';
+		return $out;
+	}
+
+	public function form_title() {
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
+		$val = $this->EE->TMPL->fetch_param('value', false);
+
+		$out = '<input type="text" name="title" class="'.$class
+			.'" id="'.$id.'" value="'.$val.'" />';
+
+		return $out;
+	}
+
+	public function form_description() {
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
+		$val = $this->EE->TMPL->fetch_param('value', false);
+
+		$out = '<textarea name="description" class="'.$class
+			.'" id="'.$id.'">'.$val.'</textarea>';
+
+		return $out;
+	}
+
+	public function form_status() {
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
+		$checked = $this->EE->TMPL->fetch_param('checked', false);
+
+		$out = '<input type="checkbox" name="status" value="1" class="'.$class
+			.'" id="'.$id.'"';
+		if( $checked ) {
+			$out .= ' checked';
+		}
+		$out .= ' />';
+
+		return $out;
+	}
+
+	public function form_image() {
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
+
+		$out = '<input type="file" name="image" class="'.$class
+			.'" id="'.$id.'" />';
+
+		return $out;
+	}
+
+	public function form_target() {
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
+		$val = $this->EE->TMPL->fetch_param('value', false);
+
+		$out = '<input type="text" name="target" class="'.$class
+			.'" id="'.$id.'" value="'.$val.'" />';
+
+		return $out;
+	}
+
+	public function form_youtube() {
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
+		$val = $this->EE->TMPL->fetch_param('value', false);
+
+		$out = '<input type="text" name="youtube" class="'.$class
+			.'" id="'.$id.'" value="'.$val.'" />';
+
+		return $out;
+	}
+
+
 }
 /* End of file mod.modl_giving_impact.php */
 /* Location: /system/expressionengine/third_party/giving_impact/mod.modl_giving_impact.php */
