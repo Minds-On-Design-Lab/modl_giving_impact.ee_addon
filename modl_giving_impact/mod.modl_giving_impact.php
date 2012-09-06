@@ -84,6 +84,11 @@ class Modl_giving_impact {
 		$youtube = $this->EE->input->post('youtube');
 		$target = $this->EE->input->post('target');
 
+		if( !$token || !$title || !$description ) {
+			$this->EE->output->fatal_error('Missing required fields: token, title, description');
+			return;
+		}
+
 		$return_url = $this->EE->input->post('r');
 
 		// pack it

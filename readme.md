@@ -182,6 +182,36 @@ or
 * offset - INT - Number of results to skip, useful for pagination. **default = 0**
 * sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
 
+### Create Giving Opportunity
+
+Using the `{exp:giving_impact:form_start}` and `{exp:giving_impact:form_end}` tags you can easily create a form to generate new opportunities.
+
+	{exp:giving_impact:form_start campaign="[unique-tone]" return="[string]"}
+
+		<input type="text" name="title" /> - REQUIRED campaign title
+		<textarea name="description"></textarea> - REQUIRED description
+		<input type="select" value="1" name="status" /> - REQUIRED status
+
+		<input type="file" name="image" /> - OPTIONAL image file
+		<input type="text" name="target" /> - OPTIONAL target
+		<input type="text" name="youtube" /> - OPTIONAL YouTube URL
+
+	{exp:giving_impact:form_end label="[string]"}
+
+#### form_start
+
+The `{exp:giving_impact:form_start}` tag accepts two parameters
+
+* campaign - STRING - parent campaign token **REQUIRED**
+* return - STRING - a return URL
+
+#### form_end
+
+The `{exp:giving_impact:form_end}` tag accepts one parameter
+
+* label - STRING - label for the submit button
+
+
 ## Changelog
 
 * 08222012 - Version 2.0
