@@ -77,7 +77,59 @@ class Modl_giving_impact {
 	}
 
 	public function post_opportunity() {
+		$token = $this->EE->input->post('t');
+		$title = $this->EE->input->post('title');
+		$description = $this->EE->input->post('description');
+		$status = $this->EE->input->post('status') ? 1 : 0;
+		$youtube = $this->EE->input->post('youtube');
+		$target = $this->EE->input->post('target');
 
+		$return_url = $this->EE->input->post('r');
+
+		// pack it
+		$json = array(
+			'campaign_token' => $token,
+			'title' => $title,
+			'description' => $description,
+			'status' => $status
+		);
+
+		if( $youtube ) {
+			$json['youtube_url'] = $youtube;
+		}
+
+		if( $target ) {
+			$json['target'] = $target;
+		}
+
+		if( $_FILES && array_key_exists('image', $_FILES) ) {
+			$image = $_FILES['image'];
+
+			if( !$image['error'] ) {
+				$raw = base64_encode(file_get_contents($image['tmp_name']));
+				$type = $image['type'];
+
+				$json['image_file'] = $raw;
+				$json['image_type'] = $type;
+			}
+		}
+
+		require_once $this->lib_path.'/opportunity.php';
+		$api = new Modl_API_Opportunity;
+
+		$result = $api->post_single($json);
+
+		$new_token = $result['opportunity']['id_token'];
+
+		if( $return_url ) {
+			$return_url = base64_decode($return_url);
+			if( strpos($return_url, 'http://') === false ) {
+				$return_url = $this->EE->functions->create_url($return_url).$new_token;
+			}
+		}
+
+		$this->EE->functions->redirect($return_url, 'location');
+		return;
 	}
 
 	public function form_start() {
@@ -87,12 +139,18 @@ class Modl_giving_impact {
 				'Modl_giving_impact', 'post_opportunity'
 			);
 		$token = $this->EE->TMPL->fetch_param('campaign', false);
+		$return = $this->EE->TMPL->fetch_param('return', false);
 
 		$out = '<form method="POST" action="'.$action_url
-			.'" content-type="multipart/form-data">'
+			.'" enctype="multipart/form-data">'
 			."\n\n"
 			.'<input type="hidden" value="'.$token.'" name="t" />';
 
+		if( $return ) {
+			$out .= "\n\n"
+				.'<input type="hidden" name="r" value="'
+				.base64_encode($return).'" />';
+		}
 
 		return $out;
 	}
@@ -103,76 +161,6 @@ class Modl_giving_impact {
 		$out = '<input type="submit" value="'.$val.'" /></form>';
 		return $out;
 	}
-
-	public function form_title() {
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-		$val = $this->EE->TMPL->fetch_param('value', false);
-
-		$out = '<input type="text" name="title" class="'.$class
-			.'" id="'.$id.'" value="'.$val.'" />';
-
-		return $out;
-	}
-
-	public function form_description() {
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-		$val = $this->EE->TMPL->fetch_param('value', false);
-
-		$out = '<textarea name="description" class="'.$class
-			.'" id="'.$id.'">'.$val.'</textarea>';
-
-		return $out;
-	}
-
-	public function form_status() {
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-		$checked = $this->EE->TMPL->fetch_param('checked', false);
-
-		$out = '<input type="checkbox" name="status" value="1" class="'.$class
-			.'" id="'.$id.'"';
-		if( $checked ) {
-			$out .= ' checked';
-		}
-		$out .= ' />';
-
-		return $out;
-	}
-
-	public function form_image() {
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-
-		$out = '<input type="file" name="image" class="'.$class
-			.'" id="'.$id.'" />';
-
-		return $out;
-	}
-
-	public function form_target() {
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-		$val = $this->EE->TMPL->fetch_param('value', false);
-
-		$out = '<input type="text" name="target" class="'.$class
-			.'" id="'.$id.'" value="'.$val.'" />';
-
-		return $out;
-	}
-
-	public function form_youtube() {
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-		$val = $this->EE->TMPL->fetch_param('value', false);
-
-		$out = '<input type="text" name="youtube" class="'.$class
-			.'" id="'.$id.'" value="'.$val.'" />';
-
-		return $out;
-	}
-
 
 }
 /* End of file mod.modl_giving_impact.php */

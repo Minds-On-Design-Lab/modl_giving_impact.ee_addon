@@ -96,11 +96,28 @@ class Giving_impact_api {
 
 		$raw_json = $this->_curl_fetch($url);
 		$data = json_decode($raw_json, true);
+
+		if( $data['error'] ) {
+			$this->EE->output->fatal_error('Error: '.$data['message']);
+		}
+
 		return $data;
 
 	}
 
-	protected function _curl_fetch($url) {
+	public function post($url, $data) {
+		$raw_json = $this->_curl_fetch($url, json_encode($data));
+
+		$return = json_decode($raw_json, true);
+
+		if( $return['error'] ) {
+			$this->EE->output->fatal_error('Error: '.$return['message']);
+		}
+
+		return $return;
+	}
+
+	protected function _curl_fetch($url, $data = false) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -113,6 +130,19 @@ class Giving_impact_api {
 			CURLOPT_HTTPHEADER,
 			array('X-GI-Authorization: '.$this->api_key)
 		);
+
+		if( $data ) {
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			curl_setopt(
+				$ch,
+				CURLOPT_HTTPHEADER,
+				array(
+					'X-GI-Authorization: '.$this->api_key,
+					'Content-Type: application/json'
+				)
+			);
+		}
 
 		$data = curl_exec($ch);
 
