@@ -184,9 +184,9 @@ or
 
 ### Create Giving Opportunity
 
-Using the `{exp:giving_impact:form_start}` and `{exp:giving_impact:form_end}` tags you can easily create a form to generate new opportunities.
+Using the `{exp:giving_impact:create_opportunity}` tag pair you can easily create a form to generate new opportunities.
 
-	{exp:giving_impact:form_start campaign="[unique-tone]" return="[string]"}
+	{exp:giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity"}
 
 		<input type="text" name="title" /> - REQUIRED campaign title
 		<textarea name="description"></textarea> - REQUIRED description
@@ -196,21 +196,15 @@ Using the `{exp:giving_impact:form_start}` and `{exp:giving_impact:form_end}` ta
 		<input type="text" name="target" /> - OPTIONAL target
 		<input type="text" name="youtube" /> - OPTIONAL YouTube URL
 
-	{exp:giving_impact:form_end label="[string]"}
+	{/exp:giving_impact:create_opportunity}
 
-#### form_start
+Note that you **MUST** provide inputs for "title", "description" and "status" or your request will display an error.
 
-The `{exp:giving_impact:form_start}` tag accepts two parameters
+#### Options
 
 * campaign - STRING - parent campaign token **REQUIRED**
 * return - STRING - a return URL
-
-#### form_end
-
-The `{exp:giving_impact:form_end}` tag accepts one parameter
-
-* label - STRING - label for the submit button
-
+* label - STRING - label for submit button **default - Submit**
 
 ## Changelog
 
