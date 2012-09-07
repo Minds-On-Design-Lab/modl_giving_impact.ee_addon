@@ -73,6 +73,9 @@ class Modl_giving_impact {
 
 		$vars = $obj->process($this->EE->TMPL);
 
+		if( !$vars || !count($vars) ) {
+			return $this->EE->TMPL->no_results();
+		}
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
 	}
 
