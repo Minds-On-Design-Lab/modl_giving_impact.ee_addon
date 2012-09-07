@@ -29,7 +29,7 @@ Returns all active campaigns
 	{exp:modl_giving_impact:campaigns}
 		{gi_title}
 		{gi_description}
-		{gi_token}
+		{gi_id_token}
 		{gi_donation_url}
 		{gi_share_url}
 		{gi_donation_target}
@@ -49,7 +49,7 @@ Returns all active campaigns
 	{exp:modl_giving_impact:campaigns sort="title"}
 		{gi_title}
 		{gi_description}
-		{gi_token}
+		{gi_id_token}
 		{gi_donation_url}
 		{gi_share_url}
 		{gi_donation_target}
@@ -60,7 +60,7 @@ Returns all active campaigns
 	{exp:modl_giving_impact:campaigns limit="10" sort="created_at|desc"}
 		{gi_title}
 		{gi_description}
-		{gi_token}
+		{gi_id_token}
 		{gi_donation_url}
 		{gi_share_url}
 		{gi_donation_target}
@@ -76,7 +76,7 @@ Returns data for campaign with provided token
 	{exp:modl_giving_impact:campaigns campaign="[unique-campaign-token]"}
 		{gi_title}
 		{gi_description}
-		{gi_token}
+		{gi_id_token}
 		{gi_donation_url}
 		{gi_share_url}
 		{gi_donation_target}
@@ -96,7 +96,7 @@ Returns all giving opportunities within campaign with provided token
 	{exp:modl_giving_impact:opportunities campaign="[unique-campaign-token]"}
 		{gi_title}
 		{gi_description}
-		{gi_token}
+		{gi_id_token}
 		{gi_donation_url}
 		{gi_share_url}
 		{gi_donation_target}
@@ -120,7 +120,7 @@ Returns data for a Giving Opportunity with provided token
 	{exp:modl_giving_impact:opportunities opportunity="[unique-giving-opp-token]"}
 		{gi_title}
 		{gi_description}
-		{gi_token}
+		{gi_id_token}
 		{gi_donation_url}
 		{gi_share_url}
 		{gi_donation_target}
