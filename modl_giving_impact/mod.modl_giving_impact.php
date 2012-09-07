@@ -134,10 +134,12 @@ class Modl_giving_impact {
 
 		$new_token = $result['opportunity']['id_token'];
 
+		$this->EE->session->set_flashdata('opportunity_token', $new_token);
+
 		if( $return_url ) {
 			$return_url = base64_decode($return_url);
 			if( strpos($return_url, 'http://') === false ) {
-				$return_url = $this->EE->functions->create_url($return_url).$new_token;
+				$return_url = $this->EE->functions->create_url($return_url);
 			}
 		} else {
 			$return_url = $this->EE->functions->form_backtrack('-1');
@@ -174,7 +176,15 @@ class Modl_giving_impact {
 
 		$out = $open.$inner.$close;
 
-		return $this->EE->TMPL->parse_variables($out, array());
+		$vars = array();
+		$created_opp = $this->EE->session->flashdata('opportunity_token');;
+		if( $created_opp ) {
+			$vars[] = array(
+				'opportunity_token' => $created_opp
+			);
+		}
+
+		return $this->EE->TMPL->parse_variables($out, $vars);
 	}
 
 }
