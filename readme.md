@@ -145,8 +145,8 @@ Donations require either a campaign or opportunity token
 		{gi_billing_state}
 		{gi_billing_postal_code}
 		{gi_billing_country}
-		{gi_total}
-		{gi_level}
+		{gi_donation_total}
+		{gi_donation_level}
 		{gi_email_address}
 		{gi_referrer}
 		{gi_offline}
