@@ -85,7 +85,15 @@ class Modl_giving_impact {
 		$target = $this->EE->input->post('target');
 
 		if( !$token || !$title || !$description ) {
-			$this->EE->output->fatal_error('Missing required fields: token, title, description');
+
+			$data = array(
+				'title'   => 'Missing required information',
+				'heading' => 'Missing required information',
+				'content' => 'You must provide token, title, status and description',
+				'link'    => array($this->EE->functions->form_backtrack('-1'), 'Return to form')
+			);
+
+			$this->EE->output->show_message($data);
 			return;
 		}
 
