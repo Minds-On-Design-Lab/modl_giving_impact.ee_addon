@@ -73,7 +73,7 @@ Returns all active campaigns
 
 Returns data for campaign with provided token
 
-	{exp:giving_impact:campaigns campaign="[unique-campaign-token]"}
+	{exp:modl_giving_impact:campaigns campaign="[unique-campaign-token]"}
 		{gi_title}
 		{gi_description}
 		{gi_token}
@@ -82,7 +82,7 @@ Returns data for campaign with provided token
 		{gi_donation_target}
 		{gi_donation_total}
 		{gi_image_url}
-	{/exp:giving_impact:campaigns}
+	{/exp:modl_giving_impact:campaigns}
 
 #### Options
 
@@ -93,7 +93,7 @@ Returns data for campaign with provided token
 
 Returns all giving opportunities within campaign with provided token
 
-	{exp:giving_impact:opportunities campaign="[unique-campaign-token]"}
+	{exp:modl_giving_impact:opportunities campaign="[unique-campaign-token]"}
 		{gi_title}
 		{gi_description}
 		{gi_token}
@@ -102,7 +102,7 @@ Returns all giving opportunities within campaign with provided token
 		{gi_donation_target}
 		{gi_donation_total}
 		{gi_image_url}
-	{/exp:giving_impact:opportunities}
+	{/exp:modl_giving_impact:opportunities}
 
 #### Options
 
@@ -117,7 +117,7 @@ Returns all giving opportunities within campaign with provided token
 
 Returns data for a Giving Opportunity with provided token
 
-	{exp:giving_impact:opportunities opportunity="[unique-giving-opp-token]"}
+	{exp:modl_giving_impact:opportunities opportunity="[unique-giving-opp-token]"}
 		{gi_title}
 		{gi_description}
 		{gi_token}
@@ -126,7 +126,7 @@ Returns data for a Giving Opportunity with provided token
 		{gi_donation_target}
 		{gi_donation_total}
 		{gi_image_url}
-	{/exp:giving_impact:opportunities}
+	{/exp:modl_giving_impact:opportunities}
 
 #### Options
 
@@ -137,7 +137,7 @@ Returns data for a Giving Opportunity with provided token
 
 Donations require either a campaign or opportunity token
 
-	{exp:giving_impact:donations opportunity="[unique-token]"}
+	{exp:modl_giving_impact:donations opportunity="[unique-token]"}
 		{gi_first_name}
 		{gi_last_name}
 		{gi_billing_address1}
@@ -153,11 +153,11 @@ Donations require either a campaign or opportunity token
 		{gi_created_at}
 		{gi_twitter_share}
 		{gi_fb_share}
-	{/exp:giving_impact:donations}
+	{/exp:modl_giving_impact:donations}
 
 or
 
-	{exp:giving_impact:donations campaign="[unique-token]"}
+	{exp:modl_giving_impact:donations campaign="[unique-token]"}
 		{gi_first_name}
 		{gi_last_name}
 		{gi_billing_address1}
@@ -173,7 +173,7 @@ or
 		{gi_created_at}
 		{gi_twitter_share}
 		{gi_fb_share}
-	{/exp:giving_impact:donations}
+	{/exp:modl_giving_impact:donations}
 
 #### Options
 
@@ -184,9 +184,9 @@ or
 
 ### Create Giving Opportunity
 
-Using the `{exp:giving_impact:create_opportunity}` tag pair you can easily create a form to generate new opportunities.
+Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily create a form to generate new opportunities.
 
-	{exp:giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity"}
+	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity"}
 
 		{if opportunity_token}
 			Sweet! Your opportunity was created with token {opportunity_token}<br />
@@ -200,7 +200,7 @@ Using the `{exp:giving_impact:create_opportunity}` tag pair you can easily creat
 		<input type="text" name="target" /> - OPTIONAL target
 		<input type="text" name="youtube" /> - OPTIONAL YouTube URL
 
-	{/exp:giving_impact:create_opportunity}
+	{/exp:modl_giving_impact:create_opportunity}
 
 You may use the `{opportunity_token}` variable within the tag pair to check for returned token for the newly created opportunity.
 
