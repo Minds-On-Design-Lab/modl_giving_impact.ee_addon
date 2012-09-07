@@ -139,6 +139,8 @@ class Modl_giving_impact {
 			if( strpos($return_url, 'http://') === false ) {
 				$return_url = $this->EE->functions->create_url($return_url).$new_token;
 			}
+		} else {
+			$return_url = $this->EE->functions->form_backtrack('-1');
 		}
 
 		$this->EE->functions->redirect($return_url, 'location');

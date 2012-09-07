@@ -203,7 +203,7 @@ Note that you **MUST** provide inputs for "title", "description" and "status" or
 #### Options
 
 * campaign - STRING - parent campaign token **REQUIRED**
-* return - STRING - a return URL
+* return - STRING - a return URL **default - returns to form**
 * label - STRING - label for submit button **default - Submit**
 
 ## Changelog
