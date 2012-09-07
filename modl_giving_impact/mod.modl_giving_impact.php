@@ -137,11 +137,13 @@ class Modl_giving_impact {
 		$this->EE->session->set_flashdata('opportunity_token', $new_token);
 
 		if( $return_url ) {
+			// template had a "return" parameter that was encoded
 			$return_url = base64_decode($return_url);
 			if( strpos($return_url, 'http://') === false ) {
 				$return_url = $this->EE->functions->create_url($return_url);
 			}
 		} else {
+			// otherwise, just send 'em back to the form
 			$return_url = $this->EE->functions->form_backtrack('-1');
 		}
 
@@ -176,6 +178,7 @@ class Modl_giving_impact {
 
 		$out = $open.$inner.$close;
 
+		// we stored this earlier, makes it easy to check for created opp inside form
 		$vars = array();
 		$created_opp = $this->EE->session->flashdata('opportunity_token');;
 		if( $created_opp ) {
