@@ -137,7 +137,7 @@ class Modl_giving_impact {
 		return;
 	}
 
-	public function form_start() {
+	public function create_opportunity() {
 		$action_url = $this->EE->functions->fetch_site_index(0, 0)
 			.QUERY_MARKER.'ACT='
 			.$this->EE->functions->fetch_action_id(
@@ -145,26 +145,26 @@ class Modl_giving_impact {
 			);
 		$token = $this->EE->TMPL->fetch_param('campaign', false);
 		$return = $this->EE->TMPL->fetch_param('return', false);
+		$label = $this->EE->TMPL->fetch_param('label', 'Submit');
 
-		$out = '<form method="POST" action="'.$action_url
+		$open = '<form method="POST" action="'.$action_url
 			.'" enctype="multipart/form-data">'
 			."\n\n"
 			.'<input type="hidden" value="'.$token.'" name="t" />';
 
 		if( $return ) {
-			$out .= "\n\n"
+			$open .= "\n\n"
 				.'<input type="hidden" name="r" value="'
 				.base64_encode($return).'" />';
 		}
 
-		return $out;
-	}
+		$inner = $this->EE->TMPL->tagdata;
 
-	public function form_end() {
-		$val = $this->EE->TMPL->fetch_param('value', 'Submit');
+		$close = '<input type="submit" value="'.$label.'" /></form>';
 
-		$out = '<input type="submit" value="'.$val.'" /></form>';
-		return $out;
+		$out = $open.$inner.$close;
+
+		return $this->EE->TMPL->parse_variables($out, array());
 	}
 
 }
