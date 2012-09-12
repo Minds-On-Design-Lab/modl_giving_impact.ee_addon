@@ -151,7 +151,7 @@ class Modl_giving_impact {
 			$return_url = $this->EE->functions->form_backtrack();
 		}
 
-		$this->EE->functions->redirect($return_url, 'location');
+		$this->EE->functions->redirect($return_url.'/'.$new_token, 'location');
 		return;
 	}
 
