@@ -163,9 +163,20 @@ class Modl_giving_impact {
 		$token = $this->EE->TMPL->fetch_param('campaign', false);
 		$return = $this->EE->TMPL->fetch_param('return', false);
 		$label = $this->EE->TMPL->fetch_param('label', 'Submit');
+		$class = $this->EE->TMPL->fetch_param('class', false);
+		$id = $this->EE->TMPL->fetch_param('id', false);
 
 		$open = '<form method="POST" action="'.$action_url
-			.'" enctype="multipart/form-data">'
+			.'" enctype="multipart/form-data"';
+
+		if( $class ) {
+			$open .= ' class="'.$class.'"';
+		}
+		if( $id ) {
+			$open .= ' id="'.$id.'"';
+		}
+
+		$open .= '>'
 			."\n\n"
 			.'<input type="hidden" value="'.$token.'" name="t" />';
 
