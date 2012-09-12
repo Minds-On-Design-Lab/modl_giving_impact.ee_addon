@@ -16,10 +16,13 @@ class Giving_impact_api {
 
 	private $base_url	= false;
 	private $api_key	= false;
-	private $user_agent = 'Modl_Giving_Impact/EE Addon';
+	private $user_agent = 'Modl_Giving_Impact/EE_Addon';
 
 	public function __construct() {
 		$this->EE =& get_instance();
+
+		$this->user_agent .= ' '.$this->EE->config->item('site_name')
+			.'('.$this->EE->config->item('site_url').')';
 
 		// Get existing credentials
 	    $creds = $this->EE->db
