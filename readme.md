@@ -186,7 +186,7 @@ or
 
 Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily create a form to generate new opportunities.
 
-	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity"}
+	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity" class="[string]" id="[string]"}
 
 		{if opportunity_token}
 			Sweet! Your opportunity was created with token {opportunity_token}<br />
@@ -212,6 +212,8 @@ Note that you **MUST** provide inputs for "title", "description" and "status" or
 * campaign - STRING - parent campaign token **REQUIRED**
 * return - STRING - a return URL **default - returns to form**
 * label - STRING - label for submit button **default - Submit**
+* class - STRING - CSS class
+* id - STRING - CSS ID
 
 ## Changelog
 
