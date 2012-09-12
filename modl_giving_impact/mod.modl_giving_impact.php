@@ -140,16 +140,8 @@ class Modl_giving_impact {
 
 		$this->EE->session->set_flashdata('opportunity_token', $new_token);
 
-		if( $return_url ) {
-			// template had a "return" parameter that was encoded
-			$return_url = base64_decode($return_url);
-			if( strpos($return_url, 'http://') === false ) {
-				$return_url = $this->EE->functions->create_url($return_url);
-			}
-		} else {
-			// otherwise, just send 'em back to the form
-			$return_url = $this->EE->functions->form_backtrack();
-		}
+		// otherwise, just send 'em back to the form
+		$return_url = $this->EE->functions->form_backtrack();
 
 		$this->EE->functions->redirect($return_url.'/'.$new_token, 'location');
 		return;
@@ -181,14 +173,12 @@ class Modl_giving_impact {
 			."\n\n"
 			.'<input type="hidden" value="'.$token.'" name="t" />';
 
-		if( $return ) {
-			$open .= "\n\n"
-				.'<input type="hidden" name="r" value="'
-				.base64_encode($return).'" />';
+		if( !$return ) {
+			$return = $this->EE->functions->fetch_current_uri();
 		}
 
 		$open .= "\n"
-			.'<input type="hidden" name="RET" value="'.$this->EE->functions->fetch_current_uri().'" />';
+			.'<input type="hidden" name="RET" value="'.$return.'" />';
 
 		$inner = $this->EE->TMPL->tagdata;
 
