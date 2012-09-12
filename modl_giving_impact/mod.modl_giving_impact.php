@@ -87,13 +87,14 @@ class Modl_giving_impact {
 		$youtube = $this->EE->input->post('youtube');
 		$target = $this->EE->input->post('target');
 
+
 		if( !$token || !$title || !$description ) {
 
 			$data = array(
 				'title'   => 'Missing required information',
 				'heading' => 'Missing required information',
 				'content' => 'You must provide token, title, status and description',
-				'link'    => array($this->EE->functions->form_backtrack('-1'), 'Return to form')
+				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
 			);
 
 			$this->EE->output->show_message($data);
@@ -147,7 +148,7 @@ class Modl_giving_impact {
 			}
 		} else {
 			// otherwise, just send 'em back to the form
-			$return_url = $this->EE->functions->form_backtrack('-1');
+			$return_url = $this->EE->functions->form_backtrack();
 		}
 
 		$this->EE->functions->redirect($return_url, 'location');
@@ -185,6 +186,9 @@ class Modl_giving_impact {
 				.'<input type="hidden" name="r" value="'
 				.base64_encode($return).'" />';
 		}
+
+		$open .= "\n"
+			.'<input type="hidden" name="RET" value="'.$this->EE->functions->fetch_current_uri().'" />';
 
 		$inner = $this->EE->TMPL->tagdata;
 
