@@ -86,6 +86,7 @@ class Modl_giving_impact {
 		$status = $this->EE->input->post('status') ? 1 : 0;
 		$youtube = $this->EE->input->post('youtube');
 		$target = $this->EE->input->post('target');
+		$captcha = $this->EE->input->post('captcha');
 
 
 		if( !$token || !$title || !$description ) {
@@ -101,7 +102,22 @@ class Modl_giving_impact {
 			return;
 		}
 
-		$return_url = $this->EE->input->post('r');
+		$q = 'select captcha_id from exp_captcha where ip_address = "'.
+			$this->EE->db->escape_str($this->EE->input->ip_address()).'" and word = "'.
+			$this->EE->db->escape_str($captcha).'"';
+		$res = $this->EE->db->query($q);
+
+		if( !$res->num_rows() ) {
+			$data = array(
+				'title'   => 'Missing required information',
+				'heading' => 'Missing required information',
+				'content' => 'The text you entered didn\'t match the image.',
+				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
+			);
+
+			$this->EE->output->show_message($data);
+			return;
+		}
 
 		// pack it
 		$json = array(

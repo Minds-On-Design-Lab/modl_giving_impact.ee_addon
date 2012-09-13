@@ -196,9 +196,13 @@ Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily 
 		<textarea name="description"></textarea> - REQUIRED description
 		<input type="select" value="1" name="status" /> - REQUIRED status
 
+		{captcha}
+		<input type="text" name="captcha" /> - REQUIRED spam protection
+
 		<input type="file" name="image" /> - OPTIONAL image file
 		<input type="text" name="target" /> - OPTIONAL target
 		<input type="text" name="youtube" /> - OPTIONAL YouTube URL
+
 
 	{/exp:modl_giving_impact:create_opportunity}
 
@@ -212,6 +216,7 @@ Note that you **MUST** provide inputs for "title", "description" and "status" or
 * campaign - STRING - parent campaign token **REQUIRED**
 * return - STRING - a return URL **default - returns to form**
 * label - STRING - label for submit button **default - Submit**
+* captcha - STRING - CAPTCHA spam protection. Both `{captcha}` tag and field are **required**
 * class - STRING - CSS class
 * id - STRING - CSS ID
 
