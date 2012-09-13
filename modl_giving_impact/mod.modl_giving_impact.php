@@ -90,11 +90,23 @@ class Modl_giving_impact {
 
 
 		if( !$token || !$title || !$description ) {
+			$errors = array();
+			if( !$token ) {
+				$errors[] = 'Campaign Token';
+			}
+			if( !$title ) {
+				$errors[] = 'Title';
+			}
+			if( !$description ) {
+				$errors[] = 'Descroption';
+			}
+
+			$errors = implode(', ', $errors);
 
 			$data = array(
 				'title'   => 'Missing required information',
 				'heading' => 'Missing required information',
-				'content' => 'You must provide token, title, status and description',
+				'content' => 'Missing required fields: '.$errors,
 				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
 			);
 
