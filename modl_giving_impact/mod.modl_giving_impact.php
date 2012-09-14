@@ -88,6 +88,7 @@ class Modl_giving_impact {
 		$target = $this->EE->input->post('target');
 		$captcha = $this->EE->input->post('captcha');
 
+		$next = $this->EE->input->post('NXT');
 
 		if( !$token || !$title || !$description ) {
 			$errors = array();
@@ -168,8 +169,11 @@ class Modl_giving_impact {
 
 		$this->EE->session->set_flashdata('opportunity_token', $new_token);
 
-		// otherwise, just send 'em back to the form
-		$return_url = $this->EE->functions->form_backtrack();
+		if( $next ) {
+			$return_url = $next;
+		} else {
+			$return_url = $this->EE->functions->form_backtrack();
+		}
 
 		$this->EE->functions->redirect($return_url.'/'.$new_token, 'location');
 		return;
@@ -201,12 +205,17 @@ class Modl_giving_impact {
 			."\n\n"
 			.'<input type="hidden" value="'.$token.'" name="t" />';
 
-		if( !$return ) {
-			$return = $this->EE->functions->fetch_current_uri();
-		}
-
 		$open .= "\n"
-			.'<input type="hidden" name="RET" value="'.$return.'" />';
+			.'<input type="hidden" name="RET" value="'.
+			$this->EE->functions->fetch_current_uri()
+			.'" />';
+
+		if( $return ) {
+			$open .= "\n"
+				.'<input type="hidden" name="NXT" value="'.
+				$return
+				.'" />';
+		}
 
 		$inner = $this->EE->TMPL->tagdata;
 
