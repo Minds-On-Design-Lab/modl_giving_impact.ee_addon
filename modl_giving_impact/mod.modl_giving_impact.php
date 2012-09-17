@@ -39,7 +39,11 @@ class Modl_giving_impact {
 			.'/libraries/api';
 
 		$this->EE->load->library('giving_impact_api');
+		$this->EE->load->library('email');
+
 		$this->EE->load->helper('inflector');
+		$this->EE->load->helper('text');
+		$this->EE->load->helper('email');
 
 	}
 
@@ -89,6 +93,11 @@ class Modl_giving_impact {
 		$captcha = $this->EE->input->post('captcha');
 
 		$next = $this->EE->input->post('NXT');
+		$notify = $this->EE->input->post('NTF');
+
+		if( $notify && !valid_email($notify) ) {
+			$notify = false;
+		}
 
 		if( !$token || !$title || !$description ) {
 			$errors = array();
@@ -169,6 +178,32 @@ class Modl_giving_impact {
 
 		$this->EE->session->set_flashdata('opportunity_token', $new_token);
 
+		// send the email
+		$webmaster = $this->EE->config->item('webmaster_email');
+		if( $notify && $webmaster ) {
+
+			$gi_title = $result['opportunity']['title'];
+			$gi_description = $result['opportunity']['description'];
+			$gi_donation_url = $result['opportunity']['donation_url'];
+
+$message = <<<END
+Hi a new Giving Opportunity has been created:
+
+Title: {$gi_title}
+Description: {$gi_description}
+URL: {$gi_donate_url}
+END;
+
+			$this->EE->email->wordwrap = TRUE;
+			$this->EE->email->mailtype = 'text';
+//			$this->EE->email->debug = TRUE;
+			$this->EE->email->from($webmaster);
+			$this->EE->email->to($notify);
+			$this->EE->email->subject('New Giving Impact Opportunity');
+			$this->EE->email->message(entities_to_ascii($message));
+			$this->EE->email->Send();
+		}
+
 		if( $next ) {
 			$return_url = $next;
 		} else {
@@ -190,6 +225,11 @@ class Modl_giving_impact {
 		$label = $this->EE->TMPL->fetch_param('label', 'Submit');
 		$class = $this->EE->TMPL->fetch_param('class', false);
 		$id = $this->EE->TMPL->fetch_param('id', false);
+		$notify = $this->EE->TMPL->fetch_param('notify', false);
+
+		if( $notify && !valid_email($notify) ) {
+			$notify = false;
+		}
 
 		$open = '<form method="POST" action="'.$action_url
 			.'" enctype="multipart/form-data"';
@@ -214,6 +254,12 @@ class Modl_giving_impact {
 			$open .= "\n"
 				.'<input type="hidden" name="NXT" value="'.
 				$return
+				.'" />';
+		}
+		if( $notify ) {
+			$open .= "\n"
+				.'<input type="hidden" name="NTF" value="'.
+				$notify
 				.'" />';
 		}
 
