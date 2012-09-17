@@ -186,7 +186,7 @@ or
 
 Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily create a form to generate new opportunities.
 
-	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity" class="[string]" id="[string]"}
+	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity" class="[string]" id="[string]" notify="[string]"}
 
 		{if opportunity_token}
 			Sweet! Your opportunity was created with token {opportunity_token}<br />
@@ -219,6 +219,7 @@ Note that you **MUST** provide inputs for "title", "description" and "status" or
 * captcha - STRING - CAPTCHA spam protection. Both `{captcha}` tag and field are **required**
 * class - STRING - CSS class
 * id - STRING - CSS ID
+* notify - STRING - A valid email address to notify upon successful opportunity creation
 
 ## Changelog
 
