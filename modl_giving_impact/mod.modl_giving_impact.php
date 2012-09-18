@@ -108,7 +108,7 @@ class Modl_giving_impact {
 				$errors[] = 'Title';
 			}
 			if( !$description ) {
-				$errors[] = 'Descroption';
+				$errors[] = 'Description';
 			}
 
 			$errors = implode(', ', $errors);
