@@ -192,21 +192,27 @@ Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily 
 			Sweet! Your opportunity was created with token {opportunity_token}<br />
 		{/if}
 
-		<input type="text" name="title" /> - REQUIRED campaign title
-		<textarea name="description"></textarea> - REQUIRED description
-		<input type="select" value="1" name="status" /> - REQUIRED status
+		<input type="text" name="title" value="{value_title}" /> - REQUIRED campaign title
+		<textarea name="description">{value_description}</textarea> - REQUIRED description
+		{if value_status}
+			<input type="select" value="1" name="status" checked /> - REQUIRED status
+		{if:else}
+			<input type="select" value="1" name="status" />
+		{/if}
 
 		{captcha}
 		<input type="text" name="captcha" /> - REQUIRED spam protection
 
 		<input type="file" name="image" /> - OPTIONAL image file
-		<input type="text" name="target" /> - OPTIONAL target
-		<input type="text" name="youtube" /> - OPTIONAL YouTube URL
+		<input type="text" name="target" value="{value_target}" /> - OPTIONAL target
+		<input type="text" name="youtube" value="{value_youtube}" /> - OPTIONAL YouTube URL
 
 
 	{/exp:modl_giving_impact:create_opportunity}
 
 You may use the `{opportunity_token}` variable within the tag pair to check for returned token for the newly created opportunity.
+
+You may use the `{value_title}`, `{value_description}`, `{value_status}`, `{value_target}`, and `{value_youtube}` variables to repopulate the form upon error.
 
 Note that you **MUST** provide inputs for "title", "description" and "status" or your request will display an error.
 
@@ -220,6 +226,7 @@ Note that you **MUST** provide inputs for "title", "description" and "status" or
 * class - STRING - CSS class
 * id - STRING - CSS ID
 * notify - STRING - A valid email address to notify upon successful opportunity creation
+
 
 ## Changelog
 
