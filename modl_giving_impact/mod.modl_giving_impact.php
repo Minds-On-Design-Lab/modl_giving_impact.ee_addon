@@ -120,6 +120,14 @@ class Modl_giving_impact {
 				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
 			);
 
+			$this->EE->session->set_flashdata('formvals', serialize(array(
+				'title' => $title,
+				'description' => $description,
+				'youtube' => $youtube,
+				'target' => $target,
+				'status' => $status
+			)));
+
 			$this->EE->output->show_message($data);
 			return;
 		}
@@ -136,6 +144,14 @@ class Modl_giving_impact {
 				'content' => 'The text you entered didn\'t match the image.',
 				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
 			);
+
+			$this->EE->session->set_flashdata('formvals', serialize(array(
+				'title' => $title,
+				'description' => $description,
+				'youtube' => $youtube,
+				'target' => $target,
+				'status' => $status
+			)));
 
 			$this->EE->output->show_message($data);
 			return;
@@ -231,6 +247,8 @@ END;
 			$notify = false;
 		}
 
+
+
 		$open = '<form method="POST" action="'.$action_url
 			.'" enctype="multipart/form-data"';
 
@@ -270,15 +288,31 @@ END;
 		$out = $open.$inner.$close;
 
 		// we stored this earlier, makes it easy to check for created opp inside form
-		$vars = array();
+		$vars = array(
+			'opportunity_token' => false,
+			'value_title' => false,
+			'value_description' => false,
+			'value_youtube' => false,
+			'value_target' => false,
+			'value_status' => false
+		);
+
 		$created_opp = $this->EE->session->flashdata('opportunity_token');;
 		if( $created_opp ) {
-			$vars[] = array(
-				'opportunity_token' => $created_opp
-			);
+			$vars['opportunity_token'] = $created_opp;
+		}
+		if( $this->EE->session->flashdata('formvals') ) {
+			$vals = unserialize($this->EE->session->flashdata('formvals'));
+			if( $vals && count($vals) ) {
+				$vars['value_title'] = $vals['title'];
+				$vars['value_description'] = $vals['description'];
+				$vars['value_youtube'] = $vals['youtube'];
+				$vars['value_target'] = $vals['target'];
+				$vars['value_status'] = $vals['status'];
+			}
 		}
 
-		return $this->EE->TMPL->parse_variables($out, $vars);
+		return $this->EE->TMPL->parse_variables($out, array($vars));
 	}
 
 }
