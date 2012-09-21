@@ -244,7 +244,6 @@ END;
 			);
 		$token = $this->EE->TMPL->fetch_param('campaign', false);
 		$return = $this->EE->TMPL->fetch_param('return', false);
-		$label = $this->EE->TMPL->fetch_param('label', 'Submit');
 		$class = $this->EE->TMPL->fetch_param('class', false);
 		$id = $this->EE->TMPL->fetch_param('id', false);
 		$notify = $this->EE->TMPL->fetch_param('notify', false);
@@ -289,7 +288,7 @@ END;
 
 		$inner = $this->EE->TMPL->tagdata;
 
-		$close = '<input type="submit" value="'.$label.'" /></form>';
+		$close = '</form>';
 
 		$out = $open.$inner.$close;
 

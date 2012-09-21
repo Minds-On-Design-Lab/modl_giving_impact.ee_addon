@@ -186,7 +186,7 @@ or
 
 Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily create a form to generate new opportunities.
 
-	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" label="Save Opportunity" class="[string]" id="[string]" notify="[string]"}
+	{exp:modl_giving_impact:create_opportunity campaign="[unique-tone]" return="[string]" class="[string]" id="[string]" notify="[string]"}
 
 		{if opportunity_token}
 			Sweet! Your opportunity was created with token {opportunity_token}<br />
@@ -194,11 +194,7 @@ Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily 
 
 		<input type="text" name="title" value="{value_title}" /> - REQUIRED campaign title
 		<textarea name="description">{value_description}</textarea> - REQUIRED description
-		{if value_status}
-			<input type="select" value="1" name="status" checked /> - REQUIRED status
-		{if:else}
-			<input type="select" value="1" name="status" />
-		{/if}
+		<input type="select" value="1" name="status" {if value_status}checked{/if} /> - REQUIRED status
 
 		{captcha}
 		<input type="text" name="captcha" /> - REQUIRED spam protection
@@ -207,7 +203,7 @@ Using the `{exp:modl_giving_impact:create_opportunity}` tag pair you can easily 
 		<input type="text" name="target" value="{value_target}" /> - OPTIONAL target
 		<input type="text" name="youtube" value="{value_youtube}" /> - OPTIONAL YouTube URL
 
-
+		<input type="submit" value="Save Opportunity" />
 	{/exp:modl_giving_impact:create_opportunity}
 
 You may use the `{opportunity_token}` variable within the tag pair to check for returned token for the newly created opportunity.
