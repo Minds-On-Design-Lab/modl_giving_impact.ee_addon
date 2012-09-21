@@ -201,13 +201,19 @@ class Modl_giving_impact {
 			$gi_title = $result['opportunity']['title'];
 			$gi_description = $result['opportunity']['description'];
 			$gi_donation_url = $result['opportunity']['donation_url'];
+			$gi_status = $result['opportunity']['status'] ? 'Active' : 'Inactive';
 
 $message = <<<END
-Hi a new Giving Opportunity has been created:
+A new Giving Opportunity has been created!
 
 Title: {$gi_title}
+
 Description: {$gi_description}
-URL: {$gi_donate_url}
+
+Status: {$gi_status}
+
+----------
+This is an automated email sent by the MODL Giving Impact ExpressionEngine Addon.
 END;
 
 			$this->EE->email->wordwrap = TRUE;
