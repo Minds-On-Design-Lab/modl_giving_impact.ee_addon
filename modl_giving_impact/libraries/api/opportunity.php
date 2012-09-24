@@ -53,7 +53,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		$data = $this->get($url);
 
 		if( !$data || !count($data['opportunity']) ) {
-			return $this->EE->TMPL->no_results();
+			return;
 		}
 
 		if( $data['error'] ) {
@@ -90,7 +90,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 
 		if( !$campaign ) {
 			$this->EE->output->fatal_error('Campaign token is required');
-			return $this->EE->TMPL->no_results();
+			return;
 		}
 
 		$url = $this->build_url(
@@ -106,7 +106,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		$data = $this->get($url);
 
 		if( !$data || !count($data['opportunities']) ) {
-			return $this->EE->TMPL->no_results();
+			return;
 		}
 
 		if( $data['error'] ) {
