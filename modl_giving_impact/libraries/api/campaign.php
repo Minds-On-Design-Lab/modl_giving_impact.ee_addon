@@ -53,7 +53,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 		$data = $this->get($url);
 
 		if( !$data || !count($data['campaign']) ) {
-			return;
+			return $this->EE->TMPL->no_results();
 		}
 
 		if( $data['error'] ) {
@@ -100,7 +100,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 		$data = $this->get($url);
 
 		if( !$data || !count($data['campaigns']) ) {
-			return;
+			return $this->EE->TMPL->no_results();
 		}
 
 		if( $data['error'] ) {

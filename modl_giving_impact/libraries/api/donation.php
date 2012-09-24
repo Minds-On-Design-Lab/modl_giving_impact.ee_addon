@@ -70,7 +70,7 @@ class Modl_API_Donation extends Giving_impact_api {
 		$data = $this->get($url);
 
 		if( !$data || !count($data['donations']) ) {
-			return;
+			return $this->EE->TMPL->no_results();
 		}
 
 		if( $data['error'] ) {
