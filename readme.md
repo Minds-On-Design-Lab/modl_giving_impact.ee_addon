@@ -138,6 +138,10 @@ Returns data for a Giving Opportunity with provided token
 Donations require either a campaign or opportunity token
 
 	{exp:modl_giving_impact:donations opportunity="[unique-token]"}
+		{if no_donations}
+			No donations found
+		{/if}
+
 		{gi_first_name}
 		{gi_last_name}
 		{gi_billing_address1}
@@ -158,6 +162,10 @@ Donations require either a campaign or opportunity token
 or
 
 	{exp:modl_giving_impact:donations campaign="[unique-token]"}
+		{if no_donations}
+			No donations found
+		{/if}
+
 		{gi_first_name}
 		{gi_last_name}
 		{gi_billing_address1}
