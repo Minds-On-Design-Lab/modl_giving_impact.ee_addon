@@ -10,6 +10,11 @@
  * @filesource
  */
 
+/*
+	No results hackery inspired by:
+	http://experienceinternet.co.uk/blog/ee-gotchas-nested-no-results-tags/
+*/
+
 // ------------------------------------------------------------------------
 
 class Modl_API_Donation extends Giving_impact_api {
