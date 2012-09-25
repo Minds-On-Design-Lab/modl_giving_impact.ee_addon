@@ -77,6 +77,10 @@ class Modl_giving_impact {
 
 		$vars = $obj->process($this->EE->TMPL);
 
+		if( is_string($vars) ) {
+			return $vars;
+		}
+
 		if( !$vars || !count($vars) ) {
 			return $this->EE->TMPL->no_results();
 		}

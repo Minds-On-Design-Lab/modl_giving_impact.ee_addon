@@ -70,7 +70,11 @@ class Modl_API_Donation extends Giving_impact_api {
 		$data = $this->get($url);
 
 		if( !$data || !count($data['donations']) ) {
-			return;
+			$pattern = '#{if no_donations}(.*?){/if}#s';
+			if( is_string($this->EE->TMPL->tagdata)
+				&& preg_match($pattern, $this->EE->TMPL->tagdata, $matches) ) {
+				return $matches[1];
+			}
 		}
 
 		if( $data['error'] ) {
