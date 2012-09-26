@@ -35,7 +35,7 @@ To learn more about these methods, the date returned and using this module to br
 * [Donations](#donations)
 * [Create Opportunity](#create_opportunity)
 
-### Campaigns {#campaigns}
+### Campaigns
 
 	{exp:modl_giving_impact:campaigns} Content {/exp:modl_giving_impact:campaigns}
 
