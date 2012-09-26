@@ -33,7 +33,7 @@ To learn more about these methods, the date returned and using this module to br
 * [Campaigns](#campaigns)
 * [Opportunities](#opportunities)
 * [Donations](#donations)
-* [Create Opportunity](#create_opportunity)
+* [Create Opportunity](#create-giving-opportunity)
 
 ### Campaigns
 
@@ -67,7 +67,7 @@ To learn more about these methods, the date returned and using this module to br
 		{gi_has_giving_opportunities}
 		{gi_status}
 
-### Opportunities {#opportunities}
+### Opportunities
 
 	{exp:modl_giving_impact:opportunities} Content {/exp:modl_giving_impact:opportunities}
 
@@ -104,7 +104,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 		{gi_shares_twitter}
 		{gi_status}
 
-#### Donations {#donations}
+#### Donations
 
 	{exp:modl_giving_impact:donations} Content {/exp:modl_giving_impact:donations}
 Donations require either a campaign or opportunity token
@@ -150,7 +150,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 This conditional will show its contents if there are no results returned for the donations tag.
 
-### Create Giving Opportunity {#create_opportunity}
+### Create Giving Opportunity
 
 Using the Create Opportunity tag pair you can easily create a form to create new opportunities.
 
