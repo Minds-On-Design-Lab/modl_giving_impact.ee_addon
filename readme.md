@@ -49,23 +49,73 @@ To learn more about these methods, the date returned and using this module to br
 
 #### Variables
 
-		{gi_id_token}
-		{gi_title}
-		{gi_description}
-		{gi_image_url}
-		{gi_youtube_id}
-		{gi_donation_url}
-		{gi_donation_target}
-		{gi_donation_total}
-		{gi_display_target}
-		{gi_display_total}
-		{gi_givlnk}
-		{gi_share_url}
-		{gi_shares_fb}
-		{gi_shares_twitter}
-		{gi_hash_tag}
-		{gi_has_giving_opportunities}
-		{gi_status}
+	{gi_id_token}
+
+Unique API token and id for the campaign.
+	
+	{gi_title}
+
+Title of the campaign
+	
+	{gi_description}
+
+Brief campaign description
+
+	{gi_image_url}
+
+URL to campaign image. Image is hosted with Giving Impact.
+
+	{gi_youtube_id}
+
+YouTube ID for campaign video.
+
+	{gi_donation_url}
+
+URL to the hosted donation landing and processing pages.
+ 
+	{gi_donation_target}
+
+Target donation amount (integer).
+
+	{gi_donation_total}
+
+Current donation total (integer)/
+
+	{gi_display_target}
+
+Returns `true` or `false` for the campaign preference to show or hide the target donation amount. Useful to use as a conditional around the `{gi_donation_target}` variable to respect this preference.
+
+	{gi_display_total}
+
+Returns `true` or `false` for the campaign preference to show or hide the current donation total. Useful to use as a conditional around the `{gi_donation_total}` variable to respect this preference.
+
+	{gi_givlnk}
+
+A Giving Impact short URL that redirects to the hosted campaign donation landing and processing page.  Useful for sharing and multi-channel outreach.
+
+	{gi_share_url}
+
+URL to the hosted share page. Useful to offer social network sharing of the campaign using campaign data.	 Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard.
+
+	{gi_shares_fb}
+
+Total number of Facebook likes for this campaign made through the Giving Impact share feature.
+
+	{gi_shares_twitter}
+
+Total number of Tweets made for this campaign made through the Giving Impact share feature.
+
+	{gi_hash_tag}
+
+Twitter hashtag for the campaign.
+
+	{gi_has_giving_opportunities}
+
+Returns `true` or `false` depending on whether the campaign is configured to support Giving Opportunities.
+
+	{gi_status}
+
+Returns `true` or `false` depending on whether the campaign is active or not.
 
 ### Opportunities
 
@@ -89,20 +139,61 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 #### Variables
 
-		{gi_id_token}
-		{gi_title}
-		{gi_description}
-		{gi_image_url}
-		{gi_youtube_id}
-		{gi_donation_url}
-		{gi_donation_target}
-		{gi_donation_total}
-		{gi_givlnk}
-		{gi_share_url}
-		{gi_shares_fb}
-		{gi_hash_tag}
-		{gi_shares_twitter}
-		{gi_status}
+	{gi_id_token}
+
+Unique API token and id for the Giving Opportunity.
+	
+	{gi_title}
+
+Title of the Giving Opportunity
+	
+	{gi_description}
+
+Brief Giving Opportunity description
+
+	{gi_image_url}
+
+URL to Giving Opportunity image. Image is hosted with Giving Impact.
+
+	{gi_youtube_id}
+
+YouTube ID for Giving Opportunity video.
+
+	{gi_donation_url}
+
+URL to the hosted donation landing and processing pages.
+ 
+	{gi_donation_target}
+
+Target donation amount (integer).
+
+	{gi_donation_total}
+
+Current donation total (integer)/
+
+	{gi_givlnk}
+
+A Giving Impact short URL that redirects to the hosted Giving Opportunity donation landing and processing page. Useful for sharing and multi-channel outreach.
+
+	{gi_share_url}
+
+URL to the hosted share page. Useful to offer social network sharing of the Giving Opportunity using Giving Opportunity data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard.
+
+	{gi_shares_fb}
+
+Total number of Facebook likes for this Giving Opportunity made through the Giving Impact share feature.
+
+	{gi_shares_twitter}
+
+Total number of Tweets made for this Giving Opportunity made through the Giving Impact share feature.
+
+	{gi_hash_tag}
+
+Twitter hashtag for the campaign.
+
+	{gi_status}
+
+Returns `true` or `false` depending on whether the Giving Opportunity is active or not.
 
 #### Donations
 
@@ -126,21 +217,65 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 #### Variables
 
-		{gi_first_name}
-		{gi_last_name}
-		{gi_billing_address1}
-		{gi_billing_city}
-		{gi_billing_state}
-		{gi_billing_postal_code}
-		{gi_billing_country}
-		{gi_donation_total}
-		{gi_donation_level}
-		{gi_email_address}
-		{gi_referrer}
-		{gi_offline}
-		{gi_created_at}
-		{gi_twitter_share}
-		{gi_fb_share}
+	{gi_first_name}
+
+Donor first name
+
+	{gi_last_name}
+
+Donor last name
+
+	{gi_billing_address1}
+
+Donor address
+
+	{gi_billing_city}
+
+Donor city
+
+	{gi_billing_state}
+
+Donor State
+
+	{gi_billing_postal_code}
+
+Donor zip code
+
+	{gi_billing_country}
+
+Donor country
+
+	{gi_individual_total}
+
+Amount donated (integer)
+
+	{gi_donation_level}
+
+The donation level selected if campaign is configured with donation levels. 
+
+	{gi_email_address}
+
+Donor email address unless donor has 'opted out' of receiving follow-up communications.
+
+	{gi_referrer}
+
+Referring URL visited prior to launching the hosted donation page. Captured when possible.
+	
+	{gi_offline}
+
+Returns `true` or `false` depending on whether the donation was an 'offline' donation recorded manually through the Giving Impact dashboard or not.
+
+	{gi_created_at}
+
+Timestamp of donation date and time.
+
+	{gi_twitter_share}
+
+Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a tweet following their donation using the Giving Impact share available on donation confirmation page.
+
+	{gi_fb_share}
+
+Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a Facebook Like following their donation using the Giving Impact share available on donation confirmation page.
 
 #### Conditionals
 
@@ -173,6 +308,7 @@ The following must be submitted otherwise your request will display an error.
 * title
 * description
 * status - true = Active, false = Inactive
+* captcha
 
 ##### Validation
 
@@ -208,39 +344,42 @@ If the user submits the form successfully and is immediately returned to the tem
 		{if opportunity_token}
 			<p>Sweet! Your opportunity was created with token {opportunity_token}</p>
 		{/if}
-
-		<p>
+		<ul>
+		<li>
 			<label class="required">Title:</label> 
 			<input type="text" name="title" value="{value_title}" />
-		</p>
-		<p>
+		</li>
+		<li>
 			<label class="required">Description:</label>
 			<textarea name="description">{value_description}</textarea>
-		</p>
-		<p>
+		</li>
+		<li>
 			<label class="required">Status:</label>
 			<input type="radio" name="status" value="true"{if value_status} checked{/if}>Active and accepting donations<br>
 			<input type="radio" name="status" value="false"{if value_status} checked{/if}>Inactive
-		</p>
-		<p>
+		</li>
+		<li>
 			<label>Team Photo:</label>	
+			<p class="directions">Add an image to display on your Page. Image dimensions should be 300 pixels x 200 pixels. File needs to be less than 100K and a web optimized jpeg, gif or png.</p>
 			<input type="file" name="image" />
-		</p>
-		<p>
+		</li>
+		<li>
 			<label>Donation Target:</label>
 			<input type="text" name="target" value="{value_target}" />
-		</p>
-		<p>
+		</li>
+		<li>
 			<label>YouTube Video ID:</label>
+			<p class="directions">Enter the YouTube URL or Video Id to add a video to your Page.<br/>
+			Ex: http://www.youtube.com/watch?v=**dtdo_pOwuHI**</p>
 			<input type="text" name="youtube" value="{value_youtube}" />
-		</p>
-		<p>
+		</li>
+		<li>
 			{captcha}<br />
-			<input type="text" name="captcha" /> - REQUIRED spam protection
-		</p>
-		<p>
+			<p class="directions">Please enter the letters/numbers you see above.</p>
+			<input type="text" name="captcha" />
+		</li>
 			<input type="submit" value="Save Opportunity" />
-		</p>
+		</ul>
 	{/exp:modl_giving_impact:create_opportunity}
 
 
