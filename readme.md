@@ -79,7 +79,7 @@ Target donation amount (integer).
 
 	{gi_donation_total}
 
-Current donation total (integer)/
+Current donation total (integer).
 
 	{gi_display_target}
 
@@ -169,7 +169,7 @@ Target donation amount (integer).
 
 	{gi_donation_total}
 
-Current donation total (integer)/
+Current donation total (integer).
 
 	{gi_givlnk}
 
