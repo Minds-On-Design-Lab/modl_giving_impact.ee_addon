@@ -68,6 +68,10 @@ class Modl_API_Campaign extends Giving_impact_api {
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
 		$sort = $this->EE->TMPL->fetch_param('sort', $this->sort);
 
+		if( $sort && strpos($sort, 'gi_') === 0 ) {
+			$sort = substr($sort, 3);
+		}
+
 		$dir = $this->dir;
 		if( strpos($sort, '|') !== false ) {
 			$temp = explode('|', $sort);
