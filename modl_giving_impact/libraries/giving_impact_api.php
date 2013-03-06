@@ -31,7 +31,7 @@ class Giving_impact_api {
 
 		if ($creds->num_rows() > 0)  {
 			$this->api_key = $creds->row('api_key');
-			$this->base_url = $creds->row('api_path');
+			$this->base_url = $creds->row('api_path').'/v2';
 		}
 
 	}
