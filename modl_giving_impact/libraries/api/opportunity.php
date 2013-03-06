@@ -21,6 +21,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 	private $sort = 'created_at';
 	private $dir = 'asc';
 	private $status = 'active';
+	private $related = false;
 
 	private $max_limit = 100;
 
@@ -35,6 +36,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 
 	public function fetch_single() {
 		$token = $this->EE->TMPL->fetch_param('opportunity', false);
+		$related = $this->EE->TMPL->fetch_param('related', false);
 
 		switch( $this->EE->TMPL->fetch_param('status', false) ) {
 			case 'active':
@@ -68,6 +70,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
 		$sort = $this->EE->TMPL->fetch_param('sort', $this->sort);
+		$related = $this->EE->TMPL->fetch_param('related', $this->related);
 
 		if( $sort && strpos($sort, 'gi_') === 0 ) {
 			$sort = substr($sort, 3);
@@ -103,7 +106,8 @@ class Modl_API_Opportunity extends Giving_impact_api {
 				'limit' => $limit,
 				'offset' => $offset,
 				'sort' => sprintf('%s|%s', $sort, $dir),
-				'status' => $status
+				'status' => $status,
+				'related' => $related
 			)
 		);
 
