@@ -46,6 +46,7 @@ class Modl_API_Donation extends Giving_impact_api {
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
 		$sort = $this->EE->TMPL->fetch_param('sort', $this->sort);
+		$related = $this->EE->TMPL->fetch_param('related', $this->related);
 
 		$dir = $this->dir;
 		if( strpos($sort, '|') !== false ) {
@@ -70,7 +71,8 @@ class Modl_API_Donation extends Giving_impact_api {
 			'limit' => $limit,
 			'offset' => $offset,
 			'sort' => sprintf('%s|%s', $sort, $dir),
-			'status' => $status
+			'status' => $status,
+			'related' => $related
 		));
 		$data = $this->get($url);
 
@@ -84,6 +86,25 @@ class Modl_API_Donation extends Giving_impact_api {
 
 		if( $data['error'] ) {
 			$this->EE->output->fatal_error('Error: '.$data['message']);
+		}
+
+		if( $related ) {
+			foreach( $data['donations'] as $k => $v ) {
+				if( array_key_exists('opportunity', $v) ) {
+					$ret = $this->prefix_tags('opportunity', array($v['opportunity']));
+					$data['donations'][$k] = array_merge(
+						$data['donations'][$k],
+						$ret[0]
+					);
+				}
+				if( array_key_exists('campaign', $v) ) {
+					$ret = $this->prefix_tags('campaign', array($v['campaign']));
+					$data['donations'][$k] = array_merge(
+						$data['donations'][$k],
+						$ret[0]
+					);
+				}
+			}
 		}
 
 		return $this->prefix_tags('gi', $data['donations']);
