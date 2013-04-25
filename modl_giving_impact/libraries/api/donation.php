@@ -26,6 +26,7 @@ class Modl_API_Donation extends Giving_impact_api {
 	private $sort = 'created_at';
 	private $dir = 'asc';
 	private $status = 'active';
+	private $related = false;
 
 	private $max_limit = 100;
 
@@ -91,18 +92,12 @@ class Modl_API_Donation extends Giving_impact_api {
 		if( $related ) {
 			foreach( $data['donations'] as $k => $v ) {
 				if( array_key_exists('opportunity', $v) ) {
-					$ret = $this->prefix_tags('opportunity', array($v['opportunity']));
-					$data['donations'][$k] = array_merge(
-						$data['donations'][$k],
-						$ret[0]
-					);
+					$ret = $this->prefix_tags('gi', array($v['opportunity']));
+					$data['donations'][$k]['opportunity'] = $ret;
 				}
 				if( array_key_exists('campaign', $v) ) {
-					$ret = $this->prefix_tags('campaign', array($v['campaign']));
-					$data['donations'][$k] = array_merge(
-						$data['donations'][$k],
-						$ret[0]
-					);
+					$ret = $this->prefix_tags('gi', array($v['campaign']));
+					$data['donations'][$k]['campaign'] = $ret;
 				}
 			}
 		}

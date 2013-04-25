@@ -112,7 +112,6 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		);
 
 		$data = $this->get($url);
-
 		if( !$data || !count($data['opportunities']) ) {
 			return;
 		}
@@ -123,11 +122,8 @@ class Modl_API_Opportunity extends Giving_impact_api {
 
 		if( $related ) {
 			foreach( $data['opportunities'] as $k => $v ) {
-				$ret = $this->prefix_tags('campaign', array($v['campaign']));
-				$data['opportunities'][$k] = array_merge(
-					$data['opportunities'][$k],
-					$ret[0]
-				);
+				$ret = $this->prefix_tags('gi', array($v['campaign']));
+				$data['opportunities'][$k]['campaign'] = $ret;
 			}
 		}
 
