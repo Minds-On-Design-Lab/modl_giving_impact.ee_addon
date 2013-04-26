@@ -124,6 +124,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 			foreach( $data['opportunities'] as $k => $v ) {
 				$ret = $this->prefix_tags('gi', array($v['campaign']));
 				$data['opportunities'][$k]['campaign'] = $ret;
+				$data['opportunities'][$k]['has_campaign'] = true;
 			}
 		}
 

@@ -94,10 +94,12 @@ class Modl_API_Donation extends Giving_impact_api {
 				if( array_key_exists('opportunity', $v) ) {
 					$ret = $this->prefix_tags('gi', array($v['opportunity']));
 					$data['donations'][$k]['opportunity'] = $ret;
+					$data['donations'][$k]['has_opportunity'] = true;
 				}
 				if( array_key_exists('campaign', $v) ) {
 					$ret = $this->prefix_tags('gi', array($v['campaign']));
 					$data['donations'][$k]['campaign'] = $ret;
+					$data['donations'][$k]['has_campaign'] = true;
 				}
 			}
 		}
