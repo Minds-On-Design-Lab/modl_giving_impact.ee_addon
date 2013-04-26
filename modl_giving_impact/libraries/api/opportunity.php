@@ -120,15 +120,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 			$this->EE->output->fatal_error('Error: '.$data['message']);
 		}
 
-		if( $related ) {
-			foreach( $data['opportunities'] as $k => $v ) {
-				$ret = $this->prefix_tags('gi', array($v['campaign']));
-				$data['opportunities'][$k]['campaign'] = $ret;
-				$data['opportunities'][$k]['has_campaign'] = true;
-			}
-		}
-
-		return $this->prefix_tags('gi', $data['opportunities']);
+		return $this->prefix_tags('gi', $data['opportunities'], true);
 	}
 
 	public function post_single($data) {

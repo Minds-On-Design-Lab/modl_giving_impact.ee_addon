@@ -47,20 +47,45 @@ class Giving_impact_api {
 	 * @access protected
 	 * @final
 	 */
-	protected function prefix_tags($pfx, $data) {
+	protected function prefix_tags($pfx, $data, $recurse) {
 		$out = array();
 
 		foreach( $data as $item ) {
 			$row = array();
 
 			foreach( $item as $k => $v ) {
-				$row[$pfx.'_'.$k] = $v;
+				if( $recurse && is_array($v) && !is_int($k) ) {
+					$row[$pfx.'_'.$k] = $this->prefix_tags($pfx, array($v), true);
+				} elseif( $recurse && is_array($v) && is_int($k) ) {
+					$row[$k] = $this->prefix_tags_single($pfx, $v, true);
+				} else {
+					$row[$pfx.'_'.$k] = $v;
+				}
 			}
 
 			$out[] = $row;
 		}
 
+		if( isset($out[0]) && isset($out[0][0]) ) {
+			return array_shift($out);
+		}
 		return $out;
+	}
+
+	protected function prefix_tags_single($pfx, $data, $recurse) {
+		$row = array();
+
+		foreach( $data as $k => $v ) {
+			if( $recurse && is_array($v) && !is_int($k) ) {
+				$row[$pfx.'_'.$k] = $this->prefix_tags($pfx, array($v), true);
+			} elseif( $recurse && is_array($v) && !is_int($k) ) {
+				$row[$pfx.'_'.$k] = $this->prefix_tags_single($pfx, $v, true);
+			} else {
+				$row[$pfx.'_'.$k] = $v;
+			}
+		}
+
+		return $row;
 	}
 
 	/**

@@ -89,21 +89,20 @@ class Modl_API_Donation extends Giving_impact_api {
 			$this->EE->output->fatal_error('Error: '.$data['message']);
 		}
 
-		if( $related ) {
-			foreach( $data['donations'] as $k => $v ) {
-				if( array_key_exists('opportunity', $v) ) {
-					$ret = $this->prefix_tags('gi', array($v['opportunity']));
-					$data['donations'][$k]['opportunity'] = $ret;
-					$data['donations'][$k]['has_opportunity'] = true;
-				}
-				if( array_key_exists('campaign', $v) ) {
-					$ret = $this->prefix_tags('gi', array($v['campaign']));
-					$data['donations'][$k]['campaign'] = $ret;
-					$data['donations'][$k]['has_campaign'] = true;
-				}
-			}
-		}
-
-		return $this->prefix_tags('gi', $data['donations']);
+		// if( $related ) {
+		// 	foreach( $data['donations'] as $k => $v ) {
+		// 		if( array_key_exists('opportunity', $v) ) {
+		// 			$ret = $this->prefix_tags('gi', array($v['opportunity']));
+		// 			$data['donations'][$k]['opportunity'] = $ret;
+		// 			$data['donations'][$k]['has_opportunity'] = true;
+		// 		}
+		// 		if( array_key_exists('campaign', $v) ) {
+		// 			$ret = $this->prefix_tags('gi', array($v['campaign']));
+		// 			$data['donations'][$k]['campaign'] = $ret;
+		// 			$data['donations'][$k]['has_campaign'] = true;
+		// 		}
+		// 	}
+		// }
+		return $this->prefix_tags('gi', $data['donations'], true);
 	}
 }
