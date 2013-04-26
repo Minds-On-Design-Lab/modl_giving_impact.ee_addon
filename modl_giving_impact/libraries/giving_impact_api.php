@@ -72,6 +72,15 @@ class Giving_impact_api {
 		return $out;
 	}
 
+	/**
+	 * Prefix tags, but don't return wrapped in array
+	 * @param  string $pfx
+	 * @param  array $data
+	 * @param  boolean $recurse
+	 * @return array
+	 * @access protected
+	 * @final
+	 */
 	protected function prefix_tags_single($pfx, $data, $recurse) {
 		$row = array();
 
