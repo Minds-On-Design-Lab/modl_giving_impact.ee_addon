@@ -47,7 +47,7 @@ class Giving_impact_api {
 	 * @access protected
 	 * @final
 	 */
-	protected function prefix_tags($pfx, $data, $recurse) {
+	protected function prefix_tags($pfx, $data, $recurse = false) {
 		$out = array();
 
 		foreach( $data as $item ) {
@@ -81,7 +81,7 @@ class Giving_impact_api {
 	 * @access protected
 	 * @final
 	 */
-	protected function prefix_tags_single($pfx, $data, $recurse) {
+	protected function prefix_tags_single($pfx, $data, $recurse = false) {
 		$row = array();
 
 		foreach( $data as $k => $v ) {

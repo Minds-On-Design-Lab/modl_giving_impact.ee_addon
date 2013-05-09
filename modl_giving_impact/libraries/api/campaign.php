@@ -75,9 +75,10 @@ class Modl_API_Campaign extends Giving_impact_api {
 		$dir = $this->dir;
 		if( strpos($sort, '|') !== false ) {
 			$temp = explode('|', $sort);
-			$sort = $sort[0];
-			if( $sort[1] == 'desc' || $sort[1] == 'asc' ) {
-				$dir = $sort[1];
+
+			$sort = $temp[0];
+			if( $temp[1] == 'desc' || $temp[1] == 'asc' ) {
+				$dir = $temp[1];
 			}
 		}
 
