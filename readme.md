@@ -156,7 +156,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 ##### Optional Parameters
  
- | Parameter | Data Type | Description | Default | 
+| Parameter | Data Type | Description | Default | 
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
@@ -166,6 +166,9 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 | Variable        | Description| 
 | ------------- |:-------------|
+| {gi_id_token} | Unique API token and id for the donation. |
+| {gi_created_at} | Timestamp of donation date and time. |
+| {gi_campaign} OR {gi_opportunity} | Unique API token for campaign OR opportunity that the donation is most directly associated with.|
 | {gi_first_name} | Donor first name |
 | {gi_last_name} | Donor last name |
 | {gi_billing_address1} | Donor address | 
@@ -173,12 +176,11 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | {gi_billing_state} | Donor State |
 | {gi_billing_postal_code} | Donor zip code |
 | {gi_billing_country} | Donor country |
-| {gi_individual_total} | Amount donated (integer) |
+| {gi_donation_total} | Amount donated (integer) |
 | {gi_donation_level} | The donation level selected if campaign is configured with donation levels. |
+| {gi_contactl} | Returns `true` or `false` depending on whether the donor requested to be opted out of follow/up email communications.|
 | {gi_email_address} | Donor email address unless donor has 'opted out' of receiving follow-up communications. |
-| {gi_referrer} | Referring URL visited prior to launching the hosted donation page. Captured when possible. |
-| {gi_offline} | Returns `true` or `false` depending on whether the donation was an 'offline' donation recorded manually through the Giving Impact dashboard or not. |
-| {gi_created_at} | Timestamp of donation date and time. |
+| {gi_offline} |  Returns `true` or `false` depending on whether the donation was recorded offline (manually) or not. |
 | {gi_twitter_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a tweet following their donation using the Giving Impact share available on donation confirmation page. |
 | {gi_fb_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a Facebook Like following their donation using the Giving Impact share available on donation confirmation page. |
 
@@ -186,9 +188,15 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 ##### Custom Responses
 
-	{gi_custom_responses}
-		{gi_field_label}: {gi_response}<br>
-	{/gi_custom_responses}
+	{gi_custom_responses}{/gi_custom_responses}
+
+| Variable        | Description| 
+| ------------- |:-------------|
+| {gi_field_id} | Returns a unique identifier for the custom field |
+| {gi_field_type} | Returns the type of field (dropdown, text, ...) |
+| {gi_field_label} | Returns the label of the field |
+| {gi_response} | Returns the donor's response if entered |
+| {gi_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
 
 #### Conditionals
 
