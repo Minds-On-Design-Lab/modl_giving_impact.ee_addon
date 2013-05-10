@@ -23,9 +23,9 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 ## Usage
 
-The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of it's related method's data as an ee tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is data element returned with a campaign's unique token labeled `id_token` which in the related EE tag pair would be returned as `{gi_id_token}`.
+The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of it's related method's data as an EECMS tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is a data element returned with a campaign's unique token labeled `id_token` which in the related EECMS tag pair would be returned as `{gi_id_token}`.
 
-The following details the ExpressionEngine tags available, data returned, parameters, and any unique variables available for use. It also details options for create forms to post data to Giving Impact.
+The following details the ExpressionEngine tags available, variables returned, parameters, and any unique variables available for use. It also details options for create forms to post data to Giving Impact.
 
 To learn more about these methods, the date returned and using this module to bring a customized donation experience to your nonprofit's ExpressionEngine site, please visit [givingimpact.com](http://givingimpact.com)
 
@@ -128,7 +128,7 @@ The following are used to modify the returned list of giving opportunities when 
 | {gi_campaign_color} | Campaign accent color.  |
 | {gi_header_font} | Campaign accent color.  |
 
-#### Tag Pair Variables
+#### Variable Pairs
 
 ##### Campaign
 
@@ -161,7 +161,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
 | sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g.    sort="gi_created_at&#124;desc"| gi_created_at |
 
-#### Variables
+#### Single Variables
 
 | Variable        | Description| 
 | ------------- |:-------------|
@@ -183,7 +183,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | {gi_twitter_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a tweet following their donation using the Giving Impact share available on donation confirmation page. |
 | {gi_fb_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a Facebook Like following their donation using the Giving Impact share available on donation confirmation page. |
 
-#### Tag Pair Variables
+#### Variable Pairs
 
 ##### Custom Responses
 
@@ -199,7 +199,7 @@ The following variables are available within this tag pair.
 | {gi_response} | Returns the donor's response if entered |
 | {gi_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
 
-#### Conditionals
+#### Conditional Variables
 
 ##### if no_donations
 
@@ -251,7 +251,7 @@ On successful submission and processing of form data, the API and module will re
 1. The opportunity_token will be dynamically added as the last segment of the path specificed in the **return** parameter detailed above.
 2. If you return to the same template that contains the form tag, you may use the `{opportunity_token}` variable within the form tag.
 
-#### Conditionals
+#### Conditional Variables
 
 ##### if opportunity_token
 
