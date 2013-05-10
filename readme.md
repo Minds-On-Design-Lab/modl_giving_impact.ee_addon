@@ -44,7 +44,7 @@ To learn more about these methods, the date returned and using this module to br
 
 | Parameter | Data Type | Description | Default | 
 | ------------ |:-------------|:-------------|:-------------|
-| campaign | STRING | Unique campaign token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
+| campaign | STRING | Unique campaign id_token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
 | sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
@@ -80,11 +80,11 @@ To learn more about these methods, the date returned and using this module to br
 
 ### Opportunities
 
-	{exp:modl_giving_impact:opportunities} Content {/exp:modl_giving_impact:opportunities}
+	{exp:modl_giving_impact:opportunities campaign="{id_token}"} Content {/exp:modl_giving_impact:opportunities}
 
 #### Required Parameters
 
-You need to provide a campaign token **or** opportunity token.
+You need to provide a campaign id_token **or** opportunity id_token.
 
 * A campaign token will generate a list of children opportunities. 
 * An opportunity token will return the single opportunity.
@@ -132,16 +132,15 @@ The following are used to modify the returned list of giving opportunities when 
 
 ##### Campaign
 
-If the parameter `related=true` is added to the tag the following tag pair 
+If the parameter `related=true` is added to the tag the following tag pair becomes available:
 
 	{gi_campaign}
-		*All variables returned by the campaign tag above will be available here.*
+		[All variables returned by the campaign tag above will be available here.]
 	{/gi_campaign}
 
 ### Donations
 
-	{exp:modl_giving_impact:donations} Content {/exp:modl_giving_impact:donations}
-Donations require either a campaign or opportunity token
+	{exp:modl_giving_impact:donations campaign="{id_token}} Content {/exp:modl_giving_impact:donations}
 
 #### Parameters
 
@@ -151,8 +150,8 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 | Parameter | Data Type | Description |
 | ------------ |:-------------|:-------------|
-| campaign  | STRING | Parent campaign |
-| opportunity | STRING | Specfic opportunity |
+| campaign  | STRING | Parent campaign id_token |
+| opportunity | STRING | Specfic opportunity id_token |
 
 ##### Optional Parameters
  
@@ -160,7 +159,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
-| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at&#124;desc"`| gi_created_at |
 
 #### Variables
 
