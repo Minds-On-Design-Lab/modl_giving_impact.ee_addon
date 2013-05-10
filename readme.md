@@ -159,7 +159,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
-| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. ``sort="gi_created_at|desc"``| gi_created_at |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g.    sort="gi_created_at|desc"| gi_created_at |
 
 #### Variables
 
