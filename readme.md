@@ -189,6 +189,8 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 	{gi_custom_responses}{/gi_custom_responses}
 
+The following variables are available within this tag pair.
+
 | Variable        | Description| 
 | ------------- |:-------------|
 | {gi_field_id} | Returns a unique identifier for the custom field |
@@ -199,7 +201,7 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 #### Conditionals
 
-#### if no_donations
+##### if no_donations
 
 	{if no_donations}{/if}
 
