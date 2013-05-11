@@ -54,10 +54,14 @@ class Giving_impact_api {
 			$row = array();
 
 			foreach( $item as $k => $v ) {
-				if( $recurse && is_array($v) && !is_int($k) ) {
-					$row[$pfx.'_'.$k] = $this->prefix_tags($pfx, array($v), true);
-				} elseif( $recurse && is_array($v) && is_int($k) ) {
-					$row[$k] = $this->prefix_tags_single($pfx, $v, true);
+
+				if( is_array($v) ) {
+					reset($v);
+					if( is_int(key($v)) ) {
+						$row[$pfx.'_'.$k] = $this->prefix_indexed($k, $v);
+					} else {
+						$row[$pfx.'_'.$k] = $this->prefix_assoc($k, $v);
+					}
 				} else {
 					$row[$pfx.'_'.$k] = $v;
 				}
@@ -66,35 +70,63 @@ class Giving_impact_api {
 			$out[] = $row;
 		}
 
-		if( isset($out[0]) && isset($out[0][0]) ) {
-			return array_shift($out);
-		}
 		return $out;
 	}
 
 	/**
-	 * Prefix tags, but don't return wrapped in array
+	 * prefixes indexed arrays
 	 * @param  string $pfx
 	 * @param  array $data
-	 * @param  boolean $recurse
 	 * @return array
-	 * @access protected
-	 * @final
 	 */
-	protected function prefix_tags_single($pfx, $data, $recurse) {
-		$row = array();
+	protected function prefix_indexed($pfx, $data) {
+		$out = array();
+		if( is_array(reset($data)) ) {
+			foreach( $data as $i => $item ) {
+				$row = array();
+				foreach( $item as $k => $v ) {
+					if( is_array($v) ) {
+						reset($v);
+						if( is_int(key($v)) ) {
+							$row[$pfx.'_'.$k] = $this->prefix_indexed($k, $v);
+						} else {
+							$row[$pfx.'_'.$k] = $this->prefix_assoc($k, $v);
+						}
+					} else {
+						$row[$pfx.'_'.$k] = $v;
+					}
+				}
+				$out[] = $row;
+			}
 
+			return $out;
+		} else {
+			return $data;
+		}
+	}
+
+	/**
+	 * prefixes associative arrays
+	 * @param  string $pfx
+	 * @param  array $data
+	 * @return array
+	 */
+	protected function prefix_assoc($pfx, $data) {
+		$out = array();
 		foreach( $data as $k => $v ) {
-			if( $recurse && is_array($v) && !is_int($k) ) {
-				$row[$pfx.'_'.$k] = $this->prefix_tags($pfx, array($v), true);
-			} elseif( $recurse && is_array($v) && !is_int($k) ) {
-				$row[$pfx.'_'.$k] = $this->prefix_tags_single($pfx, $v, true);
+			if( is_array($v) ) {
+				reset($v);
+				if( is_int(key($v)) ) {
+					$out[$pfx.'_'.$k] = $this->prefix_indexed($k, $v);
+				} else {
+					$out[$pfx.'_'.$k] = $this->prefix_assoc($k, $v);
+				}
 			} else {
-				$row[$pfx.'_'.$k] = $v;
+				$out[$pfx.'_'.$k] = $v;
 			}
 		}
 
-		return $row;
+		return array($out);
 	}
 
 	/**
