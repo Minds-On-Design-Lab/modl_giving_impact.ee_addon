@@ -66,7 +66,9 @@ class Modl_API_Campaign extends Giving_impact_api {
 	public function fetch() {
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
-		$sort = $this->EE->TMPL->fetch_param('sort', $this->sort);
+		$sort = str_replace(
+			'gi_', '', $this->EE->TMPL->fetch_param('sort', $this->sort)
+		);
 
 		if( $sort && strpos($sort, 'gi_') === 0 ) {
 			$sort = substr($sort, 3);
@@ -75,9 +77,10 @@ class Modl_API_Campaign extends Giving_impact_api {
 		$dir = $this->dir;
 		if( strpos($sort, '|') !== false ) {
 			$temp = explode('|', $sort);
-			$sort = $sort[0];
-			if( $sort[1] == 'desc' || $sort[1] == 'asc' ) {
-				$dir = $sort[1];
+
+			$sort = $temp[0];
+			if( $temp[1] == 'desc' || $temp[1] == 'asc' ) {
+				$dir = $temp[1];
 			}
 		}
 

@@ -69,7 +69,9 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		$campaign = $this->EE->TMPL->fetch_param('campaign', false);
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
-		$sort = $this->EE->TMPL->fetch_param('sort', $this->sort);
+		$sort = str_replace(
+			'gi_', '', $this->EE->TMPL->fetch_param('sort', $this->sort)
+		);
 		$related = $this->EE->TMPL->fetch_param('related', $this->related);
 
 		if( $sort && strpos($sort, 'gi_') === 0 ) {

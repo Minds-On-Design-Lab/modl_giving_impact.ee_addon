@@ -5,8 +5,8 @@
 An ExpressionEngine 2.x module to interact with Giving Impact &trade;.
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.0<br />
-**Copyright:** Copyright &copy; 2010-2012 Minds On Design Lab<br />
+**Version:** 2.1<br />
+**Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
 ## Requirements
@@ -15,6 +15,7 @@ An ExpressionEngine 2.x module to interact with Giving Impact &trade;.
 * cURL
 * Expression Engine 2.x
 * A [Giving Impact](http://givingimpact.com) account.
+	* Supports v2 of API
 
 ## Installation
 
@@ -41,81 +42,41 @@ To learn more about these methods, the date returned and using this module to br
 
 #### Optional Parameters
 
-* campaign - STRING - Unique campaign token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns.
-* limit - INT - Limits results returned. **default = 10**
-* offset - INT - Number of results to skip, useful for pagination. **default = 0**
-* sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="created_at|desc"` **default = created_at**
-* status - STRING - Campaign status, "active", "inactive" or "both". **default = active**
+| Parameter | Data Type | Description | Default | 
+| ------------ |:-------------|:-------------|:-------------|
+| campaign | STRING | Unique campaign token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
+| limit | INT | Limits the number of results returned. | 10 |
+| offset | INT | Number of results to skip, useful for pagination. | 0 |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
+| status | STRING | Campaign status, "active", "inactive" or "both". | active |
 
-#### Variables
+#### Single Variables
 
-	{gi_id_token}
-
-Unique API token and id for the campaign.
-	
-	{gi_title}
-
-Title of the campaign
-	
-	{gi_description}
-
-Brief campaign description
-
-	{gi_image_url}
-
-URL to campaign image. Image is hosted with Giving Impact.
-
-	{gi_youtube_id}
-
-YouTube ID for campaign video.
-
-	{gi_donation_url}
-
-URL to the hosted donation landing and processing pages.
- 
-	{gi_donation_target}
-
-Target donation amount (integer).
-
-	{gi_donation_total}
-
-Current donation total (integer).
-
-	{gi_display_target}
-
-Returns `true` or `false` for the campaign preference to show or hide the target donation amount. Useful to use as a conditional around the `{gi_donation_target}` variable to respect this preference.
-
-	{gi_display_total}
-
-Returns `true` or `false` for the campaign preference to show or hide the current donation total. Useful to use as a conditional around the `{gi_donation_total}` variable to respect this preference.
-
-	{gi_givlnk}
-
-A Giving Impact short URL that redirects to the hosted campaign donation landing and processing page.  Useful for sharing and multi-channel outreach.
-
-	{gi_share_url}
-
-URL to the hosted share page. Useful to offer social network sharing of the campaign using campaign data.	 Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard.
-
-	{gi_shares_fb}
-
-Total number of Facebook likes for this campaign made through the Giving Impact share feature.
-
-	{gi_shares_twitter}
-
-Total number of Tweets made for this campaign made through the Giving Impact share feature.
-
-	{gi_hash_tag}
-
-Twitter hashtag for the campaign.
-
-	{gi_has_giving_opportunities}
-
-Returns `true` or `false` depending on whether the campaign is configured to support Giving Opportunities.
-
-	{gi_status}
-
-Returns `true` or `false` depending on whether the campaign is active or not.
+| Variable        | Description| 
+| ------------- |:-------------|
+| {gi_id_token} | Unique API token and id for the campaign | 
+| {gi_status} | Returns `true` or `false` depending on whether the campaign is active or not. |
+| {gi_title} | Title of the campaign |  
+| {gi_description} | Brief campaign description |
+| {gi_donation_url} | URL to the hosted donation landing and processing pages. |
+| {gi_donation_target} | Target donation amount (integer). |
+| {gi_donation_minimum} | Minimum donation value accepted. |
+| {gi_donation_total} | Current donation total (integer). |
+| {gi_total_donations} | Current total number of donations. |
+| {gi_has_giving_opportunities} | Returns `true` or `false` depending on whether the Campaign has Giving Opportunities or not. |
+| {gi_total_opportunities} | Current total number of Giving Opportunities. |
+| {gi_share_url} | URL to the hosted share page. Useful to offer social network sharing of the campaign using campaign data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard as well as can be tracked in Google Analytics if a profile ID has been added to campaign. |
+| {gi_shares_fb} | Total number of Facebook likes for this campaign made through the Giving Impact share feature. |
+| {gi_shares_twitter} | Total number of Tweets made for this campaign made through the Giving Impact share feature. |
+| {gi_image_url} | URL to campaign image. Image is hosted with Giving Impact |
+| {gi_thumb_url} | URL to campaign thumbnail image. Image is hosted with Giving Impact |
+| {gi_youtube_id} | YouTube ID for campaign video. |
+| {gi_hash_tag} | Twitter hashtag for the campaign. |
+| {gi_analytics_id} | Google Analytics Profile ID for the Campaign. |
+| {gi_campaign_color} | Campaign accent color.  |
+| {gi_header_font} | Campaign accent color.  |
+| {gi_display_donation_target} | Returns `true` or `false` for the campaign preference to show or hide the target donation amount. Useful to use as a conditional around the `{gi_donation_target}` variable to respect this preference. |
+| {gi_display_donation_total} | Returns `true` or `false` for the campaign preference to show or hide the current donation total. Useful to use as a conditional around the `{gi_donation_total}` variable to respect this preference. |
 
 ### Opportunities
 
@@ -123,79 +84,61 @@ Returns `true` or `false` depending on whether the campaign is active or not.
 
 #### Required Parameters
 
-You need to provide a campaign token **or** opportunity token. A campaign token will generate a list of children opportunities. An opportunity token will return the single opportunity.
+You need to provide a campaign token **or** opportunity token.
 
-* campaign - STRING - Parent campaign token. This is used to display the list of Giving Opportunities associated with a specific campaign.
-* opportunity - STRING - Unique giving opportunity token. This is used to display a single specific Giving Opportunity.
+* A campaign token will generate a list of children opportunities. 
+* An opportunity token will return the single opportunity.
+
+| Parameter | Data Type | Description |
+| ------------ |:-------------|:-------------|
+| campaign | STRING | Parent campaign token. This is used to display the list of Giving Opportunities associated with a specific campaign. |
+| opportunity | STRING | Unique giving opportunity token. This is used to display a single specific Giving Opportunity. |
 
 ##### Optional Parameters
  
- The following are used to modify the returned list of giving opportunities when a parent campaign is specified.
+The following are used to modify the returned list of giving opportunities when a parent campaign is specified.
 
-* limit - INT - Limits results returned. **default = 10**
-* offset - INT - Number of results to skip, useful for pagination. **default = 0**
-* sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
-* status - STRING - Campaign status, "active", "inactive" or "both". **default = active**
+| Parameter | Data Type | Description | Default | 
+| ------------ |:-------------|:-------------|:-------------|
+| limit | INT | Limits the number of results returned. | 10 |
+| offset | INT | Number of results to skip, useful for pagination. | 0 |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
+| status | STRING | Campaign status, "active", "inactive" or "both". | active |
+| related | BOOLEAN | Entering true`will make available the `{gi_campaign}{/gi_campaign}` tag pair with a full set of variables related to the opportunity's parent campaign.  | false |
 
-#### Variables
+#### Single Variables
 
-	{gi_id_token}
+| Variable        | Description| 
+| ------------- |:-------------|
+| {gi_id_token} | Unique API token and id for the Giving Opportunity. |
+| {gi_status} | Returns `true` or `false` depending on whether the Giving Opportunity is active or not. |
+| {gi_title} | Title of the Giving Opportunity |
+| {gi_description} | Brief Giving Opportunity description |
+| {gi_donation_url} | URL to the hosted donation landing and processing pages. |
+| {gi_donation_target} | Target donation amount (integer). |
+| {gi_donation_minimum} | Minimum donation value accepted. |
+| {gi_donation_total} | Current donation total (integer). |
+| {gi_total_donations} | Current total number of donations. |
+| {gi_share_url} | URL to the hosted share page. Useful to offer social network sharing of the Giving Opportunity using Giving Opportunity data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard. |
+| {gi_shares_fb} | Total number of Facebook likes for this Giving Opportunity made through the Giving Impact share feature. |
+| {gi_shares_twitter} | Total number of Tweets made for this Giving Opportunity made through the Giving Impact share feature. |
+| {gi_image_url} |  URL to Giving Opportunity image. Image is hosted with Giving Impact. |
+| {gi_thumb_url} |  URL to Giving Opportunity thumbnail image. Image is hosted with Giving Impact. |
+| {gi_youtube_id} | YouTube ID for Giving Opportunity video. |
+| {gi_campaign_color} | Campaign accent color.  |
+| {gi_header_font} | Campaign accent color.  |
 
-Unique API token and id for the Giving Opportunity.
-	
-	{gi_title}
+#### Tag Pair Variables
 
-Title of the Giving Opportunity
-	
-	{gi_description}
+##### Campaign
 
-Brief Giving Opportunity description
+If the parameter `related=true` is added to the tag the following tag pair 
 
-	{gi_image_url}
+	{gi_campaign}
+		*All variables returned by the campaign tag above will be available here.*
+	{/gi_campaign}
 
-URL to Giving Opportunity image. Image is hosted with Giving Impact.
-
-	{gi_youtube_id}
-
-YouTube ID for Giving Opportunity video.
-
-	{gi_donation_url}
-
-URL to the hosted donation landing and processing pages.
- 
-	{gi_donation_target}
-
-Target donation amount (integer).
-
-	{gi_donation_total}
-
-Current donation total (integer).
-
-	{gi_givlnk}
-
-A Giving Impact short URL that redirects to the hosted Giving Opportunity donation landing and processing page. Useful for sharing and multi-channel outreach.
-
-	{gi_share_url}
-
-URL to the hosted share page. Useful to offer social network sharing of the Giving Opportunity using Giving Opportunity data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard.
-
-	{gi_shares_fb}
-
-Total number of Facebook likes for this Giving Opportunity made through the Giving Impact share feature.
-
-	{gi_shares_twitter}
-
-Total number of Tweets made for this Giving Opportunity made through the Giving Impact share feature.
-
-	{gi_hash_tag}
-
-Twitter hashtag for the campaign.
-
-	{gi_status}
-
-Returns `true` or `false` depending on whether the Giving Opportunity is active or not.
-
-#### Donations
+### Donations
 
 	{exp:modl_giving_impact:donations} Content {/exp:modl_giving_impact:donations}
 Donations require either a campaign or opportunity token
@@ -206,76 +149,46 @@ Donations require either a campaign or opportunity token
 
 You need to provide a campaign token **or** opportunity token. A campaign token will generate a list of donations within the campaign, including those made through any children opportunities. An opportunity token will return a list of donations for the specified opportunity only.
 
-* campaign  - STRING - Parent campaign.
-* opportunity - STRING - Specfic opportunity
+| Parameter | Data Type | Description |
+| ------------ |:-------------|:-------------|
+| campaign  | STRING | Parent campaign |
+| opportunity | STRING | Specfic opportunity |
 
 ##### Optional Parameters
  
-* limit - INT - Limits results returned. **default = 10**
-* offset - INT - Number of results to skip, useful for pagination. **default = 0**
-* sort - STRING - Property to sort results by. Also accepts a direction preceded by a pipe. **default = created_at**
+ | Parameter | Data Type | Description | Default | 
+| ------------ |:-------------|:-------------|:-------------|
+| limit | INT | Limits the number of results returned. | 10 |
+| offset | INT | Number of results to skip, useful for pagination. | 0 |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
 
 #### Variables
 
-	{gi_first_name}
+| Variable        | Description| 
+| ------------- |:-------------|
+| {gi_first_name} | Donor first name |
+| {gi_last_name} | Donor last name |
+| {gi_billing_address1} | Donor address | 
+| {gi_billing_city} | Donor city |
+| {gi_billing_state} | Donor State |
+| {gi_billing_postal_code} | Donor zip code |
+| {gi_billing_country} | Donor country |
+| {gi_individual_total} | Amount donated (integer) |
+| {gi_donation_level} | The donation level selected if campaign is configured with donation levels. |
+| {gi_email_address} | Donor email address unless donor has 'opted out' of receiving follow-up communications. |
+| {gi_referrer} | Referring URL visited prior to launching the hosted donation page. Captured when possible. |
+| {gi_offline} | Returns `true` or `false` depending on whether the donation was an 'offline' donation recorded manually through the Giving Impact dashboard or not. |
+| {gi_created_at} | Timestamp of donation date and time. |
+| {gi_twitter_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a tweet following their donation using the Giving Impact share available on donation confirmation page. |
+| {gi_fb_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a Facebook Like following their donation using the Giving Impact share available on donation confirmation page. |
 
-Donor first name
+#### Tag Pair Variables
 
-	{gi_last_name}
+##### Custom Responses
 
-Donor last name
-
-	{gi_billing_address1}
-
-Donor address
-
-	{gi_billing_city}
-
-Donor city
-
-	{gi_billing_state}
-
-Donor State
-
-	{gi_billing_postal_code}
-
-Donor zip code
-
-	{gi_billing_country}
-
-Donor country
-
-	{gi_individual_total}
-
-Amount donated (integer)
-
-	{gi_donation_level}
-
-The donation level selected if campaign is configured with donation levels. 
-
-	{gi_email_address}
-
-Donor email address unless donor has 'opted out' of receiving follow-up communications.
-
-	{gi_referrer}
-
-Referring URL visited prior to launching the hosted donation page. Captured when possible.
-	
-	{gi_offline}
-
-Returns `true` or `false` depending on whether the donation was an 'offline' donation recorded manually through the Giving Impact dashboard or not.
-
-	{gi_created_at}
-
-Timestamp of donation date and time.
-
-	{gi_twitter_share}
-
-Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a tweet following their donation using the Giving Impact share available on donation confirmation page.
-
-	{gi_fb_share}
-
-Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a Facebook Like following their donation using the Giving Impact share available on donation confirmation page.
+	{gi_custom_responses}
+		{gi_field_label}: {gi_response}<br>
+	{/gi_custom_responses}
 
 #### Conditionals
 
@@ -384,7 +297,8 @@ If the user submits the form successfully and is immediately returned to the tem
 
 
 ## Changelog
-
+* Version 2.0 - update to work with v2.0 API enhancements
+	* Related Parameter - Get related Campaign or Giving Opportunity data with an opportunity or donation data set.
 * 08222012 - Version 2.0
 	* Full revision of Module designed to work with V2.0 of Giving Impact's API
 * 02172012 - Added MSM support

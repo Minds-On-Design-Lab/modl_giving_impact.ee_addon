@@ -47,7 +47,7 @@ class Giving_impact_api {
 	 * @access protected
 	 * @final
 	 */
-	protected function prefix_tags($pfx, $data, $recurse) {
+	protected function prefix_tags($pfx, $data, $recurse = false) {
 		$out = array();
 
 		foreach( $data as $item ) {
