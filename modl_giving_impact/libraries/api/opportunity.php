@@ -49,7 +49,8 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		}
 
 		$url = $this->build_url($this->api_path.'/'.$token, array(
-			'status' => $status
+			'status' => $status,
+			'related' => $related
 		));
 
 		$data = $this->get($url);
