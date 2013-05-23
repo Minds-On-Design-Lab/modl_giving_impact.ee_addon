@@ -35,10 +35,7 @@ class Giving_impact_api {
 		}
 
 		// Get sitename for user_agent
-	    $site = $this->EE->db
-	    	->where('site_id', $this->EE->config->item('site_id'))
-		    ->get('sites');
-		$this->user_agent = 'EECMS/'.$site->row('site_name');
+		$this->user_agent = 'EECMS/'.$this->EE->config->item('site_url');
 	}
 
 	/**
