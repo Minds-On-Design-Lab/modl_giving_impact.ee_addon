@@ -105,6 +105,15 @@ class Modl_API_Donation extends Giving_impact_api {
 		// 		}
 		// 	}
 		// }
-		return $this->prefix_tags('gi', $data['donations'], true);
+		//
+
+		$donations = array();
+		foreach( $data['donations'] as $donation ) {
+			if( array_key_exists('opportunity', $donation) ) {
+				$donation['has_opportunity'] = true;
+			}
+			$donations[] = $donation;
+		}
+		return $this->prefix_tags('gi', $donations, true);
 	}
 }
