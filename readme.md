@@ -23,9 +23,9 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 ## Usage
 
-The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of it's related method's data as an ee tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is data element returned with a campaign's unique token labeled `id_token` which in the related EE tag pair would be returned as `{gi_id_token}`.
+The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of it's related method's data as an EECMS tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is a data element returned with a campaign's unique token labeled `id_token` which in the related EECMS tag pair would be returned as `{gi_id_token}`.
 
-The following details the ExpressionEngine tags available, data returned, parameters, and any unique variables available for use. It also details options for create forms to post data to Giving Impact.
+The following details the ExpressionEngine tags available, variables returned, parameters, and any unique variables available for use. It also details options for create forms to post data to Giving Impact.
 
 To learn more about these methods, the date returned and using this module to bring a customized donation experience to your nonprofit's ExpressionEngine site, please visit [givingimpact.com](http://givingimpact.com)
 
@@ -44,7 +44,7 @@ To learn more about these methods, the date returned and using this module to br
 
 | Parameter | Data Type | Description | Default | 
 | ------------ |:-------------|:-------------|:-------------|
-| campaign | STRING | Unique campaign token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
+| campaign | STRING | Unique campaign id_token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
 | sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
@@ -80,11 +80,11 @@ To learn more about these methods, the date returned and using this module to br
 
 ### Opportunities
 
-	{exp:modl_giving_impact:opportunities} Content {/exp:modl_giving_impact:opportunities}
+	{exp:modl_giving_impact:opportunities campaign="{id_token}"} Content {/exp:modl_giving_impact:opportunities}
 
 #### Required Parameters
 
-You need to provide a campaign token **or** opportunity token.
+You need to provide a campaign id_token **or** opportunity id_token.
 
 * A campaign token will generate a list of children opportunities. 
 * An opportunity token will return the single opportunity.
@@ -128,20 +128,19 @@ The following are used to modify the returned list of giving opportunities when 
 | {gi_campaign_color} | Campaign accent color.  |
 | {gi_header_font} | Campaign accent color.  |
 
-#### Tag Pair Variables
+#### Variable Pairs
 
 ##### Campaign
 
-If the parameter `related=true` is added to the tag the following tag pair 
+If the parameter `related=true` is added to the tag the following tag pair becomes available:
 
 	{gi_campaign}
-		*All variables returned by the campaign tag above will be available here.*
+		[All variables returned by the campaign tag above will be available here.]
 	{/gi_campaign}
 
 ### Donations
 
-	{exp:modl_giving_impact:donations} Content {/exp:modl_giving_impact:donations}
-Donations require either a campaign or opportunity token
+	{exp:modl_giving_impact:donations campaign="{id_token}} Content {/exp:modl_giving_impact:donations}
 
 #### Parameters
 
@@ -151,21 +150,24 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 | Parameter | Data Type | Description |
 | ------------ |:-------------|:-------------|
-| campaign  | STRING | Parent campaign |
-| opportunity | STRING | Specfic opportunity |
+| campaign  | STRING | Parent campaign id_token |
+| opportunity | STRING | Specfic opportunity id_token |
 
 ##### Optional Parameters
  
- | Parameter | Data Type | Description | Default | 
+| Parameter | Data Type | Description | Default | 
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
-| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g.    sort="gi_created_at&#124;desc"| gi_created_at |
 
-#### Variables
+#### Single Variables
 
 | Variable        | Description| 
 | ------------- |:-------------|
+| {gi_id_token} | Unique API token and id for the donation. |
+| {gi_created_at} | Timestamp of donation date and time. |
+| {gi_campaign} OR {gi_opportunity} | Unique API token for campaign OR opportunity that the donation is most directly associated with.|
 | {gi_first_name} | Donor first name |
 | {gi_last_name} | Donor last name |
 | {gi_billing_address1} | Donor address | 
@@ -173,26 +175,33 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | {gi_billing_state} | Donor State |
 | {gi_billing_postal_code} | Donor zip code |
 | {gi_billing_country} | Donor country |
-| {gi_individual_total} | Amount donated (integer) |
+| {gi_donation_total} | Amount donated (integer) |
 | {gi_donation_level} | The donation level selected if campaign is configured with donation levels. |
+| {gi_contactl} | Returns `true` or `false` depending on whether the donor requested to be opted out of follow/up email communications.|
 | {gi_email_address} | Donor email address unless donor has 'opted out' of receiving follow-up communications. |
-| {gi_referrer} | Referring URL visited prior to launching the hosted donation page. Captured when possible. |
-| {gi_offline} | Returns `true` or `false` depending on whether the donation was an 'offline' donation recorded manually through the Giving Impact dashboard or not. |
-| {gi_created_at} | Timestamp of donation date and time. |
+| {gi_offline} |  Returns `true` or `false` depending on whether the donation was recorded offline (manually) or not. |
 | {gi_twitter_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a tweet following their donation using the Giving Impact share available on donation confirmation page. |
 | {gi_fb_share} | Returns `true` or `false` depending if the user shared the Campaign or Giving Opportunity with a Facebook Like following their donation using the Giving Impact share available on donation confirmation page. |
 
-#### Tag Pair Variables
+#### Variable Pairs
 
 ##### Custom Responses
 
-	{gi_custom_responses}
-		{gi_field_label}: {gi_response}<br>
-	{/gi_custom_responses}
+	{gi_custom_responses}{/gi_custom_responses}
 
-#### Conditionals
+The following variables are available within this tag pair.
 
-#### if no_donations
+| Variable        | Description| 
+| ------------- |:-------------|
+| {gi_field_id} | Returns a unique identifier for the custom field |
+| {gi_field_type} | Returns the type of field (dropdown, text, ...) |
+| {gi_field_label} | Returns the label of the field |
+| {gi_response} | Returns the donor's response if entered |
+| {gi_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
+
+#### Conditional Variables
+
+##### if no_donations
 
 	{if no_donations}{/if}
 
@@ -242,7 +251,7 @@ On successful submission and processing of form data, the API and module will re
 1. The opportunity_token will be dynamically added as the last segment of the path specificed in the **return** parameter detailed above.
 2. If you return to the same template that contains the form tag, you may use the `{opportunity_token}` variable within the form tag.
 
-#### Conditionals
+#### Conditional Variables
 
 ##### if opportunity_token
 

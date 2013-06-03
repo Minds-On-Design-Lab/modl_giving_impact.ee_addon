@@ -137,6 +137,7 @@ class Modl_giving_impact_upd {
 	 */
 	public function update($current = '')
 	{
+		$this->EE->load->dbforge();
 		// If you have updates, drop 'em in here.
 		if( version_compare($current, '1.1', '<') ) {
 			// add the site id
