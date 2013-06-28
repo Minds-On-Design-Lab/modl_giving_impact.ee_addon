@@ -56,7 +56,7 @@ To learn more about these methods, the date returned and using this module to br
 | campaign | STRING | Unique campaign id_token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
-| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. `sort="gi_created_at|desc"`| gi_created_at |
+| sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. sort="gi_created_at|desc"| gi_created_at |
 | status | STRING | Campaign status, "active", "inactive" or "both". | active |
 
 #### Single Variables
