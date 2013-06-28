@@ -2,7 +2,11 @@
 
 ## Overview
 
-An ExpressionEngine 2.x module to interact with Giving Impact &trade;.
+An ExpressionEngine 2.x module to interact with Giving Impact &trade;. Giving Impact is an online fundraising platform driven by a thoughtful API to allow designers and developers to deliver customized online donation experiences for Non-profits easily, affordable, and flexibly.
+
+For more about Giving Impact and to view our full documentation and learning reasources please visit [givingimpact.com](http://givingimpact.com)
+
+### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
 **Version:** 2.2<br />
@@ -16,6 +20,7 @@ An ExpressionEngine 2.x module to interact with Giving Impact &trade;.
 * Expression Engine 2.x
 * A [Giving Impact](http://givingimpact.com) account.
 	* Supports v2 of API
+* Tested in EECMS 2.5 -> 2.6.1
 
 ## Installation
 
@@ -25,7 +30,7 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 A Giving Impact API Key & Endpoint are required to connect the module to Giving Impact & can be entered on the modules settings screen.  The API version is detected automatically and should not be added to the endpoint URL at this time.
 
-## Usage
+## EECMS Usage
 
 The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of it's related method's data as an EECMS tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is a data element returned with a campaign's unique token labeled `id_token` which in the related EECMS tag pair would be returned as `{gi_id_token}`.
 
@@ -78,7 +83,7 @@ To learn more about these methods, the date returned and using this module to br
 | {gi_hash_tag} | Twitter hashtag for the campaign. |
 | {gi_analytics_id} | Google Analytics Profile ID for the Campaign. |
 | {gi_campaign_color} | Campaign accent color.  |
-| {gi_header_font} | Campaign accent color.  |
+| {gi_header_font_color} | Campaign accent color.  |
 | {gi_display_donation_target} | Returns `true` or `false` for the campaign preference to show or hide the target donation amount. Useful to use as a conditional around the `{gi_donation_target}` variable to respect this preference. |
 | {gi_display_donation_total} | Returns `true` or `false` for the campaign preference to show or hide the current donation total. Useful to use as a conditional around the `{gi_donation_total}` variable to respect this preference. |
 
@@ -120,7 +125,6 @@ The following are used to modify the returned list of giving opportunities when 
 | {gi_description} | Brief Giving Opportunity description |
 | {gi_donation_url} | URL to the hosted donation landing and processing pages. |
 | {gi_donation_target} | Target donation amount (integer). |
-| {gi_donation_minimum} | Minimum donation value accepted. |
 | {gi_donation_total} | Current donation total (integer). |
 | {gi_total_donations} | Current total number of donations. |
 | {gi_share_url} | URL to the hosted share page. Useful to offer social network sharing of the Giving Opportunity using Giving Opportunity data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard. |
@@ -129,8 +133,6 @@ The following are used to modify the returned list of giving opportunities when 
 | {gi_image_url} |  URL to Giving Opportunity image. Image is hosted with Giving Impact. |
 | {gi_thumb_url} |  URL to Giving Opportunity thumbnail image. Image is hosted with Giving Impact. |
 | {gi_youtube_id} | YouTube ID for Giving Opportunity video. |
-| {gi_campaign_color} | Campaign accent color.  |
-| {gi_header_font} | Campaign accent color.  |
 
 #### Variable Pairs
 
