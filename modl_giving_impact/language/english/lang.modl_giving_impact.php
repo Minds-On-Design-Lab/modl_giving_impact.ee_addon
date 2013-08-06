@@ -15,7 +15,6 @@ $lang = array(
 	'documentation' => 'Documentation',
 	'account' => 'Account API Name',
 	'key' => 'Account API Key',
-	'path' => 'API Path',
 	'setting' => 'Setting',
 	'value' => 'Value',
 	'submit' => 'Submit',

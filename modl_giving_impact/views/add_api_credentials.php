@@ -18,15 +18,6 @@
             	?>
             </td>
         </tr>
-         <tr class="odd">
-            <td><?= lang('path')?></td>
-            <td>
-            	<?php
-            	$data = array('name' => 'api_path', 'value' => set_value('api_path', $api_path));
-            	echo form_input($data);
-            	?>
-            </td>
-        </tr>
     </tbody>
 </table>
 <?= form_submit('submit', lang('submit'), 'class="submit"')?>

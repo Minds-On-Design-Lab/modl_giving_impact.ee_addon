@@ -70,12 +70,10 @@ class Modl_giving_impact_mcp {
 		if ($credentials->num_rows() > 0)
 		{
 			$data['api_key'] = $credentials->row('api_key');
-			$data['api_path'] = $credentials->row('api_path');
 		}
 		else
 		{
 			$data['api_key'] = '';
-			$data['api_path'] = '';
 		}
 
 		return $this->EE->load->view('index', $data, TRUE);
@@ -94,7 +92,6 @@ class Modl_giving_impact_mcp {
 
 		// Validation Rules
 	    $this->EE->form_validation->set_rules('api_key','lang:key','required');
-	    $this->EE->form_validation->set_rules('api_path','lang:path','required');
 	    $this->EE->form_validation->set_error_delimiters('<div class="notice">', '</div>');
 
 	    if ($this->EE->form_validation->run())
@@ -112,18 +109,16 @@ class Modl_giving_impact_mcp {
 		{
 			$api_instance_id = $credentials->row('api_instance_id');
 			$data['api_key'] = $credentials->row('api_key');
-			$data['api_path'] = $credentials->row('api_path');
 		}
 		else
 		{
 			$api_instance_id = '';
 			$data['api_key'] = '';
-			$data['api_path'] = '';
 		}
 
 	    $data['form_action'] = $this->_form_base.AMP.'method=add_edit_api';
 	    $data['form_hidden'] = array(
-	    	'api_instance_id' => $api_instance_id,
+	    	'api_instance_id' => $api_instance_id
 	    );
 
 
@@ -140,8 +135,7 @@ class Modl_giving_impact_mcp {
 
 	private function _do_add_credentials() {
 	    $data = array(
-	        'api_key' => $this->EE->input->post('api_key'),
-	        'api_path' => $this->EE->input->post('api_path')
+	        'api_key' => $this->EE->input->post('api_key')
 	    );
 
 	    // check for existing credentials and update if exist, insert if not

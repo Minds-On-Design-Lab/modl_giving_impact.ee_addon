@@ -1,4 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
  *
  * @package		Giving Impact
@@ -16,6 +17,7 @@ class Giving_impact_api {
 
 	private $base_url	= false;
 	private $api_key	= false;
+
 	private $user_agent = 'Modl_Giving_Impact/EE_Addon';
 
 	public function __construct() {
@@ -31,9 +33,11 @@ class Giving_impact_api {
 
 		if ($creds->num_rows() > 0)  {
 			$this->api_key = $creds->row('api_key');
-			$this->base_url = $creds->row('api_path').'/v2';
 		}
-
+		
+		// API Endpoint - Once next version of API is released then will add module preference for version number.
+		$this->base_url	= 'https://app.givingimpact.com/api/v2';
+		
 		// Get sitename for user_agent
 		$this->user_agent = 'EECMS/'.$this->EE->config->item('site_url');
 	}

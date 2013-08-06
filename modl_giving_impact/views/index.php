@@ -13,9 +13,5 @@
             <td><?= lang('key')?></td>
            <td><?=$api_key?></td>
         </tr>
-         <tr class="odd">
-            <td><?= lang('path')?></td>
-            <td><?=$api_path?></td>
-        </tr>
     </tbody>
 </table>
