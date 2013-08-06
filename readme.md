@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.2.1<br />
+**Version:** 2.2.2<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -28,7 +28,7 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 ## Configuration
 
-A Giving Impact API Key & Endpoint are required to connect the module to Giving Impact & can be entered on the modules settings screen.  The API version is detected automatically and should not be added to the endpoint URL at this time.
+A Giving Impact API Key is required to connect the module to Giving Impact & can be entered on the modules settings screen.
 
 ## EECMS Usage
 
@@ -312,6 +312,7 @@ If the user submits the form successfully and is immediately returned to the tem
 
 
 ## Changelog
+* 08062013 - Version 2.2.2 - update to configuration so the API Endpoint is set within the module and does not require manual entry.
 * 07032013 - Version 2.2.1 - fix issue when using direction on donation method sorts.
 * 06062013 - Version 2.2 - update to work with v2.0 API enhancements
 	* Related Parameter - Get related Campaign or Giving Opportunity data with an opportunity or donation data set.
