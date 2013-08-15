@@ -87,6 +87,10 @@ class Modl_giving_impact {
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
 	}
 
+	/**
+	 * Process opportunity form data
+	 */
+
 	public function post_opportunity() {
 		$token = $this->EE->input->post('t');
 		$title = $this->EE->input->post('title');
@@ -121,7 +125,7 @@ class Modl_giving_impact {
 				'title'   => 'Missing required information',
 				'heading' => 'Missing required information',
 				'content' => 'Missing required fields: '.$errors,
-				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
+				'link'    => array($this->EE->functions->form_backtrack('0'), 'Return to form')
 			);
 
 			$this->EE->session->set_flashdata('formvals', serialize(array(
@@ -146,7 +150,7 @@ class Modl_giving_impact {
 				'title'   => 'Missing required information',
 				'heading' => 'Missing required information',
 				'content' => 'The text you entered didn\'t match the image.',
-				'link'    => array($this->EE->functions->form_backtrack(), 'Return to form')
+				'link'    => array($this->EE->functions->form_backtrack('0'), 'Return to form')
 			);
 
 			$this->EE->session->set_flashdata('formvals', serialize(array(
@@ -240,63 +244,48 @@ END;
 		return;
 	}
 
-	public function create_opportunity() {
-		$action_url = $this->EE->functions->fetch_site_index(0, 0)
-			.QUERY_MARKER.'ACT='
-			.$this->EE->functions->fetch_action_id(
-				'Modl_giving_impact', 'post_opportunity'
-			);
-		$token = $this->EE->TMPL->fetch_param('campaign', false);
-		$return = $this->EE->TMPL->fetch_param('return', false);
-		$class = $this->EE->TMPL->fetch_param('class', false);
-		$id = $this->EE->TMPL->fetch_param('id', false);
-		$notify = $this->EE->TMPL->fetch_param('notify', false);
+	/**
+	 * Form for Giving Opportunity Creation
+	 */
 
-		if( $notify && !valid_email($notify) ) {
-			$notify = false;
+	public function opportunity_form() {
+		
+		$tagdata = $this->EE->TMPL->tagdata;
+
+		// Initiate the data array for form
+		$data = array(
+			'action' => $this->EE->functions->fetch_current_uri(),
+			'id' => $this->EE->TMPL->fetch_param('id', false),
+			'class' => $this->EE->TMPL->fetch_param('class', false),
+			'secure' => TRUE,
+			'enctype' => 'multi'
+		);
+
+		// Default hidden fields
+		
+		$data['hidden_fields'] = array(
+			'ACT' => $this->EE->functions->fetch_action_id('Modl_giving_impact', 'post_opportunity'),
+			't' => $this->EE->TMPL->fetch_param('campaign', false),
+		);
+
+		// If return parameter is used, add to hidden_fields
+		
+		if ($this->EE->TMPL->fetch_param('return', false)) {
+			$data['hidden_fields']['NXT'] = $this->EE->TMPL->fetch_param('return', false);
 		}
 
+		// If notify parameter is user, add to hidden_fields
+		
+		if ($this->EE->TMPL->fetch_param('notify', false)) {
+			$data['hidden_fields']['NTF'] = $this->EE->TMPL->fetch_param('notify', false);
+		}		
 
+		// Create form wrapper
+		
+		$tagdata = $this->EE->functions->form_declaration($data) . $tagdata . '</form>';
 
-		$open = '<form method="POST" action="'.$action_url
-			.'" enctype="multipart/form-data"';
-
-		if( $class ) {
-			$open .= ' class="'.$class.'"';
-		}
-		if( $id ) {
-			$open .= ' id="'.$id.'"';
-		}
-
-		$open .= '>'
-			."\n\n"
-			.'<input type="hidden" value="'.$token.'" name="t" />';
-
-		$open .= "\n"
-			.'<input type="hidden" name="RET" value="'.
-			$this->EE->functions->fetch_current_uri()
-			.'" />';
-
-		if( $return ) {
-			$open .= "\n"
-				.'<input type="hidden" name="NXT" value="'.
-				$return
-				.'" />';
-		}
-		if( $notify ) {
-			$open .= "\n"
-				.'<input type="hidden" name="NTF" value="'.
-				$notify
-				.'" />';
-		}
-
-		$inner = $this->EE->TMPL->tagdata;
-
-		$close = '</form>';
-
-		$out = $open.$inner.$close;
-
-		// we stored this earlier, makes it easy to check for created opp inside form
+		// Values for data, may be useful for edit in future and used in validation
+		
 		$vars = array(
 			'opportunity_token' => false,
 			'value_title' => false,
@@ -306,10 +295,6 @@ END;
 			'value_status' => false
 		);
 
-		$created_opp = $this->EE->session->flashdata('opportunity_token');;
-		if( $created_opp ) {
-			$vars['opportunity_token'] = $created_opp;
-		}
 		if( $this->EE->session->flashdata('formvals') ) {
 			$vals = unserialize($this->EE->session->flashdata('formvals'));
 			if( $vals && count($vals) ) {
@@ -321,8 +306,11 @@ END;
 			}
 		}
 
-		return $this->EE->TMPL->parse_variables($out, array($vars));
-	}
+		// Return form and data 
+		
+		return $this->EE->TMPL->parse_variables($tagdata, array($vars));
+
+	} 
 
 }
 /* End of file mod.modl_giving_impact.php */
