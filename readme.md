@@ -215,14 +215,14 @@ This conditional will show its contents if there are no results returned for the
 
 ### Create Giving Opportunity
 
-Using the Create Opportunity tag pair you can easily create a form to create new opportunities.
+Using the Opportunity Form tag pair you can easily create a form to create new opportunities.
 
-	{exp:modl_giving_impact:create_opportunity} Form Content {/exp:modl_giving_impact:create_opportunity}
+	{exp:modl_giving_impact:opportunity_form} Form Content {/exp:modl_giving_impact:opportunity_form}
 
 #### Parameters
 
 * campaign - STRING - parent campaign token **REQUIRED**
-* return - STRING - a return URL that supports `{path='template_group/template'}` **default - returns to template of form**
+* return - STRING - a return URL that supports `{path=template_group/template}` **default - returns to template of form**
 * class - STRING - CSS class applied to <form>
 * id - STRING - CSS ID applied to <form>
 * notify - STRING - A valid email address to notify upon successful opportunity creation.  Will send a simple notifcation email that included the title and description of the opportunity.
@@ -267,7 +267,7 @@ If the user submits the form successfully and is immediately returned to the tem
 
 #### Example Form
 
-	{exp:modl_giving_impact:create_opportunity campaign="[unique-token]" return="{path='team/detail'}" class="gi-form" notify="someone@somewhere.org"}
+	{exp:modl_giving_impact:opportunity_form campaign="[unique-token]" return="{path=team/detail}" class="gi-form" notify="someone@somewhere.org"}
 
 		{if opportunity_token}
 			<p>Sweet! Your opportunity was created with token {opportunity_token}</p>
@@ -308,14 +308,17 @@ If the user submits the form successfully and is immediately returned to the tem
 		</li>
 			<input type="submit" value="Save Opportunity" />
 		</ul>
-	{/exp:modl_giving_impact:create_opportunity}
+	{/exp:modl_giving_impact:opportunity_form}
 
 
 ## Changelog
-* 08062013 - Version 2.2.2 - update to configuration so the API Endpoint is set within the module and does not require manual entry.
-* 07032013 - Version 2.2.1 - fix issue when using direction on donation method sorts.
-* 06062013 - Version 2.2 - update to work with v2.0 API enhancements
+- 08152013 - Cersion 2.2.3
+	- Update to opportunity form generation.
+	- IMPORTANT - form method has changed to `opportunity_form` please update your templates
+- 08062013 - Version 2.2.2 - update to configuration so the API Endpoint is set within the module and does not require manual entry.
+- 07032013 - Version 2.2.1 - fix issue when using direction on donation method sorts.
+- 06062013 - Version 2.2 - update to work with v2.0 API enhancements
 	* Related Parameter - Get related Campaign or Giving Opportunity data with an opportunity or donation data set.
-* 08222012 - Version 2.0
-	* Full revision of Module designed to work with V2.0 of Giving Impact's API
-* 02172012 - Added MSM support
+- 08222012 - Version 2.0
+	- Full revision of Module designed to work with V2.0 of Giving Impact's API
+- 02172012 - Added MSM support
