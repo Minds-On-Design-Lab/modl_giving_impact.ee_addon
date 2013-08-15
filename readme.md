@@ -312,7 +312,7 @@ If the user submits the form successfully and is immediately returned to the tem
 
 
 ## Changelog
-- 08152013 - Cersion 2.2.3
+- 08152013 - Version 2.2.3
 	- Update to opportunity form generation.
 	- __IMPORTANT - form method has changed to `opportunity_form` from `create_opportunity` please update your templates!__
 - 08062013 - Version 2.2.2 - update to configuration so the API Endpoint is set within the module and does not require manual entry.
