@@ -26,7 +26,7 @@
 
 class Modl_giving_impact_upd {
 
-	public $version = '2.2.3';
+	public $version = '2.2.4';
 
 	private $EE;
 

@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.2.3<br />
+**Version:** 2.2.4<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -43,7 +43,12 @@ To learn more about these methods, the date returned and using this module to br
 * [Campaigns](#campaigns)
 * [Opportunities](#opportunities)
 * [Donations](#donations)
-* [Create Opportunity](#create-giving-opportunity)
+* [Opportunity Form](#opportunity-form)
+
+### Hooks
+
+* [Opportunity Form Return Data](#hook-opportunity)
+
 
 ### Campaigns
 
@@ -213,7 +218,7 @@ The following variables are available within this tag pair.
 
 This conditional will show its contents if there are no results returned for the donations tag.
 
-### Create Giving Opportunity
+### Opportunity Form
 
 Using the Opportunity Form tag pair you can easily create a form to create new opportunities.
 
@@ -310,8 +315,17 @@ If the user submits the form successfully and is immediately returned to the tem
 		</ul>
 	{/exp:modl_giving_impact:opportunity_form}
 
+## Hooks
+
+### Opportuntity Form
+
+	gi_opportunity_return_data()
+
+Once the Giving Opportunity form noted above is successfully processed you can access an array that includes the full API result for that specific opportunity created.
+
 
 ## Changelog
+- 08202013 - Version 2.2.4 - update to include `gi_opportunity_return_data()` hook.
 - 08152013 - Version 2.2.3
 	- Update to opportunity form generation.
 	- __IMPORTANT - form method has changed to `opportunity_form` from `create_opportunity` please update your templates!__

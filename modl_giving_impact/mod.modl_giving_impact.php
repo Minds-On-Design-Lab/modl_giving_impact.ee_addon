@@ -199,12 +199,12 @@ class Modl_giving_impact {
 		$result = $api->post_single($json);
 
 		/**
-		 * Hook Return Data
+		 * Hook To Access Return Data
 		 */
 
-		if ($this->EE->extensions->active_hook('gi_opportunity'))
+		if ($this->EE->extensions->active_hook('gi_opportunity_return_data'))
 		{
-			$hook_result = $this->EE->extensions->call('gi_opportunity', $result);
+			$hook_result = $this->EE->extensions->call('gi_opportunity_return_data', $result);
 			if ($this->EE->extensions->end_script === TRUE) return;
 		}
 
