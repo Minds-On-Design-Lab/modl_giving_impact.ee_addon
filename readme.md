@@ -38,17 +38,13 @@ The following details the ExpressionEngine tags available, variables returned, p
 
 To learn more about these methods, the date returned and using this module to bring a customized donation experience to your nonprofit's ExpressionEngine site, please visit [givingimpact.com](http://givingimpact.com)
 
-### Template Tags
+### Menu
 
 * [Campaigns](#campaigns)
 * [Opportunities](#opportunities)
 * [Donations](#donations)
 * [Opportunity Form](#opportunity-form)
-
-### Hooks
-
-* [Opportunity Form Return Data](#hook-opportunity)
-
+* [Hooks](#hooks)
 
 ### Campaigns
 
@@ -317,9 +313,7 @@ If the user submits the form successfully and is immediately returned to the tem
 
 ## Hooks
 
-### Opportuntity Form
-
-	gi_opportunity_return_data()
+### gi_opportunity_return_data()
 
 Once the Giving Opportunity form noted above is successfully processed you can access an array that includes the full API result for that specific opportunity created.
 
