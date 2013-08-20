@@ -198,6 +198,16 @@ class Modl_giving_impact {
 
 		$result = $api->post_single($json);
 
+		/**
+		 * Hook Return Data
+		 */
+
+		if ($this->EE->extensions->active_hook('gi_opportunity'))
+		{
+			$hook_result = $this->EE->extensions->call('gi_opportunity', $result);
+			if ($this->EE->extensions->end_script === TRUE) return;
+		}
+
 		$new_token = $result['opportunity']['id_token'];
 
 		$this->EE->session->set_flashdata('opportunity_token', $new_token);
