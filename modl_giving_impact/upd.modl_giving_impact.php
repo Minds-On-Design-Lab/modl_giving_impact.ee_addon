@@ -26,7 +26,7 @@
 
 class Modl_giving_impact_upd {
 
-	public $version = '2.1';
+	public $version = '2.2.4';
 
 	private $EE;
 
@@ -75,12 +75,7 @@ class Modl_giving_impact_upd {
                 'type'          => 'VARCHAR',
                 'constraint'        => 255,
                 'null'          => FALSE
-            ),
-            'api_path'          => array(
-                'type'          => 'VARCHAR',
-                'constraint'        => 255,
-                'null'          => FALSE
-            ),
+            )
         );
 
 		$this->EE->dbforge->add_field($api_access_table_fields);
@@ -137,6 +132,7 @@ class Modl_giving_impact_upd {
 	 */
 	public function update($current = '')
 	{
+		$this->EE->load->dbforge();
 		// If you have updates, drop 'em in here.
 		if( version_compare($current, '1.1', '<') ) {
 			// add the site id
@@ -165,12 +161,18 @@ class Modl_giving_impact_upd {
 			);
 
 		} elseif( version_compare($current, '2.1', '<') ) {
-			// remove account
+			// Add action
 			$this->EE->db->insert('actions', array(
 				'class'		=> 'Modl_giving_impact' ,
 				'method'	=> 'post_opportunity'
 			));
-		}
+		} elseif( version_compare($current, '2.2.2', '<') ) {
+			// remove api_path
+			$this->EE->dbforge->drop_column(
+				'modl_giving_impact_api_instance',
+				'api_path'
+			);
+		} 
 
 		return TRUE;
 	}
