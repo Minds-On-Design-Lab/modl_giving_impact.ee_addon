@@ -42,7 +42,7 @@ To learn more about these methods, the date returned and using this module to br
 
 #### Optional Parameters
 
-| Parameter | Data Type | Description | Default | 
+| Parameter | Data Type | Description | Default |
 | ------------ |:-------------|:-------------|:-------------|
 | campaign | STRING | Unique campaign token. If provided will only return that campaign's data.  If not used, then will return multiple campaigns. | |
 | limit | INT | Limits the number of results returned. | 10 |
@@ -52,11 +52,11 @@ To learn more about these methods, the date returned and using this module to br
 
 #### Single Variables
 
-| Variable        | Description| 
+| Variable        | Description|
 | ------------- |:-------------|
-| {gi_id_token} | Unique API token and id for the campaign | 
+| {gi_id_token} | Unique API token and id for the campaign |
 | {gi_status} | Returns `true` or `false` depending on whether the campaign is active or not. |
-| {gi_title} | Title of the campaign |  
+| {gi_title} | Title of the campaign |
 | {gi_description} | Brief campaign description |
 | {gi_donation_url} | URL to the hosted donation landing and processing pages. |
 | {gi_donation_target} | Target donation amount (integer). |
@@ -86,7 +86,7 @@ To learn more about these methods, the date returned and using this module to br
 
 You need to provide a campaign token **or** opportunity token.
 
-* A campaign token will generate a list of children opportunities. 
+* A campaign token will generate a list of children opportunities.
 * An opportunity token will return the single opportunity.
 
 | Parameter | Data Type | Description |
@@ -95,10 +95,10 @@ You need to provide a campaign token **or** opportunity token.
 | opportunity | STRING | Unique giving opportunity token. This is used to display a single specific Giving Opportunity. |
 
 ##### Optional Parameters
- 
+
 The following are used to modify the returned list of giving opportunities when a parent campaign is specified.
 
-| Parameter | Data Type | Description | Default | 
+| Parameter | Data Type | Description | Default |
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
@@ -108,7 +108,7 @@ The following are used to modify the returned list of giving opportunities when 
 
 #### Single Variables
 
-| Variable        | Description| 
+| Variable        | Description|
 | ------------- |:-------------|
 | {gi_id_token} | Unique API token and id for the Giving Opportunity. |
 | {gi_status} | Returns `true` or `false` depending on whether the Giving Opportunity is active or not. |
@@ -132,7 +132,7 @@ The following are used to modify the returned list of giving opportunities when 
 
 ##### Campaign
 
-If the parameter `related=true` is added to the tag the following tag pair 
+If the parameter `related=true` is added to the tag the following tag pair
 
 	{gi_campaign}
 		*All variables returned by the campaign tag above will be available here.*
@@ -155,8 +155,8 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | opportunity | STRING | Specfic opportunity |
 
 ##### Optional Parameters
- 
- | Parameter | Data Type | Description | Default | 
+
+ | Parameter | Data Type | Description | Default |
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
@@ -164,11 +164,11 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 
 #### Variables
 
-| Variable        | Description| 
+| Variable        | Description|
 | ------------- |:-------------|
 | {gi_first_name} | Donor first name |
 | {gi_last_name} | Donor last name |
-| {gi_billing_address1} | Donor address | 
+| {gi_billing_address1} | Donor address |
 | {gi_billing_city} | Donor city |
 | {gi_billing_state} | Donor State |
 | {gi_billing_postal_code} | Donor zip code |
@@ -259,7 +259,7 @@ If the user submits the form successfully and is immediately returned to the tem
 		{/if}
 		<ul>
 		<li>
-			<label class="required">Title:</label> 
+			<label class="required">Title:</label>
 			<input type="text" name="title" value="{value_title}" />
 		</li>
 		<li>
@@ -272,7 +272,7 @@ If the user submits the form successfully and is immediately returned to the tem
 			<input type="radio" name="status" value="false"{if value_status} checked{/if}>Inactive
 		</li>
 		<li>
-			<label>Team Photo:</label>	
+			<label>Team Photo:</label>
 			<p class="directions">Add an image to display on your Page. Image dimensions should be 300 pixels x 200 pixels. File needs to be less than 100K and a web optimized jpeg, gif or png.</p>
 			<input type="file" name="image" />
 		</li>
@@ -297,6 +297,7 @@ If the user submits the form successfully and is immediately returned to the tem
 
 
 ## Changelog
+* 08202013 - Update to add better support for single value indexed arrays
 * Version 2.0 - update to work with v2.0 API enhancements
 	* Related Parameter - Get related Campaign or Giving Opportunity data with an opportunity or donation data set.
 * 08222012 - Version 2.0
