@@ -71,7 +71,6 @@ class Giving_impact_api {
 
 			$out[] = $row;
 		}
-
 		return $out;
 	}
 
@@ -103,7 +102,13 @@ class Giving_impact_api {
 
 			return $out;
 		} else {
-			return $data;
+			// return $data;
+			$out = array();
+			foreach( $data as $i ) {
+				$out[] = array('value' => $i);
+			}
+
+			return $out;
 		}
 	}
 
