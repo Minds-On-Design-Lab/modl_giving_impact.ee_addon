@@ -63,6 +63,25 @@ class Modl_API_Campaign extends Giving_impact_api {
 		return $this->prefix_tags('gi', array($data['campaign']));
 	}
 
+	public function fetch_campaign($token) {
+
+		$url = $this->build_url($this->api_path.'/'.$token, array(
+			'status' => $status
+		));
+
+		$data = $this->get($url);
+
+		if( !$data || !count($data['campaign']) ) {
+			return;
+		}
+
+		if( $data['error'] ) {
+			$this->EE->output->fatal_error('Error: '.$data['message']);
+		}
+
+		return $data['campaign'];
+	}
+
 	public function fetch() {
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
