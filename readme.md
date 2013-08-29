@@ -88,6 +88,28 @@ To learn more about these methods, the date returned and using this module to br
 | {gi_display_donation_target} | Returns `true` or `false` for the campaign preference to show or hide the target donation amount. Useful to use as a conditional around the `{gi_donation_target}` variable to respect this preference. |
 | {gi_display_donation_total} | Returns `true` or `false` for the campaign preference to show or hide the current donation total. Useful to use as a conditional around the `{gi_donation_total}` variable to respect this preference. |
 
+#### Variable Pairs
+
+##### Campaign Fields
+
+This is a collection of custom fields that are entered when creating and updating a child opportunity
+
+	{gi_campaign_fields}
+		...
+	{/gi_campaign_fields}
+
+The following is available in this tag pair:
+
+| Variable        | Description|
+| ------------- |:-------------|
+| {campaign_fields_field_id} | Returns a unique identifier for the custom field |
+| {campaign_fields_field_type} | Returns the type of field (dropdown, text, ...) |
+| {campaign_fields_field_label} | Returns the label of the field |
+| {campaign_fields_response} | Returns the donor's response if entered |
+| {campaign_fields_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
+| {campaign_fields_required} | Returns `true` or `false` depending on whether the field is currently required |
+
+
 ### Opportunities
 
 	{exp:modl_giving_impact:opportunities campaign="{id_token}"} Content {/exp:modl_giving_impact:opportunities}
@@ -139,15 +161,30 @@ The following are used to modify the returned list of giving opportunities when 
 
 ##### Campaign
 
-<<<<<<< HEAD
-If the parameter `related=true` is added to the tag the following tag pair
-=======
 If the parameter `related=true` is added to the tag the following tag pair becomes available:
->>>>>>> 0cc56f14afce57d4686af94dd987c54f5fe010ec
 
 	{gi_campaign}
 		[All variables returned by the campaign tag above will be available here.]
 	{/gi_campaign}
+
+##### Campaign Responses
+
+This is a collection of responses to the custom campaign fields defined by the parent campaign:
+
+	{gi_campaign_responses}
+		...
+	{/gi_campaign_responses}
+
+The following is available in this tag pair:
+
+| Variable        | Description|
+| ------------- |:-------------|
+| {campaign_responses_field_id} | Returns a unique identifier for the custom field |
+| {campaign_responses_field_type} | Returns the type of field (dropdown, text, ...) |
+| {campaign_responses_field_label} | Returns the label of the field |
+| {campaign_responses_response} | Returns the donor's response if entered |
+| {campaign_responses_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
+| {campaign_responses_required} | Returns `true` or `false` depending on whether the field is currently required |
 
 ### Donations
 
@@ -165,13 +202,8 @@ You need to provide a campaign token **or** opportunity token. A campaign token 
 | opportunity | STRING | Specfic opportunity id_token |
 
 ##### Optional Parameters
-<<<<<<< HEAD
-
- | Parameter | Data Type | Description | Default |
-=======
 
 | Parameter | Data Type | Description | Default |
->>>>>>> 0cc56f14afce57d4686af94dd987c54f5fe010ec
 | ------------ |:-------------|:-------------|:-------------|
 | limit | INT | Limits the number of results returned. | 10 |
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
@@ -313,6 +345,36 @@ If the user submits the form successfully and is immediately returned to the tem
 			<input type="text" name="youtube" value="{value_youtube}" />
 		</li>
 		<li>
+			<table>
+				<thead>
+					<tr>
+						<th>Label</th>
+						<th>Type</th>
+						<th>Required</th>
+					</tr>
+				</thead>
+				{gi_campaign_fields}
+					{if campaign_fields_status}
+						<tr>
+							<td>{campaign_fields_field_label}</td>
+							<td>
+								{if campaign_fields_field_type == 'text'}
+									<input type="text" name="fields[{campaign_fields_field_id}]" />
+								{if:else}
+									<select name="fields[{campaign_fields_field_id}]">
+										{campaign_fields_options}
+											<option value="{value}">{value}</option>
+										{/campaign_fields_options}
+									</select>
+								{/if}
+							</td>
+							<td>{if campaign_fields_required}Required{/if}</td>
+						</tr>
+					{/if}
+				{/gi_campaign_fields}
+			</table>
+		</li>
+		<li>
 			{captcha}<br />
 			<p class="directions">Please enter the letters/numbers you see above.</p>
 			<input type="text" name="captcha" />
@@ -329,7 +391,7 @@ Once the Giving Opportunity form noted above is successfully processed you can a
 
 
 ## Changelog
-- 08282013 - Version 2.2.6 - Added support for updating existing opportunities with the "opportunity" attribute
+- 08282013 - Version 2.2.6 - Added support for updating existing opportunities with the "opportunity" attribute and custom campaign fields
 - 08202013 - Version 2.2.5 - Update to add better support for single value indexed arrays
 - 08202013 - Version 2.2.4 - update to include `gi_opportunity_return_data()` hook.
 - 08152013 - Version 2.2.3
