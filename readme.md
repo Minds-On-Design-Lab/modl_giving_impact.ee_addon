@@ -391,7 +391,10 @@ Once the Giving Opportunity form noted above is successfully processed you can a
 
 
 ## Changelog
-- 08282013 - Version 2.2.6 - Added support for updating existing opportunities with the "opportunity" attribute and custom campaign fields
+- 08282013 - Version 2.2.6
+	- Added support for updating existing opportunities with the "opportunity" attribute
+	- Added support for custom campaign fields and custom campaign responses
+	- Related campaign will always be returned when updating or create an opportunity
 - 08202013 - Version 2.2.5 - Update to add better support for single value indexed arrays
 - 08202013 - Version 2.2.4 - update to include `gi_opportunity_return_data()` hook.
 - 08152013 - Version 2.2.3

@@ -100,6 +100,8 @@ class Modl_giving_impact {
 		$target = $this->EE->input->post('target');
 		$captcha = $this->EE->input->post('captcha');
 
+		// $related = $this->EE->input->post('related', false);
+		$related = true;
 		$opportunity_token = $this->EE->input->post('ot', false);
 
 		$next = $this->EE->input->post('NXT');
@@ -250,7 +252,7 @@ class Modl_giving_impact {
 		require_once $this->lib_path.'/opportunity.php';
 		$api = new Modl_API_Opportunity;
 
-		$result = $api->post_single($json, $opportunity_token);
+		$result = $api->post_single($json, $opportunity_token, $related);
 
 		/**
 		 * Hook To Access Return Data
@@ -336,7 +338,8 @@ END;
 		$data['hidden_fields'] = array(
 			'ACT' => $this->EE->functions->fetch_action_id('Modl_giving_impact', 'post_opportunity'),
 			't' => $this->EE->TMPL->fetch_param('campaign', false),
-			'ot' => $this->EE->TMPL->fetch_param('opportunity', false)
+			'ot' => $this->EE->TMPL->fetch_param('opportunity', false),
+			'r'	=> $this->EE->TMPL->fetch_param('related', false)
 		);
 
 		// If return parameter is used, add to hidden_fields
