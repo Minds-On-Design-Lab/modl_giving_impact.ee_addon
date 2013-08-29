@@ -167,12 +167,64 @@ class Modl_giving_impact {
 			return;
 		}
 
+		$full_path = $this->lib_path.'/campaign.php';
+		require_once $full_path;
+
+		$c = new Modl_API_Campaign;
+		$obj = $c->fetch_campaign($token);
+
+        $campaign_responses = array();
+        if( array_key_exists('campaign_fields', $obj) ) {
+
+            $responses = $this->EE->input->post('fields');
+
+            $errors = array();
+
+            foreach( $obj['campaign_fields'] as $f ) {
+                if( $f['required'] && $f['status'] && !$responses[$f['field_id']] ) {
+                    $errors['fields['.$f['field_id'].']'] = $f['field_label'].' is required';
+                    break;
+                }
+
+                if( !array_key_exists($f['field_id'], $responses) ) {
+                    continue;
+                }
+                $item = new stdClass;
+                $item->response             = $responses[$f['field_id']];
+                $item->campaign_field_id    = $f['field_id'];
+
+                $campaign_responses[] = $item;
+            }
+
+            if( count($errors) ) {
+				$this->EE->session->set_flashdata('formvals', serialize(array(
+					'title' => $title,
+					'description' => $description,
+					'youtube' => $youtube,
+					'target' => $target,
+					'status' => $status,
+					'fields', $responses
+				)));
+
+				$data = array(
+					'title'   => 'Missing required information',
+					'heading' => 'Missing required information',
+					'content' => 'Missing required fields: '.implode(', ', $errors),
+					'link'    => array($this->EE->functions->form_backtrack('0'), 'Return to form')
+				);
+
+				$this->EE->output->show_message($data);
+				return;
+            }
+        }
+
 		// pack it
 		$json = array(
 			'campaign_token' => $token,
 			'title' => $title,
 			'description' => $description,
-			'status' => $status
+			'status' => $status,
+			'campaign_responses' => $campaign_responses
 		);
 
 		if( $youtube ) {
@@ -262,7 +314,13 @@ END;
 
 	public function opportunity_form() {
 
+		$full_path = $this->lib_path.'/campaign.php';
+		require_once $full_path;
+
 		$tagdata = $this->EE->TMPL->tagdata;
+
+		$c = new Modl_API_Campaign;
+		$obj = $c->fetch_single();
 
 		// Initiate the data array for form
 		$data = array(
@@ -320,6 +378,8 @@ END;
 		}
 
 		// Return form and data
+		//
+		$vars = array_merge($vars, $obj[0]);
 
 		return $this->EE->TMPL->parse_variables($tagdata, array($vars));
 
