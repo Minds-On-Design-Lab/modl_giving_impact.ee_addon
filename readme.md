@@ -232,6 +232,7 @@ Using the Opportunity Form tag pair you can easily create a form to create new o
 #### Parameters
 
 * campaign - STRING - parent campaign token **REQUIRED**
+* opportunity - STRING - the opportunity token if updating an existing opportunity
 * return - STRING - a return URL that supports `{path=template_group/template}` **default - returns to template of form**
 * class - STRING - CSS class applied to <form>
 * id - STRING - CSS ID applied to <form>
@@ -328,6 +329,7 @@ Once the Giving Opportunity form noted above is successfully processed you can a
 
 
 ## Changelog
+- 08282013 - Version 2.2.6 - Added support for updating existing opportunities with the "opportunity" attribute
 - 08202013 - Version 2.2.5 - Update to add better support for single value indexed arrays
 - 08202013 - Version 2.2.4 - update to include `gi_opportunity_return_data()` hook.
 - 08152013 - Version 2.2.3
