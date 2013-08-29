@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.2.4<br />
+**Version:** 2.2.6<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
