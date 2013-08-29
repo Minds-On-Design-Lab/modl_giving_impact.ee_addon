@@ -100,6 +100,8 @@ class Modl_giving_impact {
 		$target = $this->EE->input->post('target');
 		$captcha = $this->EE->input->post('captcha');
 
+		$opportunity_token = $this->EE->input->post('ot', false);
+
 		$next = $this->EE->input->post('NXT');
 		$notify = $this->EE->input->post('NTF');
 
@@ -196,7 +198,7 @@ class Modl_giving_impact {
 		require_once $this->lib_path.'/opportunity.php';
 		$api = new Modl_API_Opportunity;
 
-		$result = $api->post_single($json);
+		$result = $api->post_single($json, $opportunity_token);
 
 		/**
 		 * Hook To Access Return Data
@@ -259,7 +261,7 @@ END;
 	 */
 
 	public function opportunity_form() {
-		
+
 		$tagdata = $this->EE->TMPL->tagdata;
 
 		// Initiate the data array for form
@@ -272,30 +274,31 @@ END;
 		);
 
 		// Default hidden fields
-		
+
 		$data['hidden_fields'] = array(
 			'ACT' => $this->EE->functions->fetch_action_id('Modl_giving_impact', 'post_opportunity'),
 			't' => $this->EE->TMPL->fetch_param('campaign', false),
+			'ot' => $this->EE->TMPL->fetch_param('opportunity', false)
 		);
 
 		// If return parameter is used, add to hidden_fields
-		
+
 		if ($this->EE->TMPL->fetch_param('return', false)) {
 			$data['hidden_fields']['NXT'] = $this->EE->TMPL->fetch_param('return', false);
 		}
 
 		// If notify parameter is user, add to hidden_fields
-		
+
 		if ($this->EE->TMPL->fetch_param('notify', false)) {
 			$data['hidden_fields']['NTF'] = $this->EE->TMPL->fetch_param('notify', false);
-		}		
+		}
 
 		// Create form wrapper
-		
+
 		$tagdata = $this->EE->functions->form_declaration($data) . $tagdata . '</form>';
 
 		// Values for data, may be useful for edit in future and used in validation
-		
+
 		$vars = array(
 			'opportunity_token' => false,
 			'value_title' => false,
@@ -316,11 +319,11 @@ END;
 			}
 		}
 
-		// Return form and data 
-		
+		// Return form and data
+
 		return $this->EE->TMPL->parse_variables($tagdata, array($vars));
 
-	} 
+	}
 
 }
 /* End of file mod.modl_giving_impact.php */

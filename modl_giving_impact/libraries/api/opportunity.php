@@ -126,13 +126,18 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		return $this->prefix_tags('gi', $data['opportunities'], true);
 	}
 
-	public function post_single($data) {
+	public function post_single($data, $token = false) {
 
 		if( !$data ) {
 			show_error('Could not encode JSON data');
 		}
 
-		$url = $this->build_url('opportunities');
+		$p = 'opportunities';
+		if( $token ) {
+			$p .= '/'.$token;
+		}
+
+		$url = $this->build_url($p);
 
 		return $this->post($url, $data);
 	}
