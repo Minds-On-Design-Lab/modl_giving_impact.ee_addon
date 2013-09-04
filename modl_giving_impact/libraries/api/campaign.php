@@ -66,7 +66,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 	public function fetch_campaign($token) {
 
 		$url = $this->build_url($this->api_path.'/'.$token, array(
-			'status' => $status
+			'status' => false
 		));
 
 		$data = $this->get($url);
