@@ -34,9 +34,9 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		return $this->fetch();
 	}
 
-	public function fetch_single() {
+	public function fetch_single($rel = false) {
 		$token = $this->EE->TMPL->fetch_param('opportunity', false);
-		$related = $this->EE->TMPL->fetch_param('related', false);
+		$related = $this->EE->TMPL->fetch_param('related', $rel);
 
 		switch( $this->EE->TMPL->fetch_param('status', false) ) {
 			case 'active':

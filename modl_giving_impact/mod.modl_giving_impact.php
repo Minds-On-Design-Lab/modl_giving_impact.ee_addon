@@ -310,6 +310,23 @@ END;
 		return;
 	}
 
+	public function donate_form() {
+		$tagdata = $this->EE->TMPL->tagdata;
+
+		if( $this->EE->TMPL->fetch_param('opportunity') ) {
+			require_once $this->lib_path.'/opportunity.php';
+			$m = new Modl_API_Opportunity;
+			$obj = $m->fetch_single(true);
+		} else {
+			require_once $this->lib_path.'/campaign.php';
+			$m = new Modl_API_Campaign;
+			$obj = $this->fetch_single();
+		}
+
+		$vars = array();
+		return $this->EE->TMPL->parse_variables($tagdata, array($vars));
+	}
+
 	/**
 	 * Form for Giving Opportunity Creation
 	 */
