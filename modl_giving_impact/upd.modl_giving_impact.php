@@ -26,7 +26,7 @@
 
 class Modl_giving_impact_upd {
 
-	public $version = '2.2.4';
+	public $version = '2.3';
 
 	private $EE;
 
@@ -172,7 +172,13 @@ class Modl_giving_impact_upd {
 				'modl_giving_impact_api_instance',
 				'api_path'
 			);
-		} 
+		} elseif( version_compare($current, '2.3', '<') ) {
+			// Add action
+			$this->EE->db->insert('actions', array(
+				'class'		=> 'Modl_giving_impact',
+				'method'	=> 'post_donation'
+			));
+		}
 
 		return TRUE;
 	}
