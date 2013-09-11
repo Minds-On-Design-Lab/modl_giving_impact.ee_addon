@@ -577,8 +577,8 @@ END;
 		if( $this->EE->session->flashdata('formvals') ) {
 			$vals = unserialize($this->EE->session->flashdata('formvals'));
 			if( $vals && count($vals) ) {
-				foreach( $vals as $v ) {
-					$vars[$v] = $vals[$v];
+				foreach( $vals as $k => $v ) {
+					$vars['value_'.$k] = $v;
 				}
 			}
 		}

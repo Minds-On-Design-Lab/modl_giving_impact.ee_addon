@@ -391,6 +391,9 @@ Once the Giving Opportunity form noted above is successfully processed you can a
 
 
 ## Changelog
+- 09102013 - Version 2.3
+	- Added Donation form processing, see docs for more info
+	- Added 'gi_donation_return_data' hook.
 - 08282013 - Version 2.2.6
 	- Added support for updating existing opportunities with the "opportunity" attribute
 	- Added support for custom campaign fields and custom campaign responses
