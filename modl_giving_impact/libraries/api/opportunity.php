@@ -34,6 +34,26 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		return $this->fetch();
 	}
 
+	public function fetch_opportunity($token, $rel = false) {
+
+		$url = $this->build_url($this->api_path.'/'.$token, array(
+			'status' => false,
+			'related' => $rel
+		));
+
+		$data = $this->get($url);
+
+		if( !$data || !count($data['opportunity']) ) {
+			return;
+		}
+
+		if( $data['error'] ) {
+			$this->EE->output->fatal_error('Error: '.$data['message']);
+		}
+
+		return $data['opportunity'];
+	}
+
 	public function fetch_single($rel = false) {
 		$token = $this->EE->TMPL->fetch_param('opportunity', false);
 		$related = $this->EE->TMPL->fetch_param('related', $rel);
