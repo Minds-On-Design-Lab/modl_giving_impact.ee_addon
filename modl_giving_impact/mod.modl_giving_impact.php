@@ -310,6 +310,245 @@ END;
 		return;
 	}
 
+	public function post_donation() {
+		$token 				= $this->EE->input->post('t');
+		$opportunity_token 	= $this->EE->input->post('ot', false);
+
+		$first_name 		= $this->EE->input->post('first_name');
+		$last_name 			= $this->EE->input->post('last_name');
+		$email 				= $this->EE->input->post('email');
+		$street 			= $this->EE->input->post('street');
+		$city 				= $this->EE->input->post('city');
+		$state 				= $this->EE->input->post('state');
+		$zip 				= $this->EE->input->post('zip');
+		$donation_level 	= $this->EE->input->post('donation_level');
+		$donation_amount 	= $this->EE->input->post('donation_amount');
+
+		$captcha 			= $this->EE->input->post('captcha');
+
+		$card 				= $this->EE->input->post('token');
+
+		$next = $this->EE->input->post('NXT');
+		$notify = $this->EE->input->post('NTF');
+
+		$toCheck = array(
+			'first_name',
+			'last_name',
+			'email',
+			'street',
+			'city',
+			'state',
+			'zip'
+		);
+
+		if( $notify && !valid_email($notify) ) {
+			$notify = false;
+		}
+
+		$errors = array();
+		foreach( $toCheck as $v ) {
+			if( !$this->EE->input->post($v) ) {
+				$error[] = str_replace('_', ' ', $v).' is required';
+			}
+		}
+		if( !$token && !$opportunity_token ) {
+			$errors[] = 'Campaign or Opportunity token is required';
+		}
+		if( !$donation_level && !$donation_amount ) {
+			$errors[] = 'You did not specify a donation amount';
+		}
+		if( !$card ) {
+			$errors[] = 'Could not process credit card';
+		}
+
+		if( count($errors) ) {
+
+			$data = array(
+				'title'   => 'Missing required information',
+				'heading' => 'Missing required information',
+				'content' => 'Missing required fields: '.implode(', ', $errors),
+				'link'    => array($this->EE->functions->form_backtrack('0'), 'Return to form')
+			);
+
+			$this->EE->session->set_flashdata('formvals', serialize(array(
+				'first_name'		=> $first_name,
+				'last_name'			=> $last_name,
+				'email'				=> $email,
+				'street'			=> $street,
+				'city'				=> $city,
+				'state'				=> $state,
+				'zip'				=> $zip,
+				'donation_level'	=> $donation_level,
+				'donation_amount'	=> $donation_amount
+			)));
+
+			$this->EE->output->show_message($data);
+			return;
+		}
+
+		// $q = 'select captcha_id from exp_captcha where ip_address = "'.
+		// 	$this->EE->db->escape_str($this->EE->input->ip_address()).'" and word = "'.
+		// 	$this->EE->db->escape_str($captcha).'"';
+		// $res = $this->EE->db->query($q);
+
+		// if( !$res->num_rows() ) {
+		// 	$data = array(
+		// 		'title'   => 'Missing required information',
+		// 		'heading' => 'Missing required information',
+		// 		'content' => 'The text you entered didn\'t match the image.',
+		// 		'link'    => array($this->EE->functions->form_backtrack('0'), 'Return to form')
+		// 	);
+
+		// 	$this->EE->session->set_flashdata('formvals', serialize(array(
+		// 		'title' => $title,
+		// 		'description' => $description,
+		// 		'youtube' => $youtube,
+		// 		'target' => $target,
+		// 		'status' => $status
+		// 	)));
+
+		// 	$this->EE->output->show_message($data);
+		// 	return;
+		// }
+
+		if( $token ) {
+			$full_path = $this->lib_path.'/campaign.php';
+			require_once $full_path;
+
+			$c = new Modl_API_Campaign;
+			$obj = $c->fetch_campaign($token);
+		} else {
+			$full_path = $this->lib_path.'/opportunity.php';
+			require_once $full_path;
+
+			$c = new Modl_API_Opportunity;
+			$obj = $c->fetch_opportunity($opportunity_token, true);
+
+			$obj = $obj['campaign'];
+		}
+
+        $custom_fields = array();
+        if( array_key_exists('custom_fields', $obj) ) {
+
+            $responses = $this->EE->input->post('fields');
+
+            $errors = array();
+
+            foreach( $obj['custom_fields'] as $f ) {
+                if( $f['required'] && $f['status'] && !$responses[$f['field_id']] ) {
+                    $errors['fields['.$f['field_id'].']'] = $f['field_label'].' is required';
+                    break;
+                }
+
+                if( !array_key_exists($f['field_id'], $responses) ) {
+                    continue;
+                }
+
+                $custom_responses[$f['field_id']] = $responses[$f['field_id']];
+            }
+
+            if( count($errors) ) {
+				$this->EE->session->set_flashdata('formvals', serialize(array(
+					'first_name'		=> $first_name,
+					'last_name'			=> $last_name,
+					'email'				=> $email,
+					'street'			=> $street,
+					'city'				=> $city,
+					'state'				=> $state,
+					'zip'				=> $zip,
+					'donation_level'	=> $donation_level,
+					'donation_amount'	=> $donation_amount
+				)));
+
+				$data = array(
+					'title'   => 'Missing required information',
+					'heading' => 'Missing required information',
+					'content' => 'Missing required fields: '.implode(', ', $errors),
+					'link'    => array($this->EE->functions->form_backtrack('0'), 'Return to form')
+				);
+
+				$this->EE->output->show_message($data);
+				return;
+            }
+        }
+
+		// pack it
+		$json = array(
+			'first_name'		=> $first_name,
+			'last_name'			=> $last_name,
+			'contact'			=> false,
+			'email_address'		=> $email,
+			'billing_address1'	=> $street,
+			'billing_city'		=> $city,
+			'billing_state'		=> $state,
+			'billing_postal_code' => $zip,
+			'billing_country'	=> 'US',
+			'donation_total'	=> $donation_level ? $donation_level : $donation_amount,
+			'custom_responses' 	=> $custom_responses,
+			'card'				=> $card
+		);
+
+		if( $opportunity_token ) {
+			$json['opportunity'] = $opportunity_token;
+		} else {
+			$json['campaign']	 = $token;
+		}
+
+		require_once $this->lib_path.'/donation.php';
+		$api = new Modl_API_Donation;
+
+		$result = $api->post_single($json);
+
+		// call hook with return data
+		if( $this->EE->extensions->active_hook('gi_donation_return_data') ) {
+			$hook_result = $this->EE->extensions->call('gi_donation_return_data', $result);
+			if( $this->EE->extensions->end_script === true ) {
+				return;
+			}
+		}
+
+		$new_token = $result['donation']['id_token'];
+
+		$this->EE->session->set_flashdata('donation_token', $new_token);
+
+		// send the email
+		$webmaster = $this->EE->config->item('webmaster_email');
+		if( $notify && $webmaster ) {
+
+			$gi_name = $result['donation']['first_name'].' '.$result['donation']['last_name'];
+			$gi_total = $result['donation']['donation_total'];
+
+$message = <<<END
+A new donation has been made!
+
+Name: {$gi_name}
+
+Total: {$gi_total}
+
+----------
+This is an automated email sent by the MODL Giving Impact ExpressionEngine Addon.
+END;
+
+			$this->EE->email->wordwrap = TRUE;
+			$this->EE->email->mailtype = 'text';
+//			$this->EE->email->debug = TRUE;
+			$this->EE->email->from($webmaster);
+			$this->EE->email->to($notify);
+			$this->EE->email->subject('New Giving Impact Donation');
+			$this->EE->email->message(entities_to_ascii($message));
+			$this->EE->email->Send();
+		}
+
+		if( $next ) {
+			$return_url = $next;
+		} else {
+			$return_url = $this->EE->functions->form_backtrack();
+		}
+
+		$this->EE->functions->redirect($return_url.'/'.$new_token, 'location');
+		return;
+	}
+
 	public function donate_form() {
 		$tagdata = $this->EE->TMPL->tagdata;
 
@@ -323,7 +562,59 @@ END;
 			$obj = $this->fetch_single();
 		}
 
-		$vars = array();
+		$vars = array(
+			'value_first_name'	=> false,
+			'value_last_name'	=> false,
+			'value_email'		=> false,
+			'value_street'		=> false,
+			'value_city'		=> false,
+			'value_state'		=> false,
+			'value_zip'			=> false,
+			'value_donation_amount'	=> false,
+			'value_donation_level' => false
+		);
+
+		if( $this->EE->session->flashdata('formvals') ) {
+			$vals = unserialize($this->EE->session->flashdata('formvals'));
+			if( $vals && count($vals) ) {
+				foreach( $vals as $v ) {
+					$vars[$v] = $vals[$v];
+				}
+			}
+		}
+
+		$vars = array_merge($vars, $obj[0]);
+
+		$data = array(
+			'action' => $this->EE->functions->fetch_current_uri(),
+			'id' => $this->EE->TMPL->fetch_param('id', false),
+			'class' => $this->EE->TMPL->fetch_param('class', false),
+			'secure' => TRUE,
+			'enctype' => 'multi'
+		);
+
+		$data['hidden_fields'] = array(
+			'ACT' => $this->EE->functions->fetch_action_id('Modl_giving_impact', 'post_donation'),
+			't' => $this->EE->TMPL->fetch_param('campaign', false),
+			'ot' => $this->EE->TMPL->fetch_param('opportunity', false)
+		);
+
+		// If return parameter is used, add to hidden_fields
+
+		if ($this->EE->TMPL->fetch_param('return', false)) {
+			$data['hidden_fields']['NXT'] = $this->EE->TMPL->fetch_param('return', false);
+		}
+
+		// If notify parameter is user, add to hidden_fields
+
+		if ($this->EE->TMPL->fetch_param('notify', false)) {
+			$data['hidden_fields']['NTF'] = $this->EE->TMPL->fetch_param('notify', false);
+		}
+
+		// Create form wrapper
+
+		$tagdata = $this->EE->functions->form_declaration($data) . $tagdata . '</form>';
+
 		return $this->EE->TMPL->parse_variables($tagdata, array($vars));
 	}
 

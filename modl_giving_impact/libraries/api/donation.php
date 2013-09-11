@@ -116,4 +116,16 @@ class Modl_API_Donation extends Giving_impact_api {
 		}
 		return $this->prefix_tags('gi', $donations, true);
 	}
+
+	public function post_single($data) {
+
+		if( !$data ) {
+			show_error('Could not encode JSON data');
+		}
+
+		$url = $this->build_url('donations');
+
+		return $this->post($url, $data);
+	}
+
 }
