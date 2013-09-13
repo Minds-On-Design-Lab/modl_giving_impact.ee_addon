@@ -499,13 +499,17 @@ END;
 
 		$result = $api->post_single($json);
 
-		// call hook with return data
-		if( $this->EE->extensions->active_hook('gi_donation_return_data') ) {
+		/**
+		 * Hook To Access Return Data
+		 */
+
+		if ($this->EE->extensions->active_hook('gi_donation_return_data'))
+		{
 			$hook_result = $this->EE->extensions->call('gi_donation_return_data', $result);
-			if( $this->EE->extensions->end_script === true ) {
-				return;
-			}
+			if ($this->EE->extensions->end_script === TRUE) return;
 		}
+
+		// ---------------------------------------------------------------------------------
 
 		$new_token = $result['donation']['id_token'];
 
