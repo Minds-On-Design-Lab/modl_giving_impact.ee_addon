@@ -311,6 +311,7 @@ END;
 	}
 
 	public function post_donation() {
+
 		$token 				= $this->EE->input->post('t');
 		$opportunity_token 	= $this->EE->input->post('ot', false);
 
@@ -359,6 +360,9 @@ END;
 		}
 		if( !$card ) {
 			$errors[] = 'Could not process credit card';
+		}
+		if( !valid_email($email) ) {
+			$errors[] = 'Please enter a valid email address';
 		}
 
 		if( count($errors) ) {
