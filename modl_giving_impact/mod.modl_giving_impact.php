@@ -570,7 +570,7 @@ END;
 		} else {
 			require_once $this->lib_path.'/campaign.php';
 			$m = new Modl_API_Campaign;
-			$obj = $this->fetch_single();
+			$obj = $m->fetch_single();
 		}
 
 		$vars = array(
