@@ -364,6 +364,9 @@ END;
 		if( !valid_email($email) ) {
 			$errors[] = 'Please enter a valid email address';
 		}
+        if( $donation_amount && $donation_amount != floor($donation_amount) ) {
+        	$errors[] = 'Please enter a whole dollar amount';
+        }
 
 		if( count($errors) ) {
 
