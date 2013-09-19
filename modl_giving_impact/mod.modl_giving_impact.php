@@ -108,6 +108,69 @@ class Modl_giving_impact {
 		return $this->creds->row('api_key');
 	}
 
+	public function donate_js() {
+		$full_path = $this->lib_path.'/campaign.php';
+		require_once $full_path;
+
+		$c = new Modl_API_Campaign;
+
+		$apiUrl = $c->base_url();
+		$publicKey = $this->public_key();
+
+		$formId = $this->EE->TMPL->fetch_param('id') ? $this->EE->TMPL->fetch_param('id') : 'donate-form';
+
+$out = <<<END
+<script type="text/javascript" src="{$apiUrl}/checkout?key={$publicKey}"></script>
+<script>
+	(function(\$) {
+	    \$(function() {
+
+	    	// if jquery.payment is avaliable
+	    	try {
+		        \$('[name="cc_number"]').formatCardNumber();
+		        \$('[name="cc_cvc"]').formatCardCVC();
+		        \$('[name="cc_exp"]').formatCardExpiry();
+	    	} catch(e) {}
+
+	        $('#{$formId}').submit(function(e) {
+	        	if( $(this).find('input[name="token"]').length >= 1 ) {
+	        		return;
+	        	}
+
+	            e.preventDefault();
+	            var \$this = \$(this).find('input[type="submit"]');
+
+	            \$this.val('Processing...');
+	            \$this.attr('disabled', true);
+
+	            GIAPI.checkout({
+	                'card':     \$('[name="cc_number"]').val(),
+	                'cvc':      \$('[name="cc_cvc"]').val(),
+	                'month':    \$('[name="cc_exp"]').val().substr(0,2),
+	                'year':     \$('[name="cc_exp"]').val().substr(5,4),
+	            }, function(token) {
+
+	                if( !token ) {
+	                    \$('[name="cc_number"]').addClass('error');
+	                    \$('<small class="error">Your card was not accepted</small>').insertAfter(\$('[name="cc_number"]'));
+	                    \$this.val('Donate');
+	                    \$this.attr('disabled', false);
+	                    return;
+	                }
+	                // the card token is returned, append to form and submit
+	                \$('#donate-form').append($('<input type="hidden" value="'+token+'" name="token" />'));
+	                \$('#donate-form').submit();
+	            });
+	        })
+	    });
+	})(jQuery);
+</script>
+END;
+
+		return $out;
+
+	}
+
 	/**
 	 * Process opportunity form data
 	 */

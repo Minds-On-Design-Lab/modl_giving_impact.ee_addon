@@ -45,6 +45,14 @@ class Giving_impact_api {
 	}
 
 	/**
+	 * Simple getter for base URL, since it's a private var and we don't want people futzing with it
+	 * @return string the API endpoint
+	 */
+	public function base_url() {
+		return $this->base_url;
+	}
+
+	/**
 	 * Prefixes tags returned to template
 	 *
 	 * @param string $pfx
