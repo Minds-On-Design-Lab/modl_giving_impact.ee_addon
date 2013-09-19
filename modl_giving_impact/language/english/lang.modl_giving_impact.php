@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$lang = array(	
+$lang = array(
 	'modl_giving_impact_module_name' =>
 	'Giving Impact',
 
@@ -8,18 +8,19 @@ $lang = array(
 	'Giving Impact API Integration',
 
 	'module_home' => 'Home',
-	
+
 // Start inserting custom language keys/values here
 
 	'add_api' => 'API Settings',
 	'documentation' => 'Documentation',
 	'account' => 'Account API Name',
 	'key' => 'Account API Key',
+	'pub_key' => 'Account Public API Key',
 	'setting' => 'Setting',
 	'value' => 'Value',
 	'submit' => 'Submit',
 	'credentials_added' => 'Your Giving Impact credentials have been saved.',
-	
+
 );
 
 /* End of file lang.giving_impact.php */

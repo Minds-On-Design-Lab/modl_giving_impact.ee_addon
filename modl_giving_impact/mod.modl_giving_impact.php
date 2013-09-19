@@ -28,6 +28,7 @@ class Modl_giving_impact {
 
 	private $my_path = false;
 	private $loaded = array();
+	private $creds = false;
 
 	/**
 	 * Constructor
@@ -85,6 +86,26 @@ class Modl_giving_impact {
 			return $this->EE->TMPL->no_results();
 		}
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
+	}
+
+	public function public_key() {
+		if( !$this->creds ) {
+		    $this->creds = $this->EE->db
+		    	->where('site_id', $this->EE->config->item('site_id'))
+			    ->get('modl_giving_impact_api_instance');
+		}
+
+		return $this->creds->row('pub_key');
+	}
+
+	public function private_key() {
+		if( !$this->creds ) {
+		    $this->creds = $this->EE->db
+		    	->where('site_id', $this->EE->config->item('site_id'))
+			    ->get('modl_giving_impact_api_instance');
+		}
+
+		return $this->creds->row('api_key');
 	}
 
 	/**

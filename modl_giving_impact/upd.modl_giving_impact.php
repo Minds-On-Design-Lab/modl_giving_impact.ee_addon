@@ -27,7 +27,7 @@
 class Modl_giving_impact_upd {
 
 
-	public $version = '2.2.6';
+	public $version = '2.3.1';
 
 	private $EE;
 
@@ -73,6 +73,11 @@ class Modl_giving_impact_upd {
             	'null'			=> FALSE
             ),
             'api_key'          => array(
+                'type'          => 'VARCHAR',
+                'constraint'        => 255,
+                'null'          => FALSE
+            ),
+            'pub_key'          => array(
                 'type'          => 'VARCHAR',
                 'constraint'        => 255,
                 'null'          => FALSE
@@ -179,6 +184,17 @@ class Modl_giving_impact_upd {
 				'class'		=> 'Modl_giving_impact',
 				'method'	=> 'post_donation'
 			));
+		} elseif( version_compare($current, '2.3.1', '<') ) {
+			$this->EE->dbforge->add_column(
+				'modl_giving_impact_api_instance',
+				array(
+		            'pub_key'          => array(
+		                'type'          => 'VARCHAR',
+		                'constraint'        => 255,
+		                'null'          => FALSE
+		            )
+				)
+			);
 		}
 
 		return TRUE;

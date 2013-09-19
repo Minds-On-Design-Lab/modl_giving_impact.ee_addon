@@ -17,6 +17,7 @@ class Giving_impact_api {
 
 	private $base_url	= false;
 	private $api_key	= false;
+	private $pub_key	= false;
 
 	private $user_agent = 'Modl_Giving_Impact/EE_Addon';
 
@@ -33,6 +34,7 @@ class Giving_impact_api {
 
 		if ($creds->num_rows() > 0)  {
 			$this->api_key = $creds->row('api_key');
+			$this->pub_key = $creds->row('pub_key');
 		}
 		
 		// API Endpoint - Once next version of API is released then will add module preference for version number.
