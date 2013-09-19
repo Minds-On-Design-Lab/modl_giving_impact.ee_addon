@@ -40,11 +40,22 @@ To learn more about these methods, the date returned and using this module to br
 
 ### Menu
 
+* [Root Tags](#roottags)
 * [Campaigns](#campaigns)
 * [Opportunities](#opportunities)
 * [Donations](#donations)
 * [Opportunity Form](#opportunity-form)
 * [Hooks](#hooks)
+
+### Root Tags
+
+	{exp:modl_giving_impact:public_key}
+
+Returns public key string
+
+	{exp:modl_giving_impact:private_key}
+
+Returns private key string
 
 ### Campaigns
 
@@ -391,6 +402,9 @@ Once the Giving Opportunity form noted above is successfully processed you can a
 
 
 ## Changelog
+- 09182013 - Version 2.3.1
+	- Public key is now a module option
+	- Added public_key and private_key tags
 - 09102013 - Version 2.3
 	- Added Donation form processing, see docs for more info
 	- Added 'gi_donation_return_data' hook.
