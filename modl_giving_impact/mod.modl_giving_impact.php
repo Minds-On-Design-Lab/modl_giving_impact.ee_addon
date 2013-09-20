@@ -88,6 +88,10 @@ class Modl_giving_impact {
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $vars);
 	}
 
+	/**
+	 * Return public key string
+	 * @return string account public key
+	 */
 	public function public_key() {
 		if( !$this->creds ) {
 		    $this->creds = $this->EE->db
@@ -98,16 +102,10 @@ class Modl_giving_impact {
 		return $this->creds->row('pub_key');
 	}
 
-	public function private_key() {
-		if( !$this->creds ) {
-		    $this->creds = $this->EE->db
-		    	->where('site_id', $this->EE->config->item('site_id'))
-			    ->get('modl_giving_impact_api_instance');
-		}
-
-		return $this->creds->row('api_key');
-	}
-
+	/**
+	 * Load standard donation JS handler. Handles form submit, handles Credit Card checks
+	 * @return string
+	 */
 	public function donate_js() {
 		$full_path = $this->lib_path.'/campaign.php';
 		require_once $full_path;
