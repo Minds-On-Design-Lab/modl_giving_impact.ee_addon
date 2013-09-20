@@ -124,11 +124,11 @@ $out = <<<END
 	    \$(function() {
 
 	    	// if jquery.payment is avaliable
-	    	try {
-		        \$('[name="cc_number"]').formatCardNumber();
-		        \$('[name="cc_cvc"]').formatCardCVC();
-		        \$('[name="cc_exp"]').formatCardExpiry();
-	    	} catch(e) {}
+	    	// try {
+		    //     \$('[name="cc_number"]').formatCardNumber();
+		    //     \$('[name="cc_cvc"]').formatCardCVC();
+		    //     \$('[name="cc_exp"]').formatCardExpiry();
+	    	// } catch(e) {}
 
 	        $('#{$formId}').submit(function(e) {
 	        	if( $(this).find('input[name="token"]').length >= 1 ) {
