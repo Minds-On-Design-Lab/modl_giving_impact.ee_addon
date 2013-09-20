@@ -140,10 +140,13 @@ $out = <<<END
 	                'month':    \$('[name="cc_exp"]').val().substr(0,2),
 	                'year':     \$('[name="cc_exp"]').val().substr(5,4),
 	            }, function(token) {
+	            	if( \$('#_carderr').length >= 1 ) {
+	            		\$('#_carderr').remove();
+	            	}
 
 	                if( !token ) {
 	                    \$('[name="cc_number"]').addClass('error');
-	                    \$('<small class="error">Your card was not accepted</small>').insertAfter(\$('[name="cc_number"]'));
+	                    \$('<span class="radius alert label" id="_carderr">Your card was not accepted</span>').insertAfter(\$('[name="cc_number"]'));
 	                    \$this.val('Donate');
 	                    \$this.attr('disabled', false);
 	                    return;
