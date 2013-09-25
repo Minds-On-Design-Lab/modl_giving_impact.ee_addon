@@ -396,6 +396,7 @@ END;
 		$first_name 		= $this->EE->input->post('first_name');
 		$last_name 			= $this->EE->input->post('last_name');
 		$email 				= $this->EE->input->post('email');
+		$contact			= $this->EE->input->post('contact', false);
 		$street 			= $this->EE->input->post('street');
 		$city 				= $this->EE->input->post('city');
 		$state 				= $this->EE->input->post('state');
@@ -464,7 +465,8 @@ END;
 				'state'				=> $state,
 				'zip'				=> $zip,
 				'donation_level'	=> $donation_level,
-				'donation_amount'	=> $donation_amount
+				'donation_amount'	=> $donation_amount,
+				'contact'			=> $contact
 			)));
 
 			$this->EE->output->show_message($data);
@@ -542,7 +544,8 @@ END;
 					'state'				=> $state,
 					'zip'				=> $zip,
 					'donation_level'	=> $donation_level,
-					'donation_amount'	=> $donation_amount
+					'donation_amount'	=> $donation_amount,
+					'contact'			=> $contact
 				)));
 
 				$data = array(
@@ -570,7 +573,8 @@ END;
 			'billing_country'	=> 'US',
 			'donation_total'	=> $donation_level ? $donation_level : $donation_amount,
 			'custom_responses' 	=> $custom_responses,
-			'card'				=> $card
+			'card'				=> $card,
+			'contact'			=> $contact
 		);
 
 		if( $opportunity_token ) {
