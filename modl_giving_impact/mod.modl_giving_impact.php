@@ -574,7 +574,7 @@ END;
 			'donation_total'	=> $donation_level ? $donation_level : $donation_amount,
 			'custom_responses' 	=> $custom_responses,
 			'card'				=> $card,
-			'contact'			=> $contact
+			'contact'			=> $contact ? $contact : 0
 		);
 
 		if( $opportunity_token ) {
