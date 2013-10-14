@@ -44,6 +44,7 @@ To learn more about these methods, the date returned and using this module to br
 * [Campaigns](#campaigns)
 * [Opportunities](#opportunities)
 * [Donations](#donations)
+* [Donation Checkout](#donation-checkoupt)
 * [Opportunity Form](#opportunity-form)
 * [Hooks](#hooks)
 
@@ -205,12 +206,18 @@ The following is available in this tag pair:
 
 ##### Required Parameters
 
-You need to provide a campaign token **or** opportunity token. A campaign token will generate a list of donations within the campaign, including those made through any children opportunities. An opportunity token will return a list of donations for the specified opportunity only.
+You need to provide a campaign token, opportunity token **or** dondation token. 
+
+- A campaign token will generate a list of donations within the campaign, including those made through any children opportunities.
+- An opportunity token will return a list of donations for the specified opportunity only.
+- A donation token will return only the associated donation record data.
+
 
 | Parameter | Data Type | Description |
 | ------------ |:-------------|:-------------|
 | campaign  | STRING | Parent campaign id_token |
 | opportunity | STRING | Specfic opportunity id_token |
+| donation | STRING | Specfic donation id_token |
 
 ##### Optional Parameters
 
@@ -266,20 +273,126 @@ The following variables are available within this tag pair.
 
 This conditional will show its contents if there are no results returned for the donations tag.
 
+### Donation Checkout
+
+There are two options available for setting up checkout experiences for donations. You can use our Hosted Checkout page or you can setup your own custom checkout page. For more details about these two different options and how they work, please review our [Integration Docs (API)](http://givingimpact.com/docs/api/donation-checkout).
+
+#### Hosted Checkout
+
+The Hosted Checkout is a secure, super quick solution that utilizes all of the Giving Impact&trade; campaign customization goodness. The Hosted Checkout supports donation levels, donation fields to gather data from donors, messaging content, and whatever future enhancements that may come.
+
+Implementing a solution with Hosted Checkout is as simple as pointing donors to the gi_donation_url provided in the Campaign and Giving Opportunity tag data.
+
+#### Custom Checkout
+
+
+#### Required Javascript
+
+
+##### Javascript Tag
+
+     {exp:modl_giving_impact:donate_js id="donate-form"}
+
+##### Required Parameters
+
+#### Donation Form
+
+    {exp:modl_giving_impact:donate_form 
+      opportunity="######" 
+      id="donate-form"
+    }
+
+    ... form content 
+
+    {/exp:modl_giving_impact:donate_form}
+
+
+#### Opportunity Example Donation Checkout Form
+    {exp:modl_giving_impact:donate_form opportunity="{segment_3}" return="{path=campaign_gi_donate_form}/thanks" class="gi-form" id="donate-form"}
+    <fieldset>
+  	  <legend>Donation</legend>
+  			<label class="required">Donation Amount:</label>
+          {gi_campaign}
+              {if campaign_enable_donation_levels}
+                  <select name="donation_level">
+                      {campaign_donation_levels}
+                          <option value="{donation_levels_amount}">{donation_levels_label}</option>
+                      {/campaign_donation_levels}
+                  </select>
+              {if:else}
+           		<input type="text" name="donation_amount" value="{value_donation_amount}" />
+              {/if}
+          {/gi_campaign}
+		</fieldset>
+    <fieldset>
+  		<legend>Donor Information</legend>
+        <label class="required">First Name:</label>
+        <input type="text" name="first_name" value="{value_first_name}" />
+   
+        <label class="required">Last Name:</label>
+        <input type="text" name="last_name" value="{value_last_name}" />
+   
+        <label class="required">Email:</label>
+        <input type="text" name="email" value="{value_email}" />
+   			<label id="may_contact"><input type="checkbox" value="1" name="contact" id="may_contact" checked /> You may contact me with future updates</label>
+        
+        {gi_campaign}
+            {campaign_custom_fields}
+                {if custom_fields_status}
+                   <label{if custom_fields_required} class="required"{/if}>{custom_fields_field_label}</label>
+                  
+                      {if custom_fields_field_type == 'text'}
+                          <input type="text" name="fields[{custom_fields_field_id}]" />
+                      {if:else}
+                          <select name="fields[{custom_fields_field_id}]">
+                              {custom_fields_options}
+                                  <option value="{value}">{value}</option>
+                              {/custom_fields_options}
+                          </select>
+                      {/if}
+                {/if}
+            {/campaign_custom_fields}
+        {/gi_campaign} 
+   	</fieldset>
+    <fieldset>
+			<legend>Payment Information</legend>
+				<label class="required">Address:</label>
+        <input type="text" name="street" value="{value_street}" placeholder="Street Address" />
+        <input type="text" name="city" value="{value_city}" placeholder="City" />
+        <input type="text" name="state" value="{value_state}" placeholder="State" />
+        <input type="text" name="zip" value="{value_zip}" placeholder="Zip" />
+                   
+        <label class="required">CC Number:</label>
+        <input type="text" name="cc_number" placeholder="1234 5679 9012 3456" />
+   
+        <label class="required">CVC:</label>
+        <input type="text" name="cc_cvc" placeholder="Security code" />
+   
+        <label class="required">CC EXP:</label>
+        <input type="text" name="cc_exp" placeholder="MM / YYYY" />
+   
+   	</fieldset>
+
+    <input type="submit" value="Donate" id="process-donation" class="button radius" />
+    {/exp:modl_giving_impact:donate_form}
+
+
 ### Opportunity Form
 
-Using the Opportunity Form tag pair you can easily create a form to create new opportunities.
+Using the Opportunity Form tag pair you can easily create a form to create new Giving Opportunities or update existing ones.
 
 	{exp:modl_giving_impact:opportunity_form} Form Content {/exp:modl_giving_impact:opportunity_form}
 
 #### Parameters
 
-* campaign - STRING - parent campaign token **REQUIRED**
-* opportunity - STRING - the opportunity token if updating an existing opportunity
-* return - STRING - a return URL that supports `{path=template_group/template}` **default - returns to template of form**
-* class - STRING - CSS class applied to <form>
-* id - STRING - CSS ID applied to <form>
-* notify - STRING - A valid email address to notify upon successful opportunity creation.  Will send a simple notifcation email that included the title and description of the opportunity.
+| Parameter | Data Type | Description | Default |
+| ------------ |:-------------|:-------------|:-------------|
+| campaign | STRING | parent campaign token **REQUIRED** | |
+| opportunity | STRING | the opportunity token if updating an existing opportunity | |
+| return | STRING | a return URL that supports `{path=template_group/template}` | returns to template of form |
+| class | STRING | CSS class applied to <form> | |
+| class | STRING | CSS ID applied to <form> | |
+| notify | STRING | A valid email address to notify upon successful opportunity creation.  Will send a simple notifcation email that included the title and description of the opportunity. | |
 
 #### Validation and Required Fields
 
@@ -326,79 +439,63 @@ If the user submits the form successfully and is immediately returned to the tem
 		{if opportunity_token}
 			<p>Sweet! Your opportunity was created with token {opportunity_token}</p>
 		{/if}
-		<ul>
-		<li>
-			<label class="required">Title:</label>
-			<input type="text" name="title" value="{value_title}" />
-		</li>
-		<li>
-			<label class="required">Description:</label>
-			<textarea name="description">{value_description}</textarea>
-		</li>
-		<li>
-			<label class="required">Status:</label>
-			<input type="radio" name="status" value="true"{if value_status} checked{/if}>Active and accepting donations<br>
-			<input type="radio" name="status" value="false"{if value_status} checked{/if}>Inactive
-		</li>
-		<li>
-			<label>Team Photo:</label>
-			<p class="directions">Add an image to display on your Page. Image dimensions should be 300 pixels x 200 pixels. File needs to be less than 100K and a web optimized jpeg, gif or png.</p>
-			<input type="file" name="image" />
-		</li>
-		<li>
-			<label>Donation Target:</label>
-			<input type="text" name="target" value="{value_target}" />
-		</li>
-		<li>
-			<label>YouTube Video ID:</label>
-			<p class="directions">Enter the YouTube URL or Video Id to add a video to your Page.<br/>
-			Ex: http://www.youtube.com/watch?v=**dtdo_pOwuHI**</p>
-			<input type="text" name="youtube" value="{value_youtube}" />
-		</li>
-		<li>
-			<table>
-				<thead>
-					<tr>
-						<th>Label</th>
-						<th>Type</th>
-						<th>Required</th>
-					</tr>
-				</thead>
-				{gi_campaign_fields}
-					{if campaign_fields_status}
-						<tr>
-							<td>{campaign_fields_field_label}</td>
-							<td>
-								{if campaign_fields_field_type == 'text'}
-									<input type="text" name="fields[{campaign_fields_field_id}]" />
-								{if:else}
-									<select name="fields[{campaign_fields_field_id}]">
-										{campaign_fields_options}
-											<option value="{value}">{value}</option>
-										{/campaign_fields_options}
-									</select>
-								{/if}
-							</td>
-							<td>{if campaign_fields_required}Required{/if}</td>
-						</tr>
-					{/if}
-				{/gi_campaign_fields}
-			</table>
-		</li>
-		<li>
-			{captcha}<br />
-			<p class="directions">Please enter the letters/numbers you see above.</p>
-			<input type="text" name="captcha" />
-		</li>
-			<input type="submit" value="Save Opportunity" />
-		</ul>
+		
+		<label class="required">Title:</label>
+		<input type="text" name="title" value="{value_title}" />
+		
+		<label class="required">Description:</label>
+		<textarea name="description">{value_description}</textarea>
+	
+		<label class="required">Status:</label>
+		<input type="radio" name="status" value="true"{if value_status} checked{/if}>Active and accepting donations<br>
+		<input type="radio" name="status" value="false"{if value_status} checked{/if}>Inactive
+	
+		<label>Team Photo:</label>
+		<p class="directions">Add an image to display on your Page. Image dimensions should be 300 pixels x 200 pixels. File needs to be less than 100K and a web optimized jpeg, gif or png.</p>
+		<input type="file" name="image" />
+		
+		<label>Donation Target:</label>
+		<input type="text" name="target" value="{value_target}" />
+		
+		<label>YouTube Video ID:</label>
+		<p class="directions">Enter the YouTube URL or Video Id to add a video to your Page.<br/>
+		Ex: http://www.youtube.com/watch?v=**dtdo_pOwuHI**</p>
+		<input type="text" name="youtube" value="{value_youtube}" />
+		
+    {gi_campaign_fields}
+        {if campaign_fields_status}
+              <label>{campaign_fields_field_label}{if campaign_fields_required}*{/if}:</label>
+              {if campaign_fields_field_type == 'text'}
+                  <input type="text" name="fields[{campaign_fields_field_id}]" />
+              {if:else}
+                  <select name="fields[{campaign_fields_field_id}]">
+                      {campaign_fields_options}
+                          <option value="{value}">{value}</option>
+                      {/campaign_fields_options}
+                  </select>
+              {/if}
+        {/if}
+    {/gi_campaign_fields}
+
+		{captcha}<br />
+		<p class="directions">Please enter the letters/numbers you see above.</p>
+		<input type="text" name="captcha" />
+		
+		<input type="submit" value="Save Opportunity" />
+		
 	{/exp:modl_giving_impact:opportunity_form}
 
 ## Hooks
 
+The following developer hooks are avaialble to allow you tap into key actions with your own custom add-ons.
+
 ### gi_opportunity_return_data()
 
 Once the Giving Opportunity form noted above is successfully processed you can access an array that includes the full API result for that specific opportunity created.
+
+### gi_donation_return_data()
+
+When using custom checkout form and when successfully processed you can access an array that includes the full API result for that specific donation created.
 
 
 ## Changelog
