@@ -515,7 +515,7 @@ END;
 		}
 
         $custom_responses = array();
-        if( array_key_exists('custom_fields', $obj) ) {
+        if( array_key_exists('custom_fields', $obj) && is_array($this->EE->input->post('fields')) ) {
 
             $responses = $this->EE->input->post('fields');
 
