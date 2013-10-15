@@ -514,7 +514,7 @@ END;
 			$obj = $obj['campaign'];
 		}
 
-        $custom_fields = array();
+        $custom_responses = array();
         if( array_key_exists('custom_fields', $obj) ) {
 
             $responses = $this->EE->input->post('fields');
