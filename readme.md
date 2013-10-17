@@ -28,7 +28,7 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 ## Configuration
 
-A Giving Impact API Key is required to connect the module to Giving Impact & can be entered on the modules settings screen.
+A Giving Impact Private API Key is required to connect the module to Giving Impact & can be entered on the modules settings screen. In addition a Public API Key is required if you are using the Custom Checkout feature.
 
 ## EECMS Usage
 
@@ -292,6 +292,7 @@ The following details the tags and provides examples for generating custom check
 The following are general requirements for the Custom Checkout feature.
 
 - Checkout MUST be hosted under SSL
+- Must enter your Public API key to module settings for Custom Checkout
 - Must include our Javascript Tag
 - `id` paramter added to Javascript Tag must match that of the checkout form tag
 - Must use the following names for credit card input fields: `cc_number`, `cc_cvc`, and `cc_exp`
