@@ -285,15 +285,29 @@ Implementing a solution with Hosted Checkout is as simple as pointing donors to 
 
 #### Custom Checkout
 
+The following details the tags and provides examples for generating custom checkout forms.
 
-#### Required Javascript
+##### General Requirements
 
+The following are general requirements for the Custom Checkout feature.
+
+- Checkout MUST be hosted under SSL
+- Must include our Javascript Tag
+- `id` paramter added to Javascript Tag must match that of the checkout form tag
+- Must use the following names for credit card input fields: `cc_number`, `cc_cvc`, and `cc_exp`
+- API requirements - Please review our [Integration Docs (API)](http://givingimpact.com/docs/api/donation-checkout) for more details about required fields and data formating.
 
 ##### Javascript Tag
 
+The following tag is required and can be added below form and above `</body>` tag.
+
      {exp:modl_giving_impact:donate_js id="donate-form"}
 
-##### Required Parameters
+###### Required Parameters
+
+| Parameter | Data Type | Description |
+| ------------ |:-------------|:-------------|
+| id  | STRING | The id used by Javscript to target form. PLEASE NOTE that it is critical that the id in the Javascript tag matches that in the form tag |
 
 #### Donation Form
 
@@ -306,22 +320,113 @@ Implementing a solution with Hosted Checkout is as simple as pointing donors to 
 
     {/exp:modl_giving_impact:donate_form}
 
+###### Required Parameters
 
-#### Opportunity Example Donation Checkout Form
-    {exp:modl_giving_impact:donate_form opportunity="{segment_3}" return="{path=campaign_gi_donate_form}/thanks" class="gi-form" id="donate-form"}
+| Parameter | Data Type | Description |
+| ------------ |:-------------|:-------------|
+| id  | STRING | The id added to form tag. PLEASE NOTE that it is critical that the id in the Javascript tag matches that in the form tag |
+| campaign **or** opportunity | STRING | id_token for either the Campaign **or** Giving Opportunity donation is towards. |
+
+###### Optional Parameters
+
+| Parameter | Data Type | Description | Default |
+| ------------ |:-------------|:-------------|:-------------|
+| return | STRING | a return URL that supports `{path=template_group/template}` | returns to template of form |
+| class | STRING | CSS class applied to `<form>` ||
+| notify | STRING | A valid email address to notify upon successful opportunity creation. Will send a simple notifcation email that included the name and total of the donation. ||
+
+#### Campaign Example Donation Checkout Form
+
+The following is an example of a **Campaign** checkout Form. Please note that all Campaign data as detailed above is available within the form opening and closing tags. You can see examples of this in both the donation levels and custom donation fields areas.
+
+    {exp:modl_giving_impact:donate_form campaign="{id_token}" return="{path=thanks" class="gi-form" id="donate-form"}
+    <fieldset>
+      <legend>Donation</legend>
+        <label class="required">Donation Amount:</label>
+              
+        <!-- Donation Level or Open Input -->
+        
+        {if gi_enable_donation_levels}
+          {gi_donation_levels}
+           <label for="radio1"><input type="radio" name="donation_amount" value="{donation_levels_amount}"> {exp:gi_helper:money}{donation_levels_amount}{/exp:gi_helper:money} - {donation_levels_label}</label>
+          {/gi_donation_levels}
+        {if:else}
+          <input type="text" name="donation_amount" value="{value_donation_amount}" />
+        {/if}
+
+    </fieldset>
+    <fieldset>
+      <legend>Donor Information</legend>
+        <label class="required">First Name:</label>
+        <input type="text" name="first_name" value="{value_first_name}" />
+   
+        <label class="required">Last Name:</label>
+        <input type="text" name="last_name" value="{value_last_name}" />
+   
+        <label class="required">Email:</label>
+        <input type="text" name="email" value="{value_email}" />
+        <label id="may_contact"><input type="checkbox" value="1" name="contact" id="may_contact" checked /> You may contact me with future updates</label>
+
+        <!-- Custom Donation Fields -->
+        {gi_custom_fields}
+           {if custom_fields_status}
+              <label{if custom_fields_required} class="required"{/if}>{custom_fields_field_label}</label>
+           
+               {if custom_fields_field_type == 'text'}
+                   <input type="text" name="fields[{custom_fields_field_id}]" />
+               {if:else}
+                   <select name="fields[{custom_fields_field_id}]">
+                       {custom_fields_options}
+                           <option value="{value}">{value}</option>
+                       {/custom_fields_options}
+                   </select>
+               {/if}
+           {/if}
+        {/gi_custom_fields}
+    </fieldset>
+    <fieldset>
+      <legend>Payment Information</legend>
+        <label class="required">Address:</label>
+        <input type="text" name="street" value="{value_street}" placeholder="Street Address" />
+        <input type="text" name="city" value="{value_city}" placeholder="City" />
+        <input type="text" name="state" value="{value_state}" placeholder="State" />
+        <input type="text" name="zip" value="{value_zip}" placeholder="Zip" />
+                   
+        <label class="required">CC Number:</label>
+        <input type="text" name="cc_number" placeholder="1234 5679 9012 3456" />
+   
+        <label class="required">CVC:</label>
+        <input type="text" name="cc_cvc" placeholder="Security code" />
+   
+        <label class="required">CC EXP:</label>
+        <input type="text" name="cc_exp" placeholder="MM / YYYY" />
+   
+    </fieldset>
+
+    <input type="submit" value="Donate" id="process-donation" class="button radius" />
+    {/exp:modl_giving_impact:donate_form}
+
+#### Giving Opportunity Example Donation Checkout Form
+
+
+The following is an example of a **Giving Opportunity** checkout Form. Please note that all Giving Opportunity data as detailed above is available within the form opening and closing tags. You can see examples of this in both the donation levels and custom donation fields areas.
+
+    {exp:modl_giving_impact:donate_form opportunity="{id_token}" return="{path=thanks" class="gi-form" id="donate-form"}
     <fieldset>
   	  <legend>Donation</legend>
   			<label class="required">Donation Amount:</label>
           {gi_campaign}
+              
+              <!-- Donation Level or Open Input -->
+              
               {if campaign_enable_donation_levels}
-                  <select name="donation_level">
-                      {campaign_donation_levels}
-                          <option value="{donation_levels_amount}">{donation_levels_label}</option>
-                      {/campaign_donation_levels}
-                  </select>
+                {campaign_donation_levels}
+                   <label for="radio1"><input type="radio" name="donation_amount" value="{donation_levels_amount}"> {donation_levels_amount} - {donation_levels_label}</label>
+                {/campaign_donation_levels}
               {if:else}
            		<input type="text" name="donation_amount" value="{value_donation_amount}" />
               {/if}
+
           {/gi_campaign}
 		</fieldset>
     <fieldset>
@@ -337,6 +442,9 @@ Implementing a solution with Hosted Checkout is as simple as pointing donors to 
    			<label id="may_contact"><input type="checkbox" value="1" name="contact" id="may_contact" checked /> You may contact me with future updates</label>
         
         {gi_campaign}
+
+          <!-- Custom Donation Fields -->
+
             {campaign_custom_fields}
                 {if custom_fields_status}
                    <label{if custom_fields_required} class="required"{/if}>{custom_fields_field_label}</label>
@@ -352,6 +460,7 @@ Implementing a solution with Hosted Checkout is as simple as pointing donors to 
                       {/if}
                 {/if}
             {/campaign_custom_fields}
+
         {/gi_campaign} 
    	</fieldset>
     <fieldset>
@@ -390,8 +499,8 @@ Using the Opportunity Form tag pair you can easily create a form to create new G
 | campaign | STRING | parent campaign token **REQUIRED** | |
 | opportunity | STRING | the opportunity token if updating an existing opportunity | |
 | return | STRING | a return URL that supports `{path=template_group/template}` | returns to template of form |
-| class | STRING | CSS class applied to <form> | |
-| class | STRING | CSS ID applied to <form> | |
+| class | STRING | CSS class applied to `<form>` | |
+| id | STRING | CSS ID applied to `<form>` | |
 | notify | STRING | A valid email address to notify upon successful opportunity creation.  Will send a simple notifcation email that included the title and description of the opportunity. | |
 
 #### Validation and Required Fields
