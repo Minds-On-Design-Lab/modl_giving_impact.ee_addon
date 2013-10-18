@@ -32,11 +32,11 @@ A Giving Impact Private API Key is required to connect the module to Giving Impa
 
 ## EECMS Usage
 
-The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of it's related method's data as an EECMS tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is a data element returned with a campaign's unique token labeled `id_token` which in the related EECMS tag pair would be returned as `{gi_id_token}`.
+The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of its related methods data as an EECMS tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is a data element returned with a campaign's unique token labeled `id_token` which in the related EECMS tag pair would be returned as `{gi_id_token}`.
 
-The following details the ExpressionEngine tags available, variables returned, parameters, and any unique variables available for use. It also details options for create forms to post data to Giving Impact.
+The following details the ExpressionEngine tags available, variables returned, parameters, and any unique variables available for use. It also details options for opportunity & donation creation forms to post data to Giving Impact.
 
-To learn more about these methods, the date returned and using this module to bring a customized donation experience to your nonprofit's ExpressionEngine site, please visit [givingimpact.com](http://givingimpact.com)
+To learn more about these methods, the data returned and using this module to bring a customized donation experience to your nonprofit's ExpressionEngine site, please visit [givingimpact.com](http://givingimpact.com)
 
 ### Menu
 
@@ -53,10 +53,6 @@ To learn more about these methods, the date returned and using this module to br
 	{exp:modl_giving_impact:public_key}
 
 Returns public key string
-
-	{exp:modl_giving_impact:private_key}
-
-Returns private key string
 
 ### Campaigns
 
@@ -81,17 +77,17 @@ Returns private key string
 | {gi_title} | Title of the campaign |
 | {gi_description} | Brief campaign description |
 | {gi_donation_url} | URL to the hosted donation landing and processing pages. |
-| {gi_donation_target} | Target donation amount (integer). |
+| {gi_donation_target} | Target donation amount (signed float). |
 | {gi_donation_minimum} | Minimum donation value accepted. |
-| {gi_donation_total} | Current donation total (integer). |
+| {gi_donation_total} | Current donation total (signed float). |
 | {gi_total_donations} | Current total number of donations. |
 | {gi_has_giving_opportunities} | Returns `true` or `false` depending on whether the Campaign has Giving Opportunities or not. |
 | {gi_total_opportunities} | Current total number of Giving Opportunities. |
 | {gi_share_url} | URL to the hosted share page. Useful to offer social network sharing of the campaign using campaign data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard as well as can be tracked in Google Analytics if a profile ID has been added to campaign. |
 | {gi_shares_fb} | Total number of Facebook likes for this campaign made through the Giving Impact share feature. |
 | {gi_shares_twitter} | Total number of Tweets made for this campaign made through the Giving Impact share feature. |
-| {gi_image_url} | URL to campaign image. Image is hosted with Giving Impact |
-| {gi_thumb_url} | URL to campaign thumbnail image. Image is hosted with Giving Impact |
+| {gi_image_url} | URL to campaign image. Image is hosted with Giving Impact. Image is served via HTTPS.|
+| {gi_thumb_url} | URL to campaign thumbnail image. Image is hosted with Giving Impact. Image is served via HTTPS.|
 | {gi_youtube_id} | YouTube ID for campaign video. |
 | {gi_hash_tag} | Twitter hashtag for the campaign. |
 | {gi_analytics_id} | Google Analytics Profile ID for the Campaign. |
@@ -148,7 +144,7 @@ The following are used to modify the returned list of giving opportunities when 
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
 | sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. sort="gi_created_at&#124;desc"| gi_created_at |
 | status | STRING | Campaign status, "active", "inactive" or "both". | active |
-| related | BOOLEAN | Entering true`will make available the `{gi_campaign}{/gi_campaign}` tag pair with a full set of variables related to the opportunity's parent campaign.  | false |
+| related | BOOLEAN | Entering `true` will make available the `{gi_campaign}{/gi_campaign}` tag pair with a full set of variables related to the opportunity's parent campaign.  | false |
 
 #### Single Variables
 
@@ -159,14 +155,14 @@ The following are used to modify the returned list of giving opportunities when 
 | {gi_title} | Title of the Giving Opportunity |
 | {gi_description} | Brief Giving Opportunity description |
 | {gi_donation_url} | URL to the hosted donation landing and processing pages. |
-| {gi_donation_target} | Target donation amount (integer). |
-| {gi_donation_total} | Current donation total (integer). |
+| {gi_donation_target} | Target donation amount (signed float). |
+| {gi_donation_total} | Current donation total (signed float). |
 | {gi_total_donations} | Current total number of donations. |
 | {gi_share_url} | URL to the hosted share page. Useful to offer social network sharing of the Giving Opportunity using Giving Opportunity data. Offers basic tracking of shares reported as part of campaign analytics within the Giving Impact dashboard. |
 | {gi_shares_fb} | Total number of Facebook likes for this Giving Opportunity made through the Giving Impact share feature. |
 | {gi_shares_twitter} | Total number of Tweets made for this Giving Opportunity made through the Giving Impact share feature. |
-| {gi_image_url} |  URL to Giving Opportunity image. Image is hosted with Giving Impact. |
-| {gi_thumb_url} |  URL to Giving Opportunity thumbnail image. Image is hosted with Giving Impact. |
+| {gi_image_url} |  URL to Giving Opportunity image. Image is hosted with Giving Impact. Image is served via HTTPS.|
+| {gi_thumb_url} |  URL to Giving Opportunity thumbnail image. Image is hosted with Giving Impact. Image is serverd via HTTPS.|
 | {gi_youtube_id} | YouTube ID for Giving Opportunity video. |
 
 #### Variable Pairs
@@ -200,13 +196,13 @@ The following is available in this tag pair:
 
 ### Donations
 
-	{exp:modl_giving_impact:donations campaign="{id_token}} Content {/exp:modl_giving_impact:donations}
+	{exp:modl_giving_impact:donations campaign="{id_token}"} Content {/exp:modl_giving_impact:donations}
 
 #### Parameters
 
 ##### Required Parameters
 
-You need to provide a campaign token, opportunity token **or** dondation token. 
+You need to provide a campaign token, opportunity token **or** dondation token.
 
 - A campaign token will generate a list of donations within the campaign, including those made through any children opportunities.
 - An opportunity token will return a list of donations for the specified opportunity only.
@@ -241,7 +237,7 @@ You need to provide a campaign token, opportunity token **or** dondation token.
 | {gi_billing_state} | Donor State |
 | {gi_billing_postal_code} | Donor zip code |
 | {gi_billing_country} | Donor country |
-| {gi_donation_total} | Amount donated (integer) |
+| {gi_donation_total} | Amount donated (signed float) |
 | {gi_donation_level} | The donation level selected if campaign is configured with donation levels. |
 | {gi_contactl} | Returns `true` or `false` depending on whether the donor requested to be opted out of follow/up email communications.|
 | {gi_email_address} | Donor email address unless donor has 'opted out' of receiving follow-up communications. |
@@ -312,12 +308,12 @@ The following tag is required and can be added below form and above `</body>` ta
 
 #### Donation Form
 
-    {exp:modl_giving_impact:donate_form 
-      opportunity="######" 
+    {exp:modl_giving_impact:donate_form
+      opportunity="######"
       id="donate-form"
     }
 
-    ... form content 
+    ... form content
 
     {/exp:modl_giving_impact:donate_form}
 
@@ -336,17 +332,58 @@ The following tag is required and can be added below form and above `</body>` ta
 | class | STRING | CSS class applied to `<form>` ||
 | notify | STRING | A valid email address to notify upon successful opportunity creation. Will send a simple notifcation email that included the name and total of the donation. ||
 
+#### Validation and Required Fields
+
+##### Required Form Fields
+
+The following must be submitted otherwise your request will display an error.
+
+* first_name
+* last_name
+* email_address
+* contact
+* billing_address1
+* billing_city
+* billing_state
+* billing_country
+* billing_postal_code
+* donation_total
+* card - Card token provided by Stripe
+
+##### Validation
+
+Form uses ExpressionEngine's validation resulting in a system message being displayed when any required case fails.
+
+You may use the following variables to repopulate the form upon return from validation error.
+
+* `{value_first_name}`
+* `{value_last_name}`
+* `{value_email}`
+* `{value_street}`
+* `{value_city}`
+* `{value_state}`
+* `{value_zip}`
+* `{value_donation_amount}`
+* `{value_donation_level}`
+
+#### Returned Data
+
+On successful submission and processing of form data, the API and module will return the new donations unique token. This value are returned in two ways.
+
+1. The `donation_token` will be dynamically added as the last segment of the path specificed in the **return** parameter detailed above.
+2. If you return to the same template that contains the form tag, you may use the `{donation_token}` variable within the form tag.
+
 #### Campaign Example Donation Checkout Form
 
 The following is an example of a **Campaign** checkout Form. Please note that all Campaign data as detailed above is available within the form opening and closing tags. You can see examples of this in both the donation levels and custom donation fields areas.
 
-    {exp:modl_giving_impact:donate_form campaign="{id_token}" return="{path=thanks" class="gi-form" id="donate-form"}
+    {exp:modl_giving_impact:donate_form campaign="{id_token}" return="{path=thanks}" class="gi-form" id="donate-form"}
     <fieldset>
       <legend>Donation</legend>
         <label class="required">Donation Amount:</label>
-              
+
         <!-- Donation Level or Open Input -->
-        
+
         {if gi_enable_donation_levels}
           {gi_donation_levels}
            <label for="radio1"><input type="radio" name="donation_amount" value="{donation_levels_amount}"> {exp:gi_helper:money}{donation_levels_amount}{/exp:gi_helper:money} - {donation_levels_label}</label>
@@ -360,10 +397,10 @@ The following is an example of a **Campaign** checkout Form. Please note that al
       <legend>Donor Information</legend>
         <label class="required">First Name:</label>
         <input type="text" name="first_name" value="{value_first_name}" />
-   
+
         <label class="required">Last Name:</label>
         <input type="text" name="last_name" value="{value_last_name}" />
-   
+
         <label class="required">Email:</label>
         <input type="text" name="email" value="{value_email}" />
         <label id="may_contact"><input type="checkbox" value="1" name="contact" id="may_contact" checked /> You may contact me with future updates</label>
@@ -372,7 +409,7 @@ The following is an example of a **Campaign** checkout Form. Please note that al
         {gi_custom_fields}
            {if custom_fields_status}
               <label{if custom_fields_required} class="required"{/if}>{custom_fields_field_label}</label>
-           
+
                {if custom_fields_field_type == 'text'}
                    <input type="text" name="fields[{custom_fields_field_id}]" />
                {if:else}
@@ -392,16 +429,16 @@ The following is an example of a **Campaign** checkout Form. Please note that al
         <input type="text" name="city" value="{value_city}" placeholder="City" />
         <input type="text" name="state" value="{value_state}" placeholder="State" />
         <input type="text" name="zip" value="{value_zip}" placeholder="Zip" />
-                   
+
         <label class="required">CC Number:</label>
         <input type="text" name="cc_number" placeholder="1234 5679 9012 3456" />
-   
+
         <label class="required">CVC:</label>
         <input type="text" name="cc_cvc" placeholder="Security code" />
-   
+
         <label class="required">CC EXP:</label>
         <input type="text" name="cc_exp" placeholder="MM / YYYY" />
-   
+
     </fieldset>
 
     <input type="submit" value="Donate" id="process-donation" class="button radius" />
@@ -412,14 +449,14 @@ The following is an example of a **Campaign** checkout Form. Please note that al
 
 The following is an example of a **Giving Opportunity** checkout Form. Please note that all Giving Opportunity data as detailed above is available within the form opening and closing tags. You can see examples of this in both the donation levels and custom donation fields areas.
 
-    {exp:modl_giving_impact:donate_form opportunity="{id_token}" return="{path=thanks" class="gi-form" id="donate-form"}
+    {exp:modl_giving_impact:donate_form opportunity="{id_token}" return="{path=thanks}" class="gi-form" id="donate-form"}
     <fieldset>
   	  <legend>Donation</legend>
   			<label class="required">Donation Amount:</label>
           {gi_campaign}
-              
+
               <!-- Donation Level or Open Input -->
-              
+
               {if campaign_enable_donation_levels}
                 {campaign_donation_levels}
                    <label for="radio1"><input type="radio" name="donation_amount" value="{donation_levels_amount}"> {donation_levels_amount} - {donation_levels_label}</label>
@@ -434,14 +471,14 @@ The following is an example of a **Giving Opportunity** checkout Form. Please no
   		<legend>Donor Information</legend>
         <label class="required">First Name:</label>
         <input type="text" name="first_name" value="{value_first_name}" />
-   
+
         <label class="required">Last Name:</label>
         <input type="text" name="last_name" value="{value_last_name}" />
-   
+
         <label class="required">Email:</label>
         <input type="text" name="email" value="{value_email}" />
    			<label id="may_contact"><input type="checkbox" value="1" name="contact" id="may_contact" checked /> You may contact me with future updates</label>
-        
+
         {gi_campaign}
 
           <!-- Custom Donation Fields -->
@@ -449,7 +486,7 @@ The following is an example of a **Giving Opportunity** checkout Form. Please no
             {campaign_custom_fields}
                 {if custom_fields_status}
                    <label{if custom_fields_required} class="required"{/if}>{custom_fields_field_label}</label>
-                  
+
                       {if custom_fields_field_type == 'text'}
                           <input type="text" name="fields[{custom_fields_field_id}]" />
                       {if:else}
@@ -462,7 +499,7 @@ The following is an example of a **Giving Opportunity** checkout Form. Please no
                 {/if}
             {/campaign_custom_fields}
 
-        {/gi_campaign} 
+        {/gi_campaign}
    	</fieldset>
     <fieldset>
 			<legend>Payment Information</legend>
@@ -471,16 +508,16 @@ The following is an example of a **Giving Opportunity** checkout Form. Please no
         <input type="text" name="city" value="{value_city}" placeholder="City" />
         <input type="text" name="state" value="{value_state}" placeholder="State" />
         <input type="text" name="zip" value="{value_zip}" placeholder="Zip" />
-                   
+
         <label class="required">CC Number:</label>
         <input type="text" name="cc_number" placeholder="1234 5679 9012 3456" />
-   
+
         <label class="required">CVC:</label>
         <input type="text" name="cc_cvc" placeholder="Security code" />
-   
+
         <label class="required">CC EXP:</label>
         <input type="text" name="cc_exp" placeholder="MM / YYYY" />
-   
+
    	</fieldset>
 
     <input type="submit" value="Donate" id="process-donation" class="button radius" />
@@ -549,29 +586,29 @@ If the user submits the form successfully and is immediately returned to the tem
 		{if opportunity_token}
 			<p>Sweet! Your opportunity was created with token {opportunity_token}</p>
 		{/if}
-		
+
 		<label class="required">Title:</label>
 		<input type="text" name="title" value="{value_title}" />
-		
+
 		<label class="required">Description:</label>
 		<textarea name="description">{value_description}</textarea>
-	
+
 		<label class="required">Status:</label>
 		<input type="radio" name="status" value="true"{if value_status} checked{/if}>Active and accepting donations<br>
 		<input type="radio" name="status" value="false"{if value_status} checked{/if}>Inactive
-	
+
 		<label>Team Photo:</label>
 		<p class="directions">Add an image to display on your Page. Image dimensions should be 300 pixels x 200 pixels. File needs to be less than 100K and a web optimized jpeg, gif or png.</p>
 		<input type="file" name="image" />
-		
+
 		<label>Donation Target:</label>
 		<input type="text" name="target" value="{value_target}" />
-		
+
 		<label>YouTube Video ID:</label>
 		<p class="directions">Enter the YouTube URL or Video Id to add a video to your Page.<br/>
 		Ex: http://www.youtube.com/watch?v=**dtdo_pOwuHI**</p>
 		<input type="text" name="youtube" value="{value_youtube}" />
-		
+
     {gi_campaign_fields}
         {if campaign_fields_status}
               <label>{campaign_fields_field_label}{if campaign_fields_required}*{/if}:</label>
@@ -590,20 +627,20 @@ If the user submits the form successfully and is immediately returned to the tem
 		{captcha}<br />
 		<p class="directions">Please enter the letters/numbers you see above.</p>
 		<input type="text" name="captcha" />
-		
+
 		<input type="submit" value="Save Opportunity" />
-		
+
 	{/exp:modl_giving_impact:opportunity_form}
 
 ## Hooks
 
 The following developer hooks are avaialble to allow you tap into key actions with your own custom add-ons.
 
-### gi_opportunity_return_data()
+### `gi_opportunity_return_data(array $opportunity)`
 
 Once the Giving Opportunity form noted above is successfully processed you can access an array that includes the full API result for that specific opportunity created.
 
-### gi_donation_return_data()
+### `gi_donation_return_data(array $donation)`
 
 When using custom checkout form and when successfully processed you can access an array that includes the full API result for that specific donation created.
 
