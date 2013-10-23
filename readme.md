@@ -20,7 +20,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 * Expression Engine 2.x
 * A [Giving Impact](http://givingimpact.com) account.
 	* Supports v2 of API
-* Tested in EECMS 2.5 -> 2.7.0
+* Tested in EECMS 2.7.0
 
 ## Installation
 
