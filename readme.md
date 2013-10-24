@@ -340,14 +340,14 @@ The following must be submitted otherwise your request will display an error.
 
 * first_name
 * last_name
-* email_address
+* email
 * contact
 * billing_address1
 * billing_city
 * billing_state
 * billing_country
 * billing_postal_code
-* donation_total
+* donation_amount
 * card - Card token provided by Stripe
 
 ##### Validation
