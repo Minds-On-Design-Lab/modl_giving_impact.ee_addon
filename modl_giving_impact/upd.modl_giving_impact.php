@@ -88,11 +88,20 @@ class Modl_giving_impact_upd {
         $this->EE->dbforge->add_key('api_instance_id', TRUE);
         $this->EE->dbforge->create_table('modl_giving_impact_api_instance');
 
+    // Opportunity Form Post Action
 		$this->EE->db->insert('actions', array(
 			'class'		=> 'Modl_giving_impact' ,
 			'method'	=> 'post_opportunity'
 		));
 
+		// Donation Form Post Action
+		$this->EE->db->insert('actions', array(
+			'class'		=> 'Modl_giving_impact',
+			'method'	=> 'post_donation'
+		));
+
+
+		
 		return TRUE;
 	}
 
