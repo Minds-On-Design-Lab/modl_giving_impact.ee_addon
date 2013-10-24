@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.3.1<br />
+**Version:** 2.3.2<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -646,6 +646,9 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 10242013 - Version 2.3.2
+  - Fix - Added post_donation action to install method
+  - Fix - Correction to docs regarding required names for custom checkout donation form inputs
 - 09182013 - Version 2.3.1
 	- Public key is now a module option
 	- Added public_key and private_key tags
