@@ -144,7 +144,7 @@ The following are used to modify the returned list of giving opportunities when 
 | offset | INT | Number of results to skip, useful for pagination. | 0 |
 | sort | STRING | Property to sort results by. Also accepts a direction preceded by a pipe, e.g. sort="gi_created_at&#124;desc"| gi_created_at |
 | status | STRING | Campaign status, "active", "inactive" or "both". | active |
-| related | BOOLEAN | Entering `true` will make available the `{gi_campaign}{/gi_campaign}` tag pair with a full set of variables related to the opportunity's parent campaign.  | false |
+| related | BOOLEAN | Entering "true" will make available the `{gi_campaign}{/gi_campaign}` tag pair with a full set of variables related to the opportunity's parent campaign.  | false |
 
 #### Single Variables
 
@@ -167,12 +167,15 @@ The following are used to modify the returned list of giving opportunities when 
 
 #### Variable Pairs
 
-##### Campaign
+##### Related Campaign
 
-If the parameter `related=true` is added to the tag the following tag pair becomes available:
+If the parameter `related="true"` is added to the tag the following tag pair becomes available. Please note how within your tag pair the syntax used for campaign fields is different.
 
 	{gi_campaign}
-		[All variables returned by the campaign tag above will be available here.]
+		{campaign_id_token}
+		{campaign_status}
+		...
+		All variables returned by the campaign tag above will be available here
 	{/gi_campaign}
 
 ##### Campaign Responses
