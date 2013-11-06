@@ -402,6 +402,7 @@ END;
 		$state 				= $this->EE->input->post('state');
 		$zip 				= $this->EE->input->post('zip');
 		$donation_level 	= $this->EE->input->post('donation_level');
+		$donation_level_id	= $this->EE->input->post('donation_level_id');
 		$donation_amount 	= $this->EE->input->post('donation_amount');
 
 		$captcha 			= $this->EE->input->post('captcha');
@@ -465,6 +466,7 @@ END;
 				'state'				=> $state,
 				'zip'				=> $zip,
 				'donation_level'	=> $donation_level,
+				'donation_level_id'	=> $donation_level_id,
 				'donation_amount'	=> $donation_amount,
 				'contact'			=> $contact
 			)));
@@ -544,6 +546,7 @@ END;
 					'state'				=> $state,
 					'zip'				=> $zip,
 					'donation_level'	=> $donation_level,
+					'donation_level_id'	=> $donation_level_id,
 					'donation_amount'	=> $donation_amount,
 					'contact'			=> $contact
 				)));
@@ -571,7 +574,9 @@ END;
 			'billing_state'		=> $state,
 			'billing_postal_code' => $zip,
 			'billing_country'	=> 'US',
-			'donation_total'	=> $donation_level ? $donation_level : $donation_amount,
+			'donation_total'	=> $donation_amount,
+			'donation_level' 	=> $donation_level,
+			'donation_level_id'	=> $donation_level_id,
 			'custom_responses' 	=> $custom_responses,
 			'card'				=> $card,
 			'contact'			=> $contact ? $contact : 0
@@ -663,8 +668,9 @@ END;
 			'value_city'		=> false,
 			'value_state'		=> false,
 			'value_zip'			=> false,
-			'value_donation_amount'	=> false,
-			'value_donation_level' => false
+			'value_donation_amount'		=> false,
+			'value_donation_level'		=> false,
+			'valud_donation_level_id'	=> false
 		);
 
 		if( $this->EE->session->flashdata('formvals') ) {
