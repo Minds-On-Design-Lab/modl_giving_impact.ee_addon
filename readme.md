@@ -120,7 +120,7 @@ The following is available in this tag pair:
 
 ### Opportunities
 
-	{exp:modl_giving_impact:opportunities campaign="{id_token}"} Content {/exp:modl_giving_impact:opportunities}
+	{exp:modl_giving_impact:opportunities opportunity="{id_token}"} Content {/exp:modl_giving_impact:opportunities}
 
 #### Required Parameters
 
