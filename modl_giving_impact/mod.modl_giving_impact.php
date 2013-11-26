@@ -401,7 +401,6 @@ END;
 		$city 				= $this->EE->input->post('city');
 		$state 				= $this->EE->input->post('state');
 		$zip 				= $this->EE->input->post('zip');
-		$donation_level 	= $this->EE->input->post('donation_level');
 		$donation_level_id	= $this->EE->input->post('donation_level_id');
 		$donation_amount 	= $this->EE->input->post('donation_amount');
 
