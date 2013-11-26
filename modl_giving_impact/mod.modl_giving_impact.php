@@ -434,7 +434,7 @@ END;
 		if( !$token && !$opportunity_token ) {
 			$errors[] = 'Campaign or Opportunity token is required';
 		}
-		if( !$donation_level && !$donation_amount ) {
+		if( !$donation_level_id && !$donation_amount ) {
 			$errors[] = 'You did not specify a donation amount';
 		}
 		if( !$card ) {
@@ -574,7 +574,7 @@ END;
 			'billing_postal_code' => $zip,
 			'billing_country'	=> 'US',
 			'donation_total'	=> $donation_amount,
-			'donation_level' 	=> $donation_level,
+      // 'donation_level'   => $donation_level,
 			'donation_level_id'	=> $donation_level_id,
 			'custom_responses' 	=> $custom_responses,
 			'card'				=> $card,
