@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.3.2<br />
+**Version:** 2.3.3<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -80,6 +80,7 @@ Returns public key string
 | {gi_donation_target} | Target donation amount (signed float). |
 | {gi_donation_minimum} | Minimum donation value accepted. |
 | {gi_donation_total} | Current donation total (signed float). |
+| {gi_enable_donation_levels} | Returns `true` or `false` depending on whether the Campaign has Donation Levels enabled or not. |
 | {gi_total_donations} | Current total number of donations. |
 | {gi_has_giving_opportunities} | Returns `true` or `false` depending on whether the Campaign has Giving Opportunities or not. |
 | {gi_total_opportunities} | Current total number of Giving Opportunities. |
@@ -106,7 +107,7 @@ This is a collection of custom fields that are entered when creating and updatin
 		...
 	{/gi_campaign_fields}
 
-The following is available in this tag pair:
+The following are available in this tag pair:
 
 | Variable        | Description|
 | ------------- |:-------------|
@@ -116,6 +117,24 @@ The following is available in this tag pair:
 | {campaign_fields_response} | Returns the donor's response if entered |
 | {campaign_fields_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
 | {campaign_fields_required} | Returns `true` or `false` depending on whether the field is currently required |
+
+
+#### Donation Levels
+
+If Campaign is utilizing donation levels the following provide data about them.
+
+	{gi_donation_levels}
+		...
+	{/gi_donation_levels}
+
+The following are available in this tag pair:
+
+| Variable        | Description|
+| ------------- |:-------------|
+| {donation_levels_level_id} | Returns a unique identifier for the level |
+| {donation_levels_amount} | Returns decimal for the monetary value for the level |
+| {donation_levels_label} | Returns the string label/description for the level |
+| {donation_levels_position} | Ordering value of level |
 
 
 ### Opportunities
@@ -350,7 +369,7 @@ The following must be submitted otherwise your request will display an error.
 * billing_state
 * billing_country
 * billing_postal_code
-* donation_amount
+* donation_amount OR donation_level_id
 * card - Card token provided by Stripe
 
 ##### Validation
@@ -367,7 +386,6 @@ You may use the following variables to repopulate the form upon return from vali
 * `{value_state}`
 * `{value_zip}`
 * `{value_donation_amount}`
-* `{value_donation_level}`
 
 #### Returned Data
 
@@ -389,7 +407,7 @@ The following is an example of a **Campaign** checkout Form. Please note that al
 
         {if gi_enable_donation_levels}
           {gi_donation_levels}
-           <label for="radio1"><input type="radio" name="donation_amount" value="{donation_levels_amount}"> {exp:gi_helper:money}{donation_levels_amount}{/exp:gi_helper:money} - {donation_levels_label}</label>
+           <label for="radio1"><input type="radio" name="donation_level_id" value="{donation_levels_level_id}"> {exp:gi_helper:money}{donation_levels_amount}{/exp:gi_helper:money} - {donation_levels_label}</label>
           {/gi_donation_levels}
         {if:else}
           <input type="text" name="donation_amount" value="{value_donation_amount}" />
@@ -462,7 +480,7 @@ The following is an example of a **Giving Opportunity** checkout Form. Please no
 
               {if campaign_enable_donation_levels}
                 {campaign_donation_levels}
-                   <label for="radio1"><input type="radio" name="donation_amount" value="{donation_levels_amount}"> {donation_levels_amount} - {donation_levels_label}</label>
+                   <label for="radio1"><input type="radio" name="donation_level_id" value="{donation_levels_level_id}"> {donation_levels_amount} - {donation_levels_label}</label>
                 {/campaign_donation_levels}
               {if:else}
            		<input type="text" name="donation_amount" value="{value_donation_amount}" />
@@ -649,6 +667,8 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 11272013 - Version 2.3.3
+	- Fix - Updated API Library to support use of the donation_level_id field in custom checkout
 - 10242013 - Version 2.3.2
   - Fix - Added post_donation action to install method
   - Fix - Correction to docs regarding required names for custom checkout donation form inputs

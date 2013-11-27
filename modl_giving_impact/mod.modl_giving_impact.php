@@ -401,7 +401,7 @@ END;
 		$city 				= $this->EE->input->post('city');
 		$state 				= $this->EE->input->post('state');
 		$zip 				= $this->EE->input->post('zip');
-		$donation_level 	= $this->EE->input->post('donation_level');
+		$donation_level_id	= $this->EE->input->post('donation_level_id');
 		$donation_amount 	= $this->EE->input->post('donation_amount');
 
 		$captcha 			= $this->EE->input->post('captcha');
@@ -434,7 +434,7 @@ END;
 		if( !$token && !$opportunity_token ) {
 			$errors[] = 'Campaign or Opportunity token is required';
 		}
-		if( !$donation_level && !$donation_amount ) {
+		if( !$donation_level_id && !$donation_amount ) {
 			$errors[] = 'You did not specify a donation amount';
 		}
 		if( !$card ) {
@@ -465,6 +465,7 @@ END;
 				'state'				=> $state,
 				'zip'				=> $zip,
 				'donation_level'	=> $donation_level,
+				'donation_level_id'	=> $donation_level_id,
 				'donation_amount'	=> $donation_amount,
 				'contact'			=> $contact
 			)));
@@ -544,6 +545,7 @@ END;
 					'state'				=> $state,
 					'zip'				=> $zip,
 					'donation_level'	=> $donation_level,
+					'donation_level_id'	=> $donation_level_id,
 					'donation_amount'	=> $donation_amount,
 					'contact'			=> $contact
 				)));
@@ -571,7 +573,9 @@ END;
 			'billing_state'		=> $state,
 			'billing_postal_code' => $zip,
 			'billing_country'	=> 'US',
-			'donation_total'	=> $donation_level ? $donation_level : $donation_amount,
+			'donation_total'	=> $donation_amount,
+      // 'donation_level'   => $donation_level,
+			'donation_level_id'	=> $donation_level_id,
 			'custom_responses' 	=> $custom_responses,
 			'card'				=> $card,
 			'contact'			=> $contact ? $contact : 0
@@ -663,8 +667,9 @@ END;
 			'value_city'		=> false,
 			'value_state'		=> false,
 			'value_zip'			=> false,
-			'value_donation_amount'	=> false,
-			'value_donation_level' => false
+			'value_donation_amount'		=> false,
+			'value_donation_level'		=> false,
+			'valud_donation_level_id'	=> false
 		);
 
 		if( $this->EE->session->flashdata('formvals') ) {
