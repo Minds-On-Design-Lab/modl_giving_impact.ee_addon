@@ -57,7 +57,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', array($data['campaign']));
@@ -76,7 +76,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $data['campaign'];
@@ -130,7 +130,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', $data['campaigns']);

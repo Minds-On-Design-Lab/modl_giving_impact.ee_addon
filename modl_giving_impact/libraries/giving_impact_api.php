@@ -188,7 +188,7 @@ class Giving_impact_api {
 		$data = json_decode($raw_json, true);
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $data;
@@ -201,7 +201,7 @@ class Giving_impact_api {
 		$return = json_decode($raw_json, true);
 
 		if( $return['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$return['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$return['message']);
 		}
 
 		return $return;

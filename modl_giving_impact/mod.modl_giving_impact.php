@@ -58,7 +58,7 @@ class Modl_giving_impact {
 			require_once $full_path;
 
 			if( !file_exists($full_path) ) {
-				$this->EE->output->fatal_error('Invalid API type '.$f);
+				$this->EE->output->show_user_error('general', 'Invalid API type '.$f);
 				return;
 			}
 

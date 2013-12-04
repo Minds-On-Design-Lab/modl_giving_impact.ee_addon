@@ -45,7 +45,7 @@ class Modl_API_Donation extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', array($data['donation']));
@@ -113,7 +113,7 @@ class Modl_API_Donation extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		// if( $related ) {
@@ -145,7 +145,7 @@ class Modl_API_Donation extends Giving_impact_api {
 	public function post_single($data) {
 
 		if( !$data ) {
-			show_error('Could not encode JSON data');
+			$this->EE->output->show_user_error('general', 'Could not encode JSON data');
 		}
 
 		$url = $this->build_url('donations');

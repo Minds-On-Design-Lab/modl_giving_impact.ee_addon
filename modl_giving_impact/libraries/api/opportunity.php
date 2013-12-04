@@ -48,7 +48,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $data['opportunity'];
@@ -80,7 +80,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', array($data['opportunity']));
@@ -119,7 +119,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		}
 
 		if( !$campaign ) {
-			$this->EE->output->fatal_error('Campaign token is required');
+			$this->EE->output->show_user_error('general', 'Campaign token is required');
 			return;
 		}
 
@@ -149,7 +149,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 	public function post_single($data, $token = false, $related = false) {
 
 		if( !$data ) {
-			show_error('Could not encode JSON data');
+			$this->EE->output->show_user_error('general', 'Could not encode JSON data');
 		}
 
 		$p = 'opportunities';
