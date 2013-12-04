@@ -13,5 +13,9 @@
             <td><?= lang('key')?></td>
            <td><?=$api_key?></td>
         </tr>
+        <tr class="even">
+            <td><?= lang('pub_key')?></td>
+           <td><?=$pub_key?></td>
+        </tr>
     </tbody>
 </table>

@@ -19,7 +19,7 @@
 
 class Modl_API_Donation extends Giving_impact_api {
 
-	private $api_path = '';
+	private $api_path = 'donations';
 
 	private $limit = 10;
 	private $offset = 0;
@@ -30,6 +30,27 @@ class Modl_API_Donation extends Giving_impact_api {
 
 	private $max_limit = 100;
 
+	public function fetch_single($rel = false) {
+		$token = $this->EE->TMPL->fetch_param('donation', false);
+		$related = $this->EE->TMPL->fetch_param('related', $rel);
+
+		$url = $this->build_url($this->api_path.'/'.$token, array(
+			'related' => $related
+		));
+
+		$data = $this->get($url);
+
+		if( !$data || !count($data['donation']) ) {
+			return;
+		}
+
+		if( $data['error'] ) {
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
+		}
+
+		return $this->prefix_tags('gi', array($data['donation']));
+	}
+
 	public function process() {
 
 		if( $this->EE->TMPL->fetch_param('campaign', false) ) {
@@ -38,6 +59,10 @@ class Modl_API_Donation extends Giving_impact_api {
 
 		if( $this->EE->TMPL->fetch_param('opportunity', false) ) {
 			return $this->fetch_donations('opportunity');
+		}
+
+		if( $this->EE->TMPL->fetch_param('donation', false ) ) {
+			return $this->fetch_single();
 		}
 	}
 
@@ -88,7 +113,7 @@ class Modl_API_Donation extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		// if( $related ) {
@@ -116,4 +141,16 @@ class Modl_API_Donation extends Giving_impact_api {
 		}
 		return $this->prefix_tags('gi', $donations, true);
 	}
+
+	public function post_single($data) {
+
+		if( !$data ) {
+			$this->EE->output->show_user_error('general', 'Could not encode JSON data');
+		}
+
+		$url = $this->build_url('donations');
+
+		return $this->post($url, $data);
+	}
+
 }

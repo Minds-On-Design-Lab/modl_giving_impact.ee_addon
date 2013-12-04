@@ -18,6 +18,15 @@
             	?>
             </td>
         </tr>
+         <tr class="odd">
+            <td><?= lang('pub_key')?></td>
+            <td>
+                <?php
+                $data = array('name' => 'pub_key', 'value' => set_value('pub_key', $pub_key));
+                echo form_input($data);
+                ?>
+            </td>
+        </tr>
     </tbody>
 </table>
 <?= form_submit('submit', lang('submit'), 'class="submit"')?>

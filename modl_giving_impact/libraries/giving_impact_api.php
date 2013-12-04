@@ -17,6 +17,7 @@ class Giving_impact_api {
 
 	private $base_url	= false;
 	private $api_key	= false;
+	private $pub_key	= false;
 
 	private $user_agent = 'Modl_Giving_Impact/EE_Addon';
 
@@ -33,6 +34,7 @@ class Giving_impact_api {
 
 		if ($creds->num_rows() > 0)  {
 			$this->api_key = $creds->row('api_key');
+			$this->pub_key = $creds->row('pub_key');
 		}
 		
 		// API Endpoint - Once next version of API is released then will add module preference for version number.
@@ -40,6 +42,14 @@ class Giving_impact_api {
 		
 		// Get sitename for user_agent
 		$this->user_agent = 'EECMS/'.$this->EE->config->item('site_url');
+	}
+
+	/**
+	 * Simple getter for base URL, since it's a private var and we don't want people futzing with it
+	 * @return string the API endpoint
+	 */
+	public function base_url() {
+		return $this->base_url;
 	}
 
 	/**
@@ -178,7 +188,7 @@ class Giving_impact_api {
 		$data = json_decode($raw_json, true);
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $data;
@@ -191,7 +201,7 @@ class Giving_impact_api {
 		$return = json_decode($raw_json, true);
 
 		if( $return['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$return['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$return['message']);
 		}
 
 		return $return;

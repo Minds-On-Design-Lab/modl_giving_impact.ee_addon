@@ -26,7 +26,8 @@
 
 class Modl_giving_impact_upd {
 
-	public $version = '2.2.4';
+
+	public $version = '2.3.3';
 
 	private $EE;
 
@@ -75,6 +76,11 @@ class Modl_giving_impact_upd {
                 'type'          => 'VARCHAR',
                 'constraint'        => 255,
                 'null'          => FALSE
+            ),
+            'pub_key'          => array(
+                'type'          => 'VARCHAR',
+                'constraint'        => 255,
+                'null'          => FALSE
             )
         );
 
@@ -82,11 +88,20 @@ class Modl_giving_impact_upd {
         $this->EE->dbforge->add_key('api_instance_id', TRUE);
         $this->EE->dbforge->create_table('modl_giving_impact_api_instance');
 
+    // Opportunity Form Post Action
 		$this->EE->db->insert('actions', array(
 			'class'		=> 'Modl_giving_impact' ,
 			'method'	=> 'post_opportunity'
 		));
 
+		// Donation Form Post Action
+		$this->EE->db->insert('actions', array(
+			'class'		=> 'Modl_giving_impact',
+			'method'	=> 'post_donation'
+		));
+
+
+		
 		return TRUE;
 	}
 
@@ -172,7 +187,24 @@ class Modl_giving_impact_upd {
 				'modl_giving_impact_api_instance',
 				'api_path'
 			);
-		} 
+		} elseif( version_compare($current, '2.3', '<') ) {
+			// Add action
+			$this->EE->db->insert('actions', array(
+				'class'		=> 'Modl_giving_impact',
+				'method'	=> 'post_donation'
+			));
+		} elseif( version_compare($current, '2.3.1', '<') ) {
+			$this->EE->dbforge->add_column(
+				'modl_giving_impact_api_instance',
+				array(
+		            'pub_key'          => array(
+		                'type'          => 'VARCHAR',
+		                'constraint'        => 255,
+		                'null'          => FALSE
+		            )
+				)
+			);
+		}
 
 		return TRUE;
 	}

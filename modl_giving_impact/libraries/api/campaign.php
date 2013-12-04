@@ -57,10 +57,29 @@ class Modl_API_Campaign extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', array($data['campaign']));
+	}
+
+	public function fetch_campaign($token) {
+
+		$url = $this->build_url($this->api_path.'/'.$token, array(
+			'status' => false
+		));
+
+		$data = $this->get($url);
+
+		if( !$data || !count($data['campaign']) ) {
+			return;
+		}
+
+		if( $data['error'] ) {
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
+		}
+
+		return $data['campaign'];
 	}
 
 	public function fetch() {
@@ -111,7 +130,7 @@ class Modl_API_Campaign extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', $data['campaigns']);

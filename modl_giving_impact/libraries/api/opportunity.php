@@ -34,9 +34,29 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		return $this->fetch();
 	}
 
-	public function fetch_single() {
+	public function fetch_opportunity($token, $rel = false) {
+
+		$url = $this->build_url($this->api_path.'/'.$token, array(
+			'status' => false,
+			'related' => $rel
+		));
+
+		$data = $this->get($url);
+
+		if( !$data || !count($data['opportunity']) ) {
+			return;
+		}
+
+		if( $data['error'] ) {
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
+		}
+
+		return $data['opportunity'];
+	}
+
+	public function fetch_single($rel = false) {
 		$token = $this->EE->TMPL->fetch_param('opportunity', false);
-		$related = $this->EE->TMPL->fetch_param('related', false);
+		$related = $this->EE->TMPL->fetch_param('related', $rel);
 
 		switch( $this->EE->TMPL->fetch_param('status', false) ) {
 			case 'active':
@@ -60,7 +80,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		}
 
 		if( $data['error'] ) {
-			$this->EE->output->fatal_error('Error: '.$data['message']);
+			$this->EE->output->show_user_error('general', 'Error: '.$data['message']);
 		}
 
 		return $this->prefix_tags('gi', array($data['opportunity']));
@@ -99,7 +119,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		}
 
 		if( !$campaign ) {
-			$this->EE->output->fatal_error('Campaign token is required');
+			$this->EE->output->show_user_error('general', 'Campaign token is required');
 			return;
 		}
 
@@ -126,13 +146,20 @@ class Modl_API_Opportunity extends Giving_impact_api {
 		return $this->prefix_tags('gi', $data['opportunities'], true);
 	}
 
-	public function post_single($data) {
+	public function post_single($data, $token = false, $related = false) {
 
 		if( !$data ) {
-			show_error('Could not encode JSON data');
+			$this->EE->output->show_user_error('general', 'Could not encode JSON data');
 		}
 
-		$url = $this->build_url('opportunities');
+		$p = 'opportunities';
+		if( $token ) {
+			$p .= '/'.$token;
+		}
+
+		$url = $this->build_url($p, array(
+			'related' => $related
+		));
 
 		return $this->post($url, $data);
 	}

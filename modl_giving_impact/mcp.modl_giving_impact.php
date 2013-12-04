@@ -70,10 +70,12 @@ class Modl_giving_impact_mcp {
 		if ($credentials->num_rows() > 0)
 		{
 			$data['api_key'] = $credentials->row('api_key');
+			$data['pub_key'] = $credentials->row('pub_key');
 		}
 		else
 		{
 			$data['api_key'] = '';
+			$data['pub_key'] = '';
 		}
 
 		return $this->EE->load->view('index', $data, TRUE);
@@ -92,6 +94,7 @@ class Modl_giving_impact_mcp {
 
 		// Validation Rules
 	    $this->EE->form_validation->set_rules('api_key','lang:key','required');
+	    $this->EE->form_validation->set_rules('pub_key','lang:pub_key','required');
 	    $this->EE->form_validation->set_error_delimiters('<div class="notice">', '</div>');
 
 	    if ($this->EE->form_validation->run())
@@ -109,11 +112,13 @@ class Modl_giving_impact_mcp {
 		{
 			$api_instance_id = $credentials->row('api_instance_id');
 			$data['api_key'] = $credentials->row('api_key');
+			$data['pub_key'] = $credentials->row('pub_key');
 		}
 		else
 		{
 			$api_instance_id = '';
 			$data['api_key'] = '';
+			$data['pub_key'] = '';
 		}
 
 	    $data['form_action'] = $this->_form_base.AMP.'method=add_edit_api';
@@ -135,7 +140,8 @@ class Modl_giving_impact_mcp {
 
 	private function _do_add_credentials() {
 	    $data = array(
-	        'api_key' => $this->EE->input->post('api_key')
+	        'api_key' => $this->EE->input->post('api_key'),
+	        'pub_key' => $this->EE->input->post('pub_key')
 	    );
 
 	    // check for existing credentials and update if exist, insert if not
