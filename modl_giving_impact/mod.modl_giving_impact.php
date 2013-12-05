@@ -411,6 +411,8 @@ END;
 		$next = $this->EE->input->post('NXT');
 		$notify = $this->EE->input->post('NTF');
 
+		$related = true;
+		
 		$toCheck = array(
 			'first_name',
 			'last_name',

@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.3.4<br />
+**Version:** 2.3.5<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -667,6 +667,8 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 12042013 - Version 2.3.5
+	- Update - Returning related data (either Campaign or Opportunity) along with donation data when using Custom Checkout. Available from gi_donation_return_date hook.
 - 12042013 - Version 2.3.4
 	- Update - Improve EECMS System Error messages when there are errors from API.
 - 11272013 - Version 2.3.3
