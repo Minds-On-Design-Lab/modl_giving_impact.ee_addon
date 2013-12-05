@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.3.3<br />
+**Version:** 2.3.4<br />
 **Copyright:** Copyright &copy; 2010-2013 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -20,7 +20,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 * Expression Engine 2.x
 * A [Giving Impact](http://givingimpact.com) account.
 	* Supports v2 of API
-* Tested in EECMS 2.7.0
+* Tested in EECMS 2.7.2
 
 ## Installation
 
