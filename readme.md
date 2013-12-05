@@ -667,6 +667,8 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 12042013 - Version 2.3.4
+	- Update - Improve EECMS System Error messages when there are errors from API.
 - 11272013 - Version 2.3.3
 	- Fix - Updated API Library to support use of the donation_level_id field in custom checkout
 - 10242013 - Version 2.3.2
