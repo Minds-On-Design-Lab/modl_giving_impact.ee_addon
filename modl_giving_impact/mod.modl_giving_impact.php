@@ -178,6 +178,15 @@ END;
 		$target = $this->EE->input->post('target');
 		$captcha = $this->EE->input->post('captcha');
 
+        $supporter_first_name   = $this->EE->input->post('supporter_first_name');
+        $supporter_last_name    = $this->EE->input->post('supporter_last_name');
+        $supporter_email        = $this->EE->input->post('supporter_email');
+        $supporter_street       = $this->EE->input->post('supporter_street');
+        $supporter_city         = $this->EE->input->post('supporter_city');
+        $supporter_state        = $this->EE->input->post('supporter_state');
+        $supporter_zip          = $this->EE->input->post('supporter_zip');
+
+
 		// $related = $this->EE->input->post('related', false);
 		$related = true;
 		$opportunity_token = $this->EE->input->post('ot', false);
@@ -215,7 +224,14 @@ END;
 				'description' => $description,
 				'youtube' => $youtube,
 				'target' => $target,
-				'status' => $status
+				'status' => $status,
+				'supporter_first_name' => $supporter_first_name,
+				'supporter_last_name' => $supporter_last_name,
+				'supporter_email' => $supporter_email,
+				'supporter_street' => $supporter_street,
+				'supporter_city' => $supporter_city,
+				'supporter_state' => $supporter_state,
+				'supporter_zip' => $supporter_zip
 			)));
 
 			$this->EE->output->show_message($data);
@@ -240,7 +256,14 @@ END;
 				'description' => $description,
 				'youtube' => $youtube,
 				'target' => $target,
-				'status' => $status
+				'status' => $status,
+				'supporter_first_name' => $supporter_first_name,
+				'supporter_last_name' => $supporter_last_name,
+				'supporter_email' => $supporter_email,
+				'supporter_street' => $supporter_street,
+				'supporter_city' => $supporter_city,
+				'supporter_state' => $supporter_state,
+				'supporter_zip' => $supporter_zip
 			)));
 
 			$this->EE->output->show_message($data);
@@ -314,6 +337,31 @@ END;
 		if( $target ) {
 			$json['target'] = $target;
 		}
+
+        $supporter = array();
+        if( $supporter_email ) {
+            $supporter = array(
+                'email_address'     => $supporter_email
+            );
+            $check = array(
+                'first_name',
+                'last_name',
+                'street',
+                'city',
+                'state',
+                'zip'
+            );
+            foreach( $check as $str ) {
+                $v = 'supporter_'.$str;
+                if( isset($v) && $$v !== false ) {
+                    $supporter[$str] = $$v;
+                }
+            }
+        }
+
+        if( count($supporter) ) {
+        	$json['supporters'] = array($supporter);
+        }
 
 		if( $_FILES && array_key_exists('image', $_FILES) ) {
 			$image = $_FILES['image'];
@@ -412,7 +460,7 @@ END;
 		$notify = $this->EE->input->post('NTF');
 
 		$related = true;
-		
+
 		$toCheck = array(
 			'first_name',
 			'last_name',
@@ -774,7 +822,14 @@ END;
 			'value_description' => false,
 			'value_youtube' => false,
 			'value_target' => false,
-			'value_status' => false
+			'value_status' => false,
+			'value_supporter_first_name' => false,
+			'value_supporter_last_name' => false,
+			'value_supporter_email' => false,
+			'value_supporter_street' => false,
+			'value_supporter_city' => false,
+			'value_supporter_state' => false,
+			'value_supporter_zip' => false
 		);
 
 		if( $this->EE->session->flashdata('formvals') ) {
@@ -785,6 +840,13 @@ END;
 				$vars['value_youtube'] = $vals['youtube'];
 				$vars['value_target'] = $vals['target'];
 				$vars['value_status'] = $vals['status'];
+				$vars['value_supporter_first_name'] = $vals['supporter_first_name'];
+				$vars['value_supporter_last_name'] = $vals['supporter_last_name'];
+				$vars['value_supporter_email'] = $vals['supporter_email'];
+				$vars['value_supporter_street'] = $vals['supporter_street'];
+				$vars['value_supporter_city'] = $vals['supporter_city'];
+				$vars['value_supporter_state'] = $vals['supporter_state'];
+				$vars['value_supporter_zip'] = $vals['supporter_zip'];
 			}
 		}
 
