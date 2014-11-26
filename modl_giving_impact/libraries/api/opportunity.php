@@ -68,10 +68,18 @@ class Modl_API_Opportunity extends Giving_impact_api {
 				$status = $this->status;
 		}
 
-		$url = $this->build_url($this->api_path.'/'.$token, array(
-			'status' => $status,
-			'related' => $related
-		));
+		if( $token ) {
+			$url = $this->build_url($this->api_path.'/'.$token, array(
+				'status' => $status,
+				'related' => $related
+			));
+		} elseif( $this->EE->TMPL->fetch_param('supporter', false) ) {
+			$url = $this->build_url($this->api_path, array(
+				'status' => $status,
+				'related' => $related,
+				'supporter' => $this->EE->TMPL->fetch_param('supporter')
+			));
+		}
 
 		$data = $this->get($url);
 
@@ -88,6 +96,7 @@ class Modl_API_Opportunity extends Giving_impact_api {
 
 	public function fetch() {
 		$campaign = $this->EE->TMPL->fetch_param('campaign', false);
+		$supporter = $this->EE->TMPL->fetch_param('supporter', false);
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
 		$sort = str_replace(
@@ -118,21 +127,35 @@ class Modl_API_Opportunity extends Giving_impact_api {
 				$status = $this->status;
 		}
 
-		if( !$campaign ) {
-			$this->EE->output->show_user_error('general', 'Campaign token is required');
+		if( !$campaign && !$supporter) {
+			$this->EE->output->show_user_error('general', 'Campaign token or supporter is required');
 			return;
 		}
 
-		$url = $this->build_url(
-			'campaigns/'.$campaign.'/opportunities',
-			array(
-				'limit' => $limit,
-				'offset' => $offset,
-				'sort' => sprintf('%s|%s', $sort, $dir),
-				'status' => $status,
-				'related' => $related
-			)
-		);
+		if( $campaign ) {
+			$url = $this->build_url(
+				'campaigns/'.$campaign.'/opportunities',
+				array(
+					'limit' => $limit,
+					'offset' => $offset,
+					'sort' => sprintf('%s|%s', $sort, $dir),
+					'status' => $status,
+					'related' => $related
+				)
+			);
+		} else {
+			$url = $this->build_url(
+				'opportunities',
+				array(
+					'limit' => $limit,
+					'offset' => $offset,
+					'sort' => sprintf('%s|%s', $sort, $dir),
+					'status' => $status,
+					'related' => $related,
+					'supporter' => $supporter
+				)
+			);
+		}
 
 		$data = $this->get($url);
 		if( !$data || !count($data['opportunities']) ) {
