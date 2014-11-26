@@ -32,11 +32,19 @@ class Modl_API_Donation extends Giving_impact_api {
 
 	public function fetch_single($rel = false) {
 		$token = $this->EE->TMPL->fetch_param('donation', false);
+		$supporter = $this->EE->TMPL->fetch_param('supporter', false);
 		$related = $this->EE->TMPL->fetch_param('related', $rel);
 
-		$url = $this->build_url($this->api_path.'/'.$token, array(
-			'related' => $related
-		));
+		if( $token ) {
+			$url = $this->build_url($this->api_path.'/'.$token, array(
+				'related' => $related
+			));
+		} else {
+			$url = $this->build_url($this->api_path, array(
+				'related' => $related,
+				'supporter' => $supporter
+			));
+		}
 
 		$data = $this->get($url);
 
@@ -64,10 +72,20 @@ class Modl_API_Donation extends Giving_impact_api {
 		if( $this->EE->TMPL->fetch_param('donation', false ) ) {
 			return $this->fetch_single();
 		}
+
+		if( $this->EE->TMPL->fetch_param('supporter', false) ) {
+			return $this->fetch_donations('supporter');
+		}
 	}
 
 	public function fetch_donations($type) {
 		$token = $this->EE->TMPL->fetch_param($type, false);
+		$supporter = false;
+
+		if( $type == 'supporter' ) {
+			$supporter = $token;
+			$token = false;
+		}
 
 		$limit = $this->EE->TMPL->fetch_param('limit', $this->limit);
 		$offset = $this->EE->TMPL->fetch_param('offset', $this->offset);
@@ -95,13 +113,24 @@ class Modl_API_Donation extends Giving_impact_api {
 				$status = $this->status;
 		}
 
-		$url = $this->build_url(plural($type).'/'.$token.'/donations', array(
-			'limit' => $limit,
-			'offset' => $offset,
-			'sort' => sprintf('%s|%s', $sort, $dir),
-			'status' => $status,
-			'related' => $related
-		));
+		if( $token ) {
+			$url = $this->build_url(plural($type).'/'.$token.'/donations', array(
+				'limit' => $limit,
+				'offset' => $offset,
+				'sort' => sprintf('%s|%s', $sort, $dir),
+				'status' => $status,
+				'related' => $related
+			));
+		} else {
+			$url = $this->build_url('donations', array(
+				'limit' => $limit,
+				'offset' => $offset,
+				'sort' => sprintf('%s|%s', $sort, $dir),
+				'status' => $status,
+				'related' => $related,
+				'supporter' => $supporter
+			));
+		}
 		$data = $this->get($url);
 
 		if( !$data || !count($data['donations']) ) {
