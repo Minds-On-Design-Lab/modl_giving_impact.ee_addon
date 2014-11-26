@@ -9,7 +9,7 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.3.5<br />
+**Version:** 2.4<br />
 **Copyright:** Copyright &copy; 2010-2014 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
@@ -152,6 +152,7 @@ You need to provide a campaign id_token **or** opportunity id_token.
 | ------------ |:-------------|:-------------|
 | campaign | STRING | Parent campaign token. This is used to display the list of Giving Opportunities associated with a specific campaign. |
 | opportunity | STRING | Unique giving opportunity token. This is used to display a single specific Giving Opportunity. |
+| supporter | STRING | A supporter email or token associated with opportunities. This is used to display a list of Giving Opportunities |
 
 ##### Optional Parameters
 
@@ -216,6 +217,30 @@ The following is available in this tag pair:
 | {campaign_responses_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
 | {campaign_responses_required} | Returns `true` or `false` depending on whether the field is currently required |
 
+##### Supporters
+
+This is a collection of supporters
+
+	{gi_supporters}
+		...
+	{/gi_supporters}
+
+The following is available in this tag pair:
+
+| Variable     | Description |
+| ------------ |:------------|
+| {supporters_first_name} | First name |
+| {supporters_last_name} | Last name |
+| {supporters_email_address} | Email address |
+| {supporters_id_token} | Supporter unique token |
+| {supporters_street_address} | Billing street address |
+| {supporters_city} | Billing city |
+| {supporters_state} | Billing state/province |
+| {supporters_postal_code} | Billing postal/zip code |
+| {supporters_country} | Billing country |
+| {supporters_donations_total} | Total (dollar) amount of donations |
+| {supporters_total_donations} | Total number of donations |
+
 ### Donations
 
 	{exp:modl_giving_impact:donations campaign="{id_token}"} Content {/exp:modl_giving_impact:donations}
@@ -236,6 +261,7 @@ You need to provide a campaign token, opportunity token **or** dondation token.
 | campaign  | STRING | Parent campaign id_token |
 | opportunity | STRING | Specfic opportunity id_token |
 | donation | STRING | Specfic donation id_token |
+| supporter | STRING | Specific supporter (either email or id_token) |
 
 ##### Optional Parameters
 
@@ -282,6 +308,31 @@ The following variables are available within this tag pair.
 | {gi_field_label} | Returns the label of the field |
 | {gi_response} | Returns the donor's response if entered |
 | {gi_status} | Returns `true` or `false` depending on whether the field is currently set to active or not |
+
+##### Supporters
+
+This is a collection of supporters
+
+	{gi_supporters}
+		...
+	{/gi_supporters}
+
+The following is available in this tag pair:
+
+| Variable     | Description |
+| ------------ |:------------|
+| {supporters_first_name} | First name |
+| {supporters_last_name} | Last name |
+| {supporters_email_address} | Email address |
+| {supporters_id_token} | Supporter unique token |
+| {supporters_street_address} | Billing street address |
+| {supporters_city} | Billing city |
+| {supporters_state} | Billing state/province |
+| {supporters_postal_code} | Billing postal/zip code |
+| {supporters_country} | Billing country |
+| {supporters_donations_total} | Total (dollar) amount of donations |
+| {supporters_total_donations} | Total number of donations |
+
 
 #### Conditional Variables
 
@@ -584,6 +635,13 @@ You may use the following variables to repopulate the form upon return from vali
 * `{value_status}`
 * `{value_target}`
 * `{value_youtube}`
+* `{value_supporter_first_name}`
+* `{value_supporter_last_name}`
+* `{value_supporter_email}`
+* `{value_supporter_street}`
+* `{value_supporter_city}`
+* `{value_supporter_state}`
+* `{value_supporter_zip}`
 
 #### Returned Data
 
@@ -630,6 +688,10 @@ If the user submits the form successfully and is immediately returned to the tem
 		Ex: http://www.youtube.com/watch?v=**dtdo_pOwuHI**</p>
 		<input type="text" name="youtube" value="{value_youtube}" />
 
+		<label>Email Address:</label>
+		<p class="directions">Link your opportunity to your existing supporter account</p>
+		<input type="text" name="supporter_email" value="{value_supporter_email}" />
+
     {gi_campaign_fields}
         {if campaign_fields_status}
               <label>{campaign_fields_field_label}{if campaign_fields_required}*{/if}:</label>
@@ -667,6 +729,9 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 11252014 - Version 2.4
+    - Update - Added supporter as method for fetching campaigns and opportunities
+    - Update - Added supporter input types for campaigns
 - 12042013 - Version 2.3.5
 	- Update - Returning related data (either Campaign or Opportunity) along with donation data when using Custom Checkout. Available from gi_donation_return_date hook.
 - 12042013 - Version 2.3.4
