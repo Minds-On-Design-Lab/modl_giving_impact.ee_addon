@@ -102,6 +102,17 @@ class Modl_giving_impact {
 		return $this->creds->row('pub_key');
 	}
 
+	public function money() {
+		// $currency = ee()->TMPL->fetch_param('currency');
+
+		$number = (int) $this->EE->TMPL->tagdata;
+		if( !$number ) {
+			return '0.00';
+		}
+
+   		return number_format($number/100, 2, '.', ',');
+	}
+
 	/**
 	 * Load standard donation JS handler. Handles form submit, handles Credit Card checks
 	 * @return string
