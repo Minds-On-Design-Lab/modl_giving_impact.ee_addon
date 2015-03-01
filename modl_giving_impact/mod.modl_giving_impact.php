@@ -623,7 +623,7 @@ END;
 			'billing_state'		=> $state,
 			'billing_postal_code' => $zip,
 			'billing_country'	=> 'US',
-			'donation_total'	=> $donation_amount,
+			'donation_total'	=> $donation_amount * 100,
       // 'donation_level'   => $donation_level,
 			'donation_level_id'	=> $donation_level_id,
 			'custom_responses' 	=> $custom_responses,
