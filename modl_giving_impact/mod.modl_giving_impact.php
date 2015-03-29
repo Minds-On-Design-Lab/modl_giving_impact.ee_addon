@@ -107,10 +107,10 @@ class Modl_giving_impact {
 
 		$number = (int) $this->EE->TMPL->tagdata;
 		if( !$number ) {
-			return '0.00';
+			return '0';
 		}
 
-   		return number_format($number/100, 2, '.', ',');
+   		return number_format($number/100, 0, '.', ',');
 	}
 
 	/**
