@@ -39,7 +39,7 @@ class Modl_giving_impact_actions {
 		$description = $this->EE->input->post('description');
 		$status = $this->EE->input->post('status') ? 1 : 0;
 		$youtube = $this->EE->input->post('youtube');
-		$target = $this->EE->input->post('target');
+		$target = $this->EE->input->post('target') * 100;
 
 		$return_url = $this->EE->input->post('r');
 

@@ -346,7 +346,7 @@ END;
 		}
 
 		if( $target ) {
-			$json['target'] = $target;
+			$json['target'] = $target * 100;
 		}
 
         $supporter = array();
