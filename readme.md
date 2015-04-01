@@ -9,8 +9,8 @@ For more about Giving Impact and to view our full documentation and learning rea
 ### Module Credits
 
 **Developed By:** Minds On Design Lab - http://mod-lab.com<br />
-**Version:** 2.4<br />
-**Copyright:** Copyright &copy; 2010-2014 Minds On Design Lab<br />
+**Version:** 2.5<br />
+**Copyright:** Copyright &copy; 2010-2015 Minds On Design Lab<br />
 **License:** Licensed under the MIT license - Please refer to LICENSE
 
 ## Requirements
@@ -53,6 +53,13 @@ To learn more about these methods, the data returned and using this module to br
 	{exp:modl_giving_impact:public_key}
 
 Returns public key string
+
+	{exp:modl_giving_impact:money}INT{/exp:modl_giving_impact:money}
+
+Formats returned cent value as a whole dollar (or pound, euro, etc) value, for example:
+```
+{exp:modl_giving_impact:money}{gi_donation_total}{/exp:modl_giving_impact:money}
+```
 
 ### Campaigns
 
@@ -729,6 +736,10 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 03292015 - Version 2.5
+	- Added support for international currencies
+	- Added new money format tag pair `{exp:modl_giving_impact:money}`
+	- Added support for API currency reporting change, totals are now whole cents not float dollars
 - 11252014 - Version 2.4
     - Update - Added supporter as method for fetching campaigns and opportunities
     - Update - Added supporter input types for campaigns
