@@ -60,7 +60,7 @@ class Modl_giving_impact_mcp {
 	{
 		$vars = array();
 
-		$this->EE->cp->set_variable('cp_page_title', lang('modl_giving_impact_module_name'));
+		$this->EE->view->cp_page_title = lang('modl_giving_impact_module_name');
 
 		// check for existing credentials
 	    $credentials = $this->EE->db
