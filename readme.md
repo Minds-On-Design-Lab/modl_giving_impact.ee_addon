@@ -30,6 +30,8 @@ Install in system/expressionengine/third_party/modl_giving_impact
 
 A Giving Impact Private API Key is required to connect the module to Giving Impact & can be entered on the modules settings screen. In addition a Public API Key is required if you are using the Custom Checkout feature.
 
+Navigate to `Add-ons -> Modules -> Giving Impact` and then click the "API Settings" button to enter your keys.
+
 ## EECMS Usage
 
 The following ExpressionEngine tag pairs reflect key methods available in the Giving Impact API.  Each pair returns all of its related methods data as an EECMS tag with a "gi_" prefix added on. So for example in the GI API /campaigns method, there is a data element returned with a campaign's unique token labeled `id_token` which in the related EECMS tag pair would be returned as `{gi_id_token}`.
@@ -40,19 +42,25 @@ To learn more about these methods, the data returned and using this module to br
 
 ### Menu
 
-* [Root Tags](#roottags)
+* [General or Helper Tags](#general-or-helper-tags)
 * [Campaigns](#campaigns)
 * [Opportunities](#opportunities)
 * [Donations](#donations)
-* [Donation Checkout](#donation-checkoupt)
+* [Donation Checkout](#donation-checkout)
 * [Opportunity Form](#opportunity-form)
 * [Hooks](#hooks)
 
-### Root Tags
+### General or Helper Tags
+
+#### Public API Key
 
 	{exp:modl_giving_impact:public_key}
 
-Returns public key string
+Returns public key that is set in add-on API Settings.
+
+#### Working with Money
+
+Giving Impact stores and returns money values in cents. This is likely not the desirable way you would like to display money in your templates. To help we have the following tag pair to help improve money formatting.
 
 	{exp:modl_giving_impact:money}INT{/exp:modl_giving_impact:money}
 

@@ -27,7 +27,7 @@
 class Modl_giving_impact_upd {
 
 
-	public $version = '2.3.5';
+	public $version = '2.5';
 
 	private $EE;
 
@@ -101,7 +101,7 @@ class Modl_giving_impact_upd {
 		));
 
 
-		
+
 		return TRUE;
 	}
 
