@@ -60,7 +60,7 @@ Returns public key that is set in add-on API Settings.
 
 #### Working with Money
 
-Giving Impact stores and returns money values in cents. This is likely not the desirable way you would like to display money in your templates. To help we have the following tag pair to help improve money formatting.
+Giving Impact stores and returns money values in cents. This is likely not the desirable way you would like to display money in your templates. We provide the following tag pair that can be used to help improve money formatting.
 
 	{exp:modl_giving_impact:money}INT{/exp:modl_giving_impact:money}
 
