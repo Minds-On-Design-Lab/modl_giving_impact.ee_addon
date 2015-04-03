@@ -744,6 +744,8 @@ When using custom checkout form and when successfully processed you can access a
 
 
 ## Changelog
+- 04032015 - Version 2.5.1
+  - Fixed CP Variable Error
 - 03292015 - Version 2.5
 	- Added support for international currencies
 	- Added new money format tag pair `{exp:modl_giving_impact:money}`
