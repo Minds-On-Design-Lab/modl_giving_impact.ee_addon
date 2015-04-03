@@ -83,7 +83,7 @@ class Modl_giving_impact_mcp {
 
 	public function add_edit_api() {
 		// Set page title & breadcrumb
-	    $this->EE->cp->set_variable('cp_page_title', lang('add_api'));
+		$this->EE->view->cp_page_title = lang('add_api');
 		$this->EE->cp->set_breadcrumb($this->_base_url, lang('modl_giving_impact_module_name'));
 
 	    // Load libs
@@ -132,7 +132,8 @@ class Modl_giving_impact_mcp {
 
 	public function documentation() {
 		// Set page title & breadcrumb
-	    $this->EE->cp->set_variable('cp_page_title', lang('documentation'));
+
+		$this->EE->view->cp_page_title = lang('documentation');
 		$this->EE->cp->set_breadcrumb($this->_base_url, lang('modl_giving_impact_module_name'));
 
 		return $this->EE->load->view('documentation', '', TRUE);
