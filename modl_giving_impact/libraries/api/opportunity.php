@@ -140,7 +140,8 @@ class Modl_API_Opportunity extends Giving_impact_api {
 					'offset' => $offset,
 					'sort' => sprintf('%s|%s', $sort, $dir),
 					'status' => $status,
-					'related' => $related
+					'related' => $related,
+					'supporter' => $supporter
 				)
 			);
 		} else {

@@ -119,7 +119,8 @@ class Modl_API_Donation extends Giving_impact_api {
 				'offset' => $offset,
 				'sort' => sprintf('%s|%s', $sort, $dir),
 				'status' => $status,
-				'related' => $related
+				'related' => $related,
+				'supporter' => $supporter
 			));
 		} else {
 			$url = $this->build_url('donations', array(
